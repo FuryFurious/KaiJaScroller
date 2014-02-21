@@ -100,7 +100,9 @@
     <Compile Include="Classes\Tiled\TiledMap.cs" />
     <Compile Include="Classes\Tiled\TiledPicture.cs" />
     <Compile Include="Classes\Tiled\TiledRectangle.cs" />
+    <Compile Include="Gamestates\Credits.cs" />
     <Compile Include="Gamestates\MainMenu.cs" />
+    <Compile Include="Gamestates\Restart.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

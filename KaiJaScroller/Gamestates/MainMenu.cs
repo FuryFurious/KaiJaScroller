@@ -18,9 +18,7 @@ using System.Threading.Tasks;
         Text creditsText = new Text("Credits", Assets.font1);
         Text exitText = new Text("Exit Game", Assets.font1);
 
-        RectangleShape current;
-
-         
+        int count;
 
         public void init()
         {
@@ -40,25 +38,60 @@ using System.Threading.Tasks;
             exit.FillColor = Color.Green;
             exit.Size = new Vector2f(80, 50);
 
-            startText.Position = new Vector2f(230, 220);
+            startText.Position = new Vector2f(230, 200);
+            startText.CharacterSize = 40;
 
-            creditsText.Position = new Vector2f(230, 320);
+            creditsText.Position = new Vector2f(230, 300);
+            creditsText.CharacterSize = 40;
 
-            exitText.Position = new Vector2f(230, 420);
-
-            current = start;
-
+            exitText.Position = new Vector2f(230, 400);
+            exitText.CharacterSize = 40;
             
         }
 
         public EGameState update(GameTime gameTime)
         {
+            
+
+            if (InGame.pad.leftDown())
+                count = (count+ 1) % 3;
+            if (InGame.pad.leftUp())
+                count = (count + 2) % 3;
+
+            if (count == 0)
+            {
+                start.Size = new Vector2f(100, 50) * (float)(Math.Pow(Math.Sin(gameTime.TotalTime.TotalSeconds), 2)) + new Vector2f(95, 40);
+                credits.Size = new Vector2f(100,50);
+                exit.Size = new Vector2f(100, 50);
+                if (InGame.pad.isClicked(Help.A))
+                    return EGameState.InGame;
+            }
+
+            else if (count == 1)
+            {
+                credits.Size = new Vector2f(100, 50) * (float)(Math.Pow(Math.Sin(gameTime.TotalTime.TotalSeconds), 2)) + new Vector2f(95, 40);
+                start.Size = new Vector2f(100, 50);
+                exit.Size = new Vector2f(100, 50);
+                if (InGame.pad.isClicked(Help.A))
+                    return EGameState.Credits;
+            }
+
+            else if (count == 2)
+            {
+                exit.Size = new Vector2f(100, 50) * (float)(Math.Pow(Math.Sin(gameTime.TotalTime.TotalSeconds), 2)) + new Vector2f(95, 40);
+                credits.Size = new Vector2f(100, 50);
+                start.Size = new Vector2f(100, 50);
+                if (InGame.pad.isClicked(Help.A))
+                    return EGameState.None;
+            }
+            Console.WriteLine(count);
 
             return EGameState.MainMenu;
         }
 
         public void draw(GameTime gameTime, SFML.Graphics.RenderWindow window)
         {
+            window.Clear();
             window.Draw(start);
             window.Draw(credits);
             window.Draw(exit);
@@ -66,9 +99,6 @@ using System.Threading.Tasks;
             window.Draw(startText);
             window.Draw(creditsText);
             window.Draw(exitText);
-
-
-
             
         }
     }

@@ -23,6 +23,8 @@ public class Gamepad
     float x;
     float y;
 
+    bool middle;
+
     public Gamepad()
     {
         oldButtons = new bool[10];
@@ -61,7 +63,12 @@ public class Gamepad
         for (uint i = 0; i < oldButtons.Length; i++)
             currentButtons[i] = Joystick.IsButtonPressed(0, i);
 
+        if (getLeftX() < 30 && getLeftX() > -30)
+        {
+            if (getLeftY() < 30 && getLeftY() > -30)
+                middle = true;
 
+        }
     }
     
     public bool isClicked(uint button)
@@ -69,10 +76,31 @@ public class Gamepad
         return currentButtons[button] && !oldButtons[button];
     }
 
+
+
     public bool isPressed(uint button)
     {
         return Joystick.IsButtonPressed(0, button);
     }
+    public bool leftDown()
+    {
+        if (middle == true && getLeftY() > 90)
+        {
+            middle = false;
+            return true;
+        }
+        else return false;
+    }
+    public bool leftUp()
+    {
+        if (middle == true && getLeftY() < -90)
+        {
+            middle = false;
+            return true;
+        }
+        else return false;
+    }
+
 
     public bool isReleased(uint button)
     {

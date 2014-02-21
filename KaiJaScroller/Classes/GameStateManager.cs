@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 class GameStateManager : Game
 {
 
-    EGameState currentGameState = EGameState.InGame;
+    EGameState currentGameState = EGameState.MainMenu;
     EGameState prevGameState;
 
     IGameState gameState;
@@ -23,6 +23,7 @@ class GameStateManager : Game
 
     public override void update(GameTime gameTime)
     {
+        InGame.pad.update();
         currentGameState = gameState.update(gameTime);
 
         if (currentGameState != prevGameState)
@@ -45,6 +46,13 @@ class GameStateManager : Game
 
             case EGameState.InGame:
                 gameState = new InGame();
+                break;
+
+            case EGameState.Credits:
+                gameState = new Credits();
+                break;
+            case EGameState.Restart:
+                gameState = new Restart();
                 break;
 
             default:

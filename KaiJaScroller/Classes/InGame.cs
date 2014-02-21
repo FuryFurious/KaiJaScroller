@@ -70,7 +70,9 @@ public class InGame : IGameState
     public EGameState update(GameTime gameTime)
     {
         input.update();
-        pad.update();
+
+        if (InGame.pad.isClicked(Help.LB))
+            return EGameState.Restart;
 
         if (input.isClicked(Keyboard.Key.F1))
             Settings.drawBoundings = !Settings.drawBoundings;
