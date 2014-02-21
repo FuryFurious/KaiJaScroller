@@ -24,6 +24,7 @@ namespace TiledMap
 
         List<String> layers = new List<String>();
         public List<TiledRectangle> rectangles = new List<TiledRectangle>();
+        public List<TiledPicture> pictures = new List<TiledPicture>();
 
         Stack<String> lastElement = new Stack<String>();
         int numLayers = -1;
@@ -108,6 +109,25 @@ namespace TiledMap
                                         currentRect.height = float.Parse(reader.Value);
 
                                         map.rectangles.Add(currentRect);
+                                    }
+
+                                    else if (reader.Value.Equals("Picture"))
+                                    {
+                                        TiledPicture currentPic = new TiledPicture();
+                                        currentPic.type = reader.Value;
+
+                                        reader.MoveToNextAttribute();
+                                        currentPic.x = float.Parse(reader.Value);
+
+                                        reader.MoveToNextAttribute();
+                                        currentPic.y = float.Parse(reader.Value);
+
+                                        reader.MoveToNextAttribute();
+                                        currentPic.id = int.Parse(reader.Value);
+
+
+
+                                        map.pictures.Add(currentPic);
                                     }
 
                                     //else if() Other objects here!

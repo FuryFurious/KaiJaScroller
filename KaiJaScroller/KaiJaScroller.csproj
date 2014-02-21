@@ -93,6 +93,7 @@
     <Compile Include="Classes\Statics\Settings.cs" />
     <Compile Include="Classes\InterfacesAbstracts\APhysicComponent.cs" />
     <Compile Include="Classes\Tiled\TiledMap.cs" />
+    <Compile Include="Classes\Tiled\TiledPicture.cs" />
     <Compile Include="Classes\Tiled\TiledRectangle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
