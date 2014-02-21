@@ -23,7 +23,7 @@ namespace TiledMap
         int[, ,] tileIds;
 
         List<String> layers = new List<String>();
-        List<TiledRectangle> rectangles = new List<TiledRectangle>();
+        public List<TiledRectangle> rectangles = new List<TiledRectangle>();
 
         Stack<String> lastElement = new Stack<String>();
         int numLayers = -1;

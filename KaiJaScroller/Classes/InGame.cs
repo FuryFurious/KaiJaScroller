@@ -12,7 +12,11 @@ public class InGame : IGameState
     public static Input input;
 
     Entity player;
-    public FloatRect boundingBox = new FloatRect(0, 300, 300, 300);
+    Sprite[, ,] sprites;
+
+    public FloatRect[] collisionRects;
+
+    View view;
 
     public InGame()
     {
@@ -31,6 +35,10 @@ public class InGame : IGameState
         keys.Add(Keyboard.Key.Space);
 
         input = new Input(keys);
+
+        fillSprites("Content/testLevel.tmx");
+
+        
     }
 
     public void init()
@@ -48,9 +56,78 @@ public class InGame : IGameState
 
     public void draw(GameTime gameTime, RenderWindow window)
     {
+        
+
+        if (input.leftPressed())
+        {
+            view = window.GetView();
+            view.Center -= input.getDeltaMousePos();
+            window.SetView(view);
+        }
+
+        if (input.mouseWheelDown())
+        {
+            view = window.GetView();
+            view.Zoom(1.1f);
+            window.SetView(view);
+        }
+        else if (input.mouseWheelUp())
+        {
+            view = window.GetView();
+            view.Zoom(0.9f);
+            window.SetView(view);
+        }
+     
+
         window.Clear(Game.CornflowerBlue);
+        foreach (Sprite s in sprites)
+            window.Draw(s);
+
 
         this.player.draw(gameTime, window);
-        Help.drawRectangle(boundingBox, window);
+
+
+
+      //  Help.drawRectangle(boundingBox, window);
+    }
+
+    //TODO: remove to better place:
+    private void fillSprites(String path)
+    {
+        TiledMap.TiledMapInfo map = TiledMap.TiledMapInfo.getMap(path);
+
+        int[, ,] ids = map.getTileIds();
+        Texture texture = new Texture("Content/" + map.getTileSetName() + ".png");
+        sprites = new Sprite[ids.GetLength(0), ids.GetLength(1), ids.GetLength(2)];
+
+        collisionRects = new FloatRect[map.rectangles.Count];
+
+        for (int i = 0; i < collisionRects.Length; i++)
+        {
+            TiledMap.TiledRectangle r = map.rectangles[i];
+            collisionRects[i] = new FloatRect(r.x, r.y, r.width, r.height);
+        }
+
+        for (int z = 0; z < ids.GetLength(2); z++)
+        {
+            for (int x = 0; x < ids.GetLength(0); x++)
+            {
+                for (int y = 0; y < ids.GetLength(1); y++)
+                {
+                    int id = ids[x, y, z] - 1;
+
+                    int xPos = id % ((int)texture.Size.X / map.getTileWidth());
+                    int yPos = id / ((int)texture.Size.X / map.getTileHeight());
+
+                    if (id != -1)
+                    {
+                        sprites[x, y, z] = new Sprite(texture);
+                        sprites[x, y, z].TextureRect = new IntRect(xPos * map.getTileWidth(), yPos * map.getTileHeight(), map.getTileWidth(), map.getTileHeight());
+                        sprites[x, y, z].Position = new Vector2f(y * map.getTileHeight(), x * map.getTileWidth());
+                    }
+
+                }
+            }
+        }
     }
 }
