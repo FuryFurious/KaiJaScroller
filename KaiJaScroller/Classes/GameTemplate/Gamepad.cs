@@ -28,13 +28,9 @@ public class Gamepad
 
     public Gamepad()
     {
-        
-
         oldButtons = new bool[10];
         currentButtons = new bool[10];
-  
     }
-
 
     public void update()
     {
@@ -62,25 +58,12 @@ public class Gamepad
         oldTriggerPos = currentTriggerPos;
         currentTriggerPos = Joystick.GetAxisPosition(0, Joystick.Axis.Z);
 
-
-
-
-
-
         for (int i = 0; i < oldButtons.Length; i++)
             oldButtons[i] = currentButtons[i];
 
         for (uint i = 0; i < oldButtons.Length; i++)
-            oldButtons[i] = Joystick.IsButtonPressed(0, i);
-        
-
-       
-
-      
-
-
+            currentButtons[i] = Joystick.IsButtonPressed(0, i);
     }
-
     
     public bool isClicked(uint button)
     {
@@ -96,16 +79,15 @@ public class Gamepad
     {
         return oldButtons[button] && !Joystick.IsButtonPressed(0, button);
     }
-
-
-
-   
-
-    
-
-    
-      
-
+    public float getLeftX()
+    {
+        return currentStickLeftPos.X;
     }
+    public float getLeftY()
+    {
+        return currentStickLeftPos.Y;
+    }
+
+}
 
 

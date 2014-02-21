@@ -13,7 +13,7 @@ public class InGame : IGameState
 
     Entity player;
     Sprite[, ,] sprites;
-    Gamepad pad = new Gamepad();
+    public static Gamepad pad = new Gamepad();
 
 
     public BoundingBox[] collisionRects;
