@@ -21,20 +21,21 @@ public class SimplePhysic : PhysicComponent
 
     public override void update(GameTime gameTime, InGame ingame)
     {
-        float boundingBoxBottomY = this.entity.boundingBox.Top + this.entity.boundingBox.Height;
-        float boundingBoxBottomX = this.entity.boundingBox.Left;
 
-
-
+        //standing:
         if (!isFalling)
         {
+            float boundingBoxBottomY = this.entity.boundingBox.Bottom;
+
+            float boundingBoxBottomX1 = this.entity.boundingBox.Left;
+            float boundingBoxBottomX2 = this.entity.boundingBox.Right;
+
             bool willFall = true;
 
-            foreach (FloatRect r in ingame.collisionRects)
+            foreach (BoundingBox bb in ingame.collisionRects)
             {
-                if (r.Contains(boundingBoxBottomX, boundingBoxBottomY))
+                if (bb.intersectsHorzLine(boundingBoxBottomY + 1, boundingBoxBottomX1, boundingBoxBottomX2))
                 {
-
                     willFall = false;
                     break;
                 }
@@ -55,21 +56,53 @@ public class SimplePhysic : PhysicComponent
             }
         }
 
-
+        //jumping or falling:
         else
         {
             fallTime += gameTime.ElapsedTime.TotalSeconds;
             fallSpeed += (float)fallTime;
 
-            this.entity.move(0, fallSpeed);
 
-            foreach(FloatRect r in ingame.collisionRects)
-                if(this.entity.boundingBox.Top <= r.Top)
-                    if (this.entity.boundingBox.Intersects(r))
+            //falling:
+            if (fallSpeed > 0)
+            {
+
+                float y = this.entity.boundingBox.Bottom;
+                float x0 = this.entity.boundingBox.Left;
+                float x1 = this.entity.boundingBox.Right;
+
+                foreach (BoundingBox bb in ingame.collisionRects)
+                    if (bb.intersectsHorzLine(y, x0, x1))
                     {
                         resetPhysics();
-                        this.entity.position.Y = r.Top - this.entity.boundingBox.Height;
+                        this.entity.position.Y = bb.Y - this.entity.boundingBox.Height;
+                        return;
                     }
+
+                this.entity.moveVert(fallSpeed);
+            }
+            //jumping
+            else 
+            {
+
+                float y = this.entity.boundingBox.Top;
+                float x0 = this.entity.boundingBox.Left;
+                float x1 = this.entity.boundingBox.Right;
+
+                foreach (BoundingBox bb in ingame.collisionRects)
+                    if (bb.intersectsHorzLine(y, x0, x1))
+                    {
+                        resetPhysics();
+                        return;
+                    }
+
+                this.entity.moveVert(fallSpeed);
+            }
+
+       
+
+
+           
         }
     }
 

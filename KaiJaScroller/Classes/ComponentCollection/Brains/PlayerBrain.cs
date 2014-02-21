@@ -26,13 +26,13 @@ public class PlayerBrain : ABrain
             this.entity.move(0, speed);
         }
 
-        if (InGame.input.isPressed(Keyboard.Key.A))
+        if (InGame.input.isPressed(Keyboard.Key.A) && this.entity.canMoveLeft(-speed))
         {
-            this.entity.move(-speed, 0);
+            this.entity.moveHorz(-speed);
         }
-        else if (InGame.input.isPressed(Keyboard.Key.D))
+        else if (InGame.input.isPressed(Keyboard.Key.D) && this.entity.canMoveRight(speed))
         {
-            this.entity.move(speed, 0);
+            this.entity.moveHorz(speed);
         }
          
         float leftX = InGame.pad.getLeftX();

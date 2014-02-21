@@ -38,6 +38,18 @@ public class Gamepad
         x = Joystick.GetAxisPosition(0, Joystick.Axis.X);
         y = Joystick.GetAxisPosition(0, Joystick.Axis.Y);
 
+        /*
+        Console.Clear();
+
+        for (uint i = 0; i < 10; i++)
+        {
+            Console.WriteLine(i + ", " + Joystick.IsButtonPressed(0, i));
+        }
+        Console.WriteLine(Joystick.GetAxisPosition(0, Joystick.Axis.X));
+        Console.WriteLine(Joystick.GetAxisPosition(0, Joystick.Axis.Y));
+        Console.WriteLine(Joystick.GetAxisPosition(0, Joystick.Axis.R));
+        Console.WriteLine(Joystick.GetAxisPosition(0, Joystick.Axis.U));
+        */
         oldStickLeftPos = currentStickLeftPos;
         currentStickLeftPos = new Vector2f(Joystick.GetAxisPosition(0,Joystick.Axis.X),Joystick.GetAxisPosition(0,Joystick.Axis.Y)) ;
 

@@ -8,11 +8,17 @@ using System.Threading.Tasks;
 
 public static class Settings
 {
+    //________________________WINDOW STUFF_________________________//
+    public const string WINDOWTITLE = "KaiJaScroller";
+
     public static int windowWidth = 800;
     public static int windowHeight = 600;
 
     public static Styles windowStyles = Styles.Default;
 
-    public const string WINDOWTITLE = "KaiJaScroller";
+    //________________________OTHER STUFF__________________________//
+    public static bool drawBoundings = false;
+
+
 }
 
