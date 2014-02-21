@@ -12,10 +12,15 @@ public class InGame : IGameState
     public static Input input;
 
     Entity player;
+    public FloatRect boundingBox = new FloatRect(0, 300, 300, 300);
 
     public InGame()
     {
-        this.player = new Entity(new Sprite(Assets.zombieTexture), new PlayerBrain());
+        this.player = new Entity(   new Sprite(Assets.zombieTexture), 
+                                    new PlayerBrain(), 
+                                    new SimplePhysic());
+
+        this.player.boundingBox = new FloatRect(0, 0, 32, 32);
 
         List<Keyboard.Key> keys = new List<Keyboard.Key>();
         keys.Add(Keyboard.Key.W);
@@ -36,7 +41,7 @@ public class InGame : IGameState
     public EGameState update(GameTime gameTime)
     {
         input.update();
-        this.player.update(gameTime);
+        this.player.update(gameTime, this);
 
         return EGameState.InGame;
     }
@@ -46,5 +51,6 @@ public class InGame : IGameState
         window.Clear(Game.CornflowerBlue);
 
         this.player.draw(gameTime, window);
+        Help.drawRectangle(boundingBox, window);
     }
 }
