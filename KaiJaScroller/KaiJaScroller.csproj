@@ -74,6 +74,7 @@
     <Compile Include="Classes\Components\ABrain.cs" />
     <Compile Include="Classes\Components\CombatComponent.cs" />
     <Compile Include="Classes\Entity.cs" />
+    <Compile Include="Classes\GameTemplate\Gamepad.cs" />
     <Compile Include="Classes\InGame.cs" />
     <Compile Include="Classes\ComponentCollection\Brains\PlayerBrain.cs" />
     <Compile Include="Classes\Statics\Assets.cs" />

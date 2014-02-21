@@ -13,6 +13,7 @@ public class InGame : IGameState
 
     Entity player;
     Sprite[, ,] sprites;
+    Gamepad pad = new Gamepad();
 
     public FloatRect[] collisionRects;
 
@@ -49,6 +50,8 @@ public class InGame : IGameState
     public EGameState update(GameTime gameTime)
     {
         input.update();
+        pad.update();
+
         this.player.update(gameTime, this);
 
         return EGameState.InGame;
