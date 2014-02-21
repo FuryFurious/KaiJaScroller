@@ -19,11 +19,11 @@ public class PlayerBrain : ABrain
         
         if (InGame.input.isPressed(Keyboard.Key.W))
         {
-            this.entity.move(0, -speed);
+            this.entity.moveVert( -speed);
         }
         else if (InGame.input.isPressed(Keyboard.Key.S))
         {
-            this.entity.move(0, speed);
+            this.entity.moveVert( speed);
         }
 
         if (InGame.input.isPressed(Keyboard.Key.A) && this.entity.canMoveLeft(-speed))
@@ -42,9 +42,9 @@ public class PlayerBrain : ABrain
 
         else if (leftX < 0)
             leftX = ((Help.Clamp(leftX, -95, -5) + 5.0f) / 90.0f);
-        
 
-        if(Math.Abs(leftX)> 0.2f)
-        this.entity.move(leftX * speed, 0); 
+
+        if (Math.Abs(leftX) > 0.2f && this.entity.canMoveLeft(-speed))
+        this.entity.moveHorz(leftX * speed); 
     }
 }
