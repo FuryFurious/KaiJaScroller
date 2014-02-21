@@ -16,6 +16,7 @@ public class PlayerBrain : ABrain
 
     public override void think(GameTime gameTime)
     {
+        
         if (InGame.input.isPressed(Keyboard.Key.W))
         {
             this.entity.move(0, -speed);
@@ -33,5 +34,17 @@ public class PlayerBrain : ABrain
         {
             this.entity.move(speed, 0);
         }
+         
+        float leftX = InGame.pad.getLeftX();
+        
+        if (leftX > 0)
+            leftX = ((Help.Clamp(leftX, 5, 95) - 5.0f )/90.0f);
+
+        else if (leftX < 0)
+            leftX = ((Help.Clamp(leftX, -95, -5) + 5.0f) / 90.0f);
+        
+
+        if(Math.Abs(leftX)> 0.2f)
+        this.entity.move(leftX * speed, 0); 
     }
 }

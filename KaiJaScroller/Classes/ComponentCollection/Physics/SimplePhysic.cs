@@ -47,7 +47,7 @@ public class SimplePhysic : PhysicComponent
                 isFalling = true;
             }
 
-            if (InGame.input.isClicked(Keyboard.Key.Space))
+            if (InGame.input.isClicked(Keyboard.Key.Space) || InGame.pad.isClicked(Help.A))
             {
                 resetPhysics();
                 isFalling = true;

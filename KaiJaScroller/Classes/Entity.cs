@@ -51,7 +51,7 @@ public class Entity
     {
         target.Draw(sprite);
 
-        Help.drawRectangle(this.boundingBox, target);
+       // Help.drawRectangle(this.boundingBox, target);
     }
 
     public void move(float x, float y)
