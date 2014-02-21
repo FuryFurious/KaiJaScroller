@@ -40,6 +40,7 @@ class GameStateManager : Game
         switch (currentGameState)
         {
             case EGameState.MainMenu:
+                gameState = new MainMenu();
                 break;
 
             case EGameState.InGame:

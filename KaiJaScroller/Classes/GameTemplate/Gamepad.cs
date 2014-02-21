@@ -60,6 +60,8 @@ public class Gamepad
 
         for (uint i = 0; i < oldButtons.Length; i++)
             currentButtons[i] = Joystick.IsButtonPressed(0, i);
+
+
     }
     
     public bool isClicked(uint button)

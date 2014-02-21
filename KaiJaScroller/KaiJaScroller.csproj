@@ -98,11 +98,15 @@
     <Compile Include="Classes\Tiled\TiledMap.cs" />
     <Compile Include="Classes\Tiled\TiledPicture.cs" />
     <Compile Include="Classes\Tiled\TiledRectangle.cs" />
+    <Compile Include="Gamestates\MainMenu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Content\Gargoyles.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\testLevel.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
