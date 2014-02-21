@@ -79,6 +79,8 @@
     <Compile Include="Classes\GameTemplate\KeyboardReader.cs" />
     <Compile Include="Classes\GameTemplate\IGameState.cs" />
     <Compile Include="Classes\Statics\Settings.cs" />
+    <Compile Include="Classes\Tiled\TiledMap.cs" />
+    <Compile Include="Classes\Tiled\TiledRectangle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
