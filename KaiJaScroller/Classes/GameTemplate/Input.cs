@@ -44,20 +44,14 @@ public class Input
 
         //update every Key that is needed:
         foreach (Keyboard.Key key in usedKeys)
-            if (Keyboard.IsKeyPressed(key))
-                currentKeys[(int)key] = true;
-            else
-                currentKeys[(int)key] = false;
+            currentKeys[(int)key] = Keyboard.IsKeyPressed(key);
 
         for (int i = 0; i < oldMouse.Length; i++)
             oldMouse[i] = currentMouse[i];
 
         //update every mouseKey:
         for (int i = 0; i < oldMouse.Length; i++)
-            if (Mouse.IsButtonPressed((Mouse.Button)i))
-                currentMouse[i] = true;
-            else
-                currentMouse[i] = false;   
+            currentMouse[i] = Mouse.IsButtonPressed((Mouse.Button)i);
 
 
     }
