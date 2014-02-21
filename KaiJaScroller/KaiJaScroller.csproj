@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\BoundingBox.cs" />
     <Compile Include="Classes\ComponentCollection\Physics\SimplePhysic.cs" />
     <Compile Include="Classes\Components\ABrain.cs" />
     <Compile Include="Classes\Components\CombatComponent.cs" />

@@ -15,7 +15,8 @@ public class InGame : IGameState
     Sprite[, ,] sprites;
     Gamepad pad = new Gamepad();
 
-    public FloatRect[] collisionRects;
+
+    public BoundingBox[] collisionRects;
 
     View view;
 
@@ -25,7 +26,7 @@ public class InGame : IGameState
                                     new PlayerBrain(), 
                                     new SimplePhysic());
 
-        this.player.boundingBox = new FloatRect(0, 0, 32, 32);
+        this.player.boundingBox = new BoundingBox(0, 0, 32, 32);
 
         List<Keyboard.Key> keys = new List<Keyboard.Key>();
         keys.Add(Keyboard.Key.W);
@@ -83,15 +84,17 @@ public class InGame : IGameState
      
 
         window.Clear(Game.CornflowerBlue);
+
         foreach (Sprite s in sprites)
             window.Draw(s);
 
+        if (Settings.drawBoundings)
+            foreach (BoundingBox bb in collisionRects)
+                bb.draw(window);
 
         this.player.draw(gameTime, window);
 
 
-
-      //  Help.drawRectangle(boundingBox, window);
     }
 
     //TODO: remove to better place:
@@ -103,12 +106,12 @@ public class InGame : IGameState
         Texture texture = new Texture("Content/" + map.getTileSetName() + ".png");
         sprites = new Sprite[ids.GetLength(0), ids.GetLength(1), ids.GetLength(2)];
 
-        collisionRects = new FloatRect[map.rectangles.Count];
+        collisionRects = new BoundingBox[map.rectangles.Count];
 
         for (int i = 0; i < collisionRects.Length; i++)
         {
             TiledMap.TiledRectangle r = map.rectangles[i];
-            collisionRects[i] = new FloatRect(r.x, r.y, r.width, r.height);
+            collisionRects[i] = new BoundingBox(r.x, r.y, r.width, r.height);
         }
 
         for (int z = 0; z < ids.GetLength(2); z++)

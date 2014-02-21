@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 public static class Help
 {
-    
+    public static Color boundingBoxColor = new Color(255, 0, 0, 127);
 
     public const uint A = 0;
     public const uint B = 1;
@@ -22,15 +22,14 @@ public static class Help
     public const uint LS = 8;
     public const uint RS = 9;
 
-    public static void drawRectangle(FloatRect fRect, RenderTarget target)
+    public static void swap<T>(ref T lhs, ref T rhs)
     {
-        RectangleShape shape = new RectangleShape(new Vector2f(fRect.Width, fRect.Height));
-        shape.Position = new Vector2f(fRect.Left, fRect.Top);
-
-        //transparent red:
-        shape.FillColor = new Color(255, 0, 0, 127);
-
-        target.Draw(shape);
+        T temp;
+        temp = lhs;
+        lhs = rhs;
+        rhs = temp;
     }
+
+
 }
 
