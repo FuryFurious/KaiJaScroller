@@ -12,6 +12,7 @@ public class InGame : IGameState
     public static Input input;
 
     Entity player;
+    Gamepad pad = new Gamepad();
 
     public InGame()
     {
@@ -36,6 +37,7 @@ public class InGame : IGameState
     public EGameState update(GameTime gameTime)
     {
         input.update();
+        pad.update();
         this.player.update(gameTime);
 
         return EGameState.InGame;
