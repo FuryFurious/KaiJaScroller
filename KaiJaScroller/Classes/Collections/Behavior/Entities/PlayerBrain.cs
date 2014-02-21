@@ -27,7 +27,7 @@ public class PlayerBrain : ABehavior
             this.entity.moveHorz(speed);
         }
 
-        if (InGame.input.isClicked(Keyboard.Key.E))
+        if (InGame.input.isClicked(Keyboard.Key.E) || InGame.pad.isClicked(Help.X))
         {
 
             Entity bull = new Entity(   new Sprite(Assets.fireballTexture), 

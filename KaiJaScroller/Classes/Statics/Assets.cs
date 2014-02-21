@@ -12,5 +12,6 @@ public static class Assets
     public static Texture impTexture = new Texture("Content/impSide.png");
     public static Texture golemTexture = new Texture("Content/golemSide.png");
     public static Texture fireballTexture = new Texture("Content/fireball.png");
+    public static Font font1 = new Font("Content/Gargoyles.ttf");
 
 }
