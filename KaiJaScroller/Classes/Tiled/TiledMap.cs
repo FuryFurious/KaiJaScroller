@@ -117,13 +117,15 @@ namespace TiledMap
                                         currentPic.type = reader.Value;
 
                                         reader.MoveToNextAttribute();
+                                        currentPic.id = int.Parse(reader.Value);
+
+                                        reader.MoveToNextAttribute();
                                         currentPic.x = float.Parse(reader.Value);
 
                                         reader.MoveToNextAttribute();
                                         currentPic.y = float.Parse(reader.Value);
 
-                                        reader.MoveToNextAttribute();
-                                        currentPic.id = int.Parse(reader.Value);
+                                       
 
 
 
@@ -215,6 +217,9 @@ namespace TiledMap
         //    map.convertTilesToIntArray();
             map.tileIds = map.convertTilesToIntArray();
 
+            foreach (TiledPicture pic in map.pictures)
+                Console.WriteLine(pic.ToString());
+
             return map;
         }
 
@@ -246,6 +251,7 @@ namespace TiledMap
             {
                 Console.WriteLine(frect.ToString());
             }
+            
         }
 
         private int[,,] convertTilesToIntArray()

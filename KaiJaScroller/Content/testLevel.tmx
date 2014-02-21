@@ -67,5 +67,6 @@
   <object type="Collision" x="384" y="256" width="16" height="32"/>
   <object type="Collision" x="480" y="256" width="16" height="32"/>
   <object type="Picture" gid="2" x="404" y="157"/>
+  <object type="Picture" gid="2" x="534" y="195"/>
  </objectgroup>
 </map>
