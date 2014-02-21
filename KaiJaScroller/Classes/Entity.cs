@@ -12,25 +12,26 @@ public class Entity
     Sprite sprite;
 
     //update/think Component:
-    ABrain brain;
+    ABehavior behavior;
 
     //physicComponent
     APhysicComponent physic;
 
 
+    public bool exists = true;
 
     public BoundingBox boundingBox;
     public Vector2f position;
 
-    InGame ingame;
+    public InGame ingame;
 
 
-    public Entity(Sprite s, ABrain b, APhysicComponent p)
+    public Entity(Sprite s, ABehavior b, APhysicComponent p)
     {
         this.sprite = s;
-        this.brain = b;
 
-        this.brain.setEntity(this);
+        this.behavior = b;
+        this.behavior.setEntity(this);
 
         this.physic = p;
         this.physic.setEntity(this);
@@ -40,8 +41,8 @@ public class Entity
     public void update(GameTime gameTime, InGame ingame)
     {
         this.ingame = ingame;
-        physic.update(gameTime, ingame);
-        brain.think(gameTime);
+        physic.update(gameTime);
+        behavior.update(gameTime);
 
         //TODO: combatComponent update later
 
@@ -135,13 +136,13 @@ public class Entity
         this.sprite = s;
     }
 
-    public void setBrain(ABrain b)
+    public void setBrain(ABehavior b)
     {
-        this.brain = b;
-        this.brain.setEntity(this);
+        this.behavior = b;
+        this.behavior.setEntity(this);
     }
 
-    public void setPhysics(APhysicComponent physics)
+    public void setPhysics(APhysicComponent physic)
     {
         this.physic = physic;
         this.physic.setEntity(this);

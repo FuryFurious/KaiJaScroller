@@ -70,17 +70,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Collections\Actions\NoAction.cs" />
     <Compile Include="Classes\Collections\Actions\PlayerJump.cs" />
     <Compile Include="Classes\Collections\Actions\RandomJump.cs" />
     <Compile Include="Classes\BoundingBox.cs" />
-    <Compile Include="Classes\Collections\Brains\RandomBrain.cs" />
+    <Compile Include="Classes\Collections\Behavior\Entities\RandomBrain.cs" />
+    <Compile Include="Classes\Collections\Behavior\Projectiles\SimpleBullet.cs" />
+    <Compile Include="Classes\Collections\Physics\NoPhysics.cs" />
     <Compile Include="Classes\Collections\Physics\SimplePhysic.cs" />
-    <Compile Include="Classes\InterfacesAbstracts\ABrain.cs" />
+    <Compile Include="Classes\InterfacesAbstracts\ABehavior.cs" />
     <Compile Include="Classes\Entity.cs" />
     <Compile Include="Classes\GameTemplate\Gamepad.cs" />
     <Compile Include="Classes\InterfacesAbstracts\IAction.cs" />
     <Compile Include="Classes\InGame.cs" />
-    <Compile Include="Classes\Collections\Brains\PlayerBrain.cs" />
+    <Compile Include="Classes\Collections\Behavior\Entities\PlayerBrain.cs" />
     <Compile Include="Classes\Statics\Assets.cs" />
     <Compile Include="Classes\Statics\Enums.cs" />
     <Compile Include="Classes\GameStateManager.cs" />

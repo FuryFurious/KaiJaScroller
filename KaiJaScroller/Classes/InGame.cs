@@ -14,15 +14,13 @@ public class InGame : IGameState
 
     public BoundingBox[] collisionRects;
 
-    Entity player;
-    Sprite[, ,] sprites;
-
-
-    Entity enemy1;
-
+    public Entity player;
+    public List<Entity> bullets = new List<Entity>();
+    public List<Entity> enemies = new List<Entity>();
 
 
     View view;
+    Sprite[, ,] sprites;
 
     public InGame()
     {
@@ -32,16 +30,24 @@ public class InGame : IGameState
 
         this.player.boundingBox = new BoundingBox(0, 0, 32, 32);
 
- 
-        this.enemy1 = new Entity(new Sprite(Assets.impTexture), new RandomBrain(), new SimplePhysic(new RandomJump()));
-        this.enemy1.boundingBox = new BoundingBox(0, 0, 32, 32);
-        this.enemy1.setPosition(240, 50);
+
+        Entity enemy1;
+        enemy1 = new Entity(   new Sprite(Assets.impTexture), 
+                                    new RandomBrain(), 
+                                    new SimplePhysic(new RandomJump()));
+
+        enemy1.boundingBox = new BoundingBox(0, 0, 32, 32);
+        enemy1.setPosition(240, 50);
+
+        enemies.Add(enemy1);
 
         List<Keyboard.Key> keys = new List<Keyboard.Key>();
         keys.Add(Keyboard.Key.W);
         keys.Add(Keyboard.Key.A);
         keys.Add(Keyboard.Key.S);
         keys.Add(Keyboard.Key.D);
+        keys.Add(Keyboard.Key.E);
+        keys.Add(Keyboard.Key.Q);
         keys.Add(Keyboard.Key.Escape);
         keys.Add(Keyboard.Key.Space);
 
@@ -59,13 +65,39 @@ public class InGame : IGameState
 
     public EGameState update(GameTime gameTime)
     {
-     
-
         input.update();
         pad.update();
 
+        for (int i = 0; i < bullets.Count; i++)
+        {
+            bullets[i].update(gameTime, this);
+
+            foreach (Entity e in enemies)
+            {
+                if (bullets[i].boundingBox.intersects(e.boundingBox))
+                {
+                    e.exists = false;
+                    bullets[i].exists = false;
+                    break;
+                }
+            }
+
+            if (!bullets[i].exists)
+                this.bullets.Remove(bullets[i]);
+        }
+
+
         this.player.update(gameTime, this);
-        this.enemy1.update(gameTime, this);
+
+
+
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            enemies[i].update(gameTime, this);
+
+            if (!enemies[i].exists)
+                this.enemies.Remove(enemies[i]);
+        }
 
         return EGameState.InGame;
     }
@@ -99,12 +131,17 @@ public class InGame : IGameState
             if(s != null)
                 window.Draw(s);
 
+        foreach (Entity e in bullets)
+            e.draw(gameTime, window);
+
+        foreach (Entity e in enemies)
+            e.draw(gameTime, window);
+
         if (Settings.drawBoundings)
             foreach (BoundingBox bb in collisionRects)
                 bb.draw(window);
 
         this.player.draw(gameTime, window);
-        this.enemy1.draw(gameTime, window);
 
 
     }

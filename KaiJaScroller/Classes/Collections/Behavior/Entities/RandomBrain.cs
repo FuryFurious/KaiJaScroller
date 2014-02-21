@@ -6,15 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class RandomBrain : ABrain
+public class RandomBrain : ABehavior
 {
     double thinkCooldown = 3;
-    float speed = 3;
 
     bool left = true;
 
 
-    public override void think(GameTime gameTime)
+    public override void update(GameTime gameTime)
     {
         thinkCooldown -= gameTime.ElapsedTime.TotalSeconds;
 
@@ -29,5 +28,10 @@ public class RandomBrain : ABrain
 
         else if(this.entity.canMoveRight(3))
             this.entity.moveHorz(3);
+    }
+
+    public override void init()
+    {
+    
     }
 }

@@ -12,7 +12,6 @@ public class RandomJump : IAction
 
     public bool performed(GameTime gameTime, InGame ingame)
     {
-        Console.WriteLine(cooldown);
 
         cooldown -= gameTime.ElapsedTime.TotalSeconds;
 

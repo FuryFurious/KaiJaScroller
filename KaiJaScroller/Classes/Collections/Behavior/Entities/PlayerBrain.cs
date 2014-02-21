@@ -1,11 +1,12 @@
-﻿using SFML.Window;
+﻿using SFML.Graphics;
+using SFML.Window;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class PlayerBrain : ABrain
+public class PlayerBrain : ABehavior
 {
     float speed = 3;
 
@@ -14,7 +15,7 @@ public class PlayerBrain : ABrain
 
     }
 
-    public override void think(GameTime gameTime)
+    public override void update(GameTime gameTime)
     {
         
         if (InGame.input.isPressed(Keyboard.Key.A) && this.entity.canMoveLeft(-speed))
@@ -24,6 +25,19 @@ public class PlayerBrain : ABrain
         else if (InGame.input.isPressed(Keyboard.Key.D) && this.entity.canMoveRight(speed))
         {
             this.entity.moveHorz(speed);
+        }
+
+        if (InGame.input.isClicked(Keyboard.Key.E))
+        {
+
+            Entity bull = new Entity(   new Sprite(Assets.zombieTexture), 
+                                        new SimpleBullet(this.entity.position), 
+                                        new NoPhysics());
+
+            bull.boundingBox = new BoundingBox(this.entity.position.X, this.entity.position.Y, 32,32);
+            bull.setPosition(this.entity.position.X, this.entity.position.Y);
+
+            this.entity.ingame.bullets.Add(bull);
         }
          
         float leftX = InGame.pad.getLeftX();
@@ -45,5 +59,10 @@ public class PlayerBrain : ABrain
             else if (xHelp < 0 && this.entity.canMoveLeft(xHelp))
                 this.entity.moveHorz(xHelp);
         }
+    }
+
+    public override void init()
+    {
+        
     }
 }

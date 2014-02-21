@@ -21,7 +21,7 @@ public class SimplePhysic : APhysicComponent
         this.jumpPerformance = jumpPerformance;
     }
 
-    public override void update(GameTime gameTime, InGame ingame)
+    public override void update(GameTime gameTime)
     {
 
         //standing:
@@ -34,7 +34,7 @@ public class SimplePhysic : APhysicComponent
 
             bool willFall = true;
 
-            foreach (BoundingBox bb in ingame.collisionRects)
+            foreach (BoundingBox bb in this.entity.ingame.collisionRects)
             {
                 if (bb.intersectsHorzLine(boundingBoxBottomY + 1, boundingBoxBottomX1, boundingBoxBottomX2))
                 {
@@ -50,7 +50,7 @@ public class SimplePhysic : APhysicComponent
                 isFalling = true;
             }
 
-            if (jumpPerformance.performed(gameTime,ingame))
+            if (jumpPerformance.performed(gameTime,this.entity.ingame))
             {
                 resetPhysics();
                 isFalling = true;
@@ -73,7 +73,7 @@ public class SimplePhysic : APhysicComponent
                 float x0 = this.entity.boundingBox.Left;
                 float x1 = this.entity.boundingBox.Right;
 
-                foreach (BoundingBox bb in ingame.collisionRects)
+                foreach (BoundingBox bb in this.entity.ingame.collisionRects)
                     if (bb.intersectsHorzLine(y, x0, x1))
                     {
                         resetPhysics();
@@ -91,7 +91,7 @@ public class SimplePhysic : APhysicComponent
                 float x0 = this.entity.boundingBox.Left;
                 float x1 = this.entity.boundingBox.Right;
 
-                foreach (BoundingBox bb in ingame.collisionRects)
+                foreach (BoundingBox bb in this.entity.ingame.collisionRects)
                     if (bb.intersectsHorzLine(y, x0, x1))
                     {
                         resetPhysics();
