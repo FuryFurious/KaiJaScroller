@@ -18,6 +18,7 @@ public class Entity
     APhysicComponent physic;
 
 
+
     public bool exists = true;
 
     public BoundingBox boundingBox;
@@ -29,21 +30,11 @@ public class Entity
     public int hitpoints = 1;
 
     public double inviTime = Settings.INVITIME;
-
+    public EDirection direction = EDirection.Left;
 
     public Entity()
     {
-    }
 
-    public Entity(Sprite s, ABehavior b, APhysicComponent p)
-    {
-        this.sprite = s;
-
-        this.behavior = b;
-        this.behavior.setEntity(this);
-
-        this.physic = p;
-        this.physic.setEntity(this);
     }
 
 
@@ -53,13 +44,10 @@ public class Entity
         physic.update(gameTime);
         behavior.update(gameTime);
 
-        //TODO: combatComponent update later
 
-
-        //updates boundingBoxes and sprites:
         this.sprite.Position = position;
-        boundingBox.X = position.X;
-        boundingBox.Y = position.Y;
+        boundingBox.X = position.X + boundingBox.offsetX;
+        boundingBox.Y = position.Y + boundingBox.offsetY;
     }
 
     public void draw(GameTime gameTime, RenderTarget target)
@@ -72,6 +60,16 @@ public class Entity
 
     public void moveHorz(float x)
     {
+        if (x < 0)
+        {
+            this.direction = EDirection.Left;
+            this.sprite.TextureRect = new IntRect(0, 0, this.sprite.TextureRect.Width, this.sprite.TextureRect.Height);
+        }
+        else if (x > 0)
+        {
+            this.direction = EDirection.Right;
+            this.sprite.TextureRect = new IntRect(this.sprite.TextureRect.Width, 0, this.sprite.TextureRect.Width, this.sprite.TextureRect.Height);
+        }
         this.position += new Vector2f(x, 0);
     }
 
@@ -106,7 +104,7 @@ public class Entity
         return true;
     }
 
-    //TODO maybe remove +- 1 in verMovement:
+    //TODO maybe remove +- 1 in verMovement, written for offsetting stuff, maybe its not good!
     public bool canMoveDown(float dy)
     {
         float y = this.boundingBox.Bottom + dy;
@@ -158,6 +156,11 @@ public class Entity
     {
         this.physic = physic;
         this.physic.setEntity(this);
+    }
+
+    public void onKill()
+    {
+        behavior.onKill();
     }
 
 }

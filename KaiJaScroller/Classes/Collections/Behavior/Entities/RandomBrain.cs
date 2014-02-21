@@ -10,7 +10,7 @@ public class RandomBrain : ABehavior
 {
     double thinkCooldown = 3;
 
-    bool left = true;
+    bool moveLeft = true;
 
 
     public override void update(GameTime gameTime)
@@ -19,15 +19,20 @@ public class RandomBrain : ABehavior
 
         if (thinkCooldown <= 0)
         {
-            left = Help.random.NextDouble() < 0.5;
+            moveLeft = Help.random.NextDouble() < 0.5;
             thinkCooldown = 5;
         }
 
-        if (left && this.entity.canMoveLeft(-3))
+        if (moveLeft && this.entity.canMoveLeft(-3))
             this.entity.moveHorz(-3);
 
-        else if(this.entity.canMoveRight(3))
+        else if(!moveLeft && this.entity.canMoveRight(3))
             this.entity.moveHorz(3);
+    }
+
+    public override void onKill()
+    {
+
     }
 
 }

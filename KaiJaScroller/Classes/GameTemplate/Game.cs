@@ -18,9 +18,6 @@ public abstract class Game
 
     public Game(int width, int height, String title, Styles style)
     {
-        foreach (VideoMode m in VideoMode.FullscreenModes)
-            Console.WriteLine(m);
-
         window = new RenderWindow(new VideoMode((uint)width, (uint)height), title, style);
         
         window.SetMouseCursorVisible(true);

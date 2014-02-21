@@ -16,14 +16,11 @@ public class RandomJump : IAction
         cooldown -= gameTime.ElapsedTime.TotalSeconds;
 
         if (cooldown <= 0)
-        {
             if (Help.random.NextDouble() < 0.5)
             {
-                cooldown = 5;
+                cooldown = 4;
                 return true;
             }
-           
-        }
 
         return false;
     }

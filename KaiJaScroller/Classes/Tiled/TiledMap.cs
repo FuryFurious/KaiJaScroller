@@ -23,13 +23,14 @@ namespace TiledMap
         int[, ,] tileIds;
 
         List<String> layers = new List<String>();
+
         public List<TiledRectangle> rectangles = new List<TiledRectangle>();
+
         public List<TiledPicture> pictures = new List<TiledPicture>();
 
         Stack<String> lastElement = new Stack<String>();
         int numLayers = -1;
 
-        //TODO: add possibility to read objects such as images
 
         private TiledMapInfo()
         {
@@ -125,12 +126,28 @@ namespace TiledMap
                                         reader.MoveToNextAttribute();
                                         currentPic.y = float.Parse(reader.Value);
 
-                                       
-
-
-
                                         map.pictures.Add(currentPic);
                                     }
+                                    else if (reader.Value.Equals("PlayerSpawn"))
+                                    {
+                                        TiledRectangle currentRect = new TiledRectangle();
+                                        currentRect.type = reader.Value;
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.x = float.Parse(reader.Value);
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.y = float.Parse(reader.Value);
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.width = float.Parse(reader.Value);
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.height = float.Parse(reader.Value);
+
+                                        map.rectangles.Add(currentRect);
+                                    }
+
 
                                     //else if() Other objects here!
                                 }
