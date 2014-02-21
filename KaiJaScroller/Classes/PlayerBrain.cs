@@ -20,12 +20,12 @@ public class PlayerBrain : ABrain
         {
             this.entity.move(0, -speed);
         }
-        else if (InGame.input.isPressed(Keyboard.Key.A))
+        else if (InGame.input.isPressed(Keyboard.Key.S))
         {
             this.entity.move(0, speed);
         }
 
-        if (InGame.input.isPressed(Keyboard.Key.S))
+        if (InGame.input.isPressed(Keyboard.Key.A))
         {
             this.entity.move(-speed, 0);
         }

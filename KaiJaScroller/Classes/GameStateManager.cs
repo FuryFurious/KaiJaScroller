@@ -31,7 +31,8 @@ class GameStateManager : Game
 
     public override void draw(GameTime gameTime, RenderWindow window)
     {
-        window.Clear(CornflowerBlue);
+
+        gameState.draw(gameTime, window);
     }
 
     private void handleNewGameState()

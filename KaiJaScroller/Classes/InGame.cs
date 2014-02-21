@@ -15,7 +15,7 @@ public class InGame : IGameState
 
     public InGame()
     {
-        this.player = new Entity(new Sprite(), null);
+        this.player = new Entity(new Sprite(Assets.zombieTexture), new PlayerBrain());
 
         List<Keyboard.Key> keys = new List<Keyboard.Key>();
         keys.Add(Keyboard.Key.W);
@@ -43,6 +43,8 @@ public class InGame : IGameState
 
     public void draw(GameTime gameTime, RenderWindow window)
     {
+        window.Clear(Game.CornflowerBlue);
+
         this.player.draw(gameTime, window);
     }
 }
