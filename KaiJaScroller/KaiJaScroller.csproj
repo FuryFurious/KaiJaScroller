@@ -70,7 +70,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ABrain.cs" />
+    <Compile Include="Classes\Entity.cs" />
     <Compile Include="Classes\InGame.cs" />
+    <Compile Include="Classes\PlayerBrain.cs" />
     <Compile Include="Classes\Statics\Enums.cs" />
     <Compile Include="Classes\GameStateManager.cs" />
     <Compile Include="Classes\GameTemplate\Game.cs" />
