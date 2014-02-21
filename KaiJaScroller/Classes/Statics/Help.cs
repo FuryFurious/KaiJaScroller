@@ -11,6 +11,8 @@ public static class Help
 {
     public static Color boundingBoxColor = new Color(255, 0, 0, 127);
 
+    public static Random random = new Random();
+
     public const uint A = 0;
     public const uint B = 1;
     public const uint X = 2;

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public abstract class PhysicComponent
+public abstract class APhysicComponent
 {
     protected Entity entity;
 

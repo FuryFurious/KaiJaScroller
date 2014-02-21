@@ -8,18 +8,15 @@ using System.Threading.Tasks;
 
 public class Gamepad
 {
-    
-    
-
     bool[] oldButtons;
     bool[] currentButtons;
 
-    
-
     Vector2f oldStickLeftPos;
     Vector2f currentStickLeftPos;
+
     Vector2f oldStickRightPos;
     Vector2f currentStickRightPos;
+
     float oldTriggerPos;
     float currentTriggerPos;
 
