@@ -17,7 +17,11 @@ public static class Settings
     public static Styles windowStyles = Styles.Default;
 
     //________________________OTHER STUFF__________________________//
-    public static bool drawBoundings = true;
+    public static bool drawBoundings = false;
+
+
+
+    public static double INVITIME = 0.2;
 
 
 }

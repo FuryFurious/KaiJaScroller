@@ -15,6 +15,7 @@ public class InGame : IGameState
     public BoundingBox[] collisionRects;
 
     public Entity player;
+
     public List<Entity> bullets = new List<Entity>();
     public List<Entity> enemies = new List<Entity>();
 
@@ -33,11 +34,13 @@ public class InGame : IGameState
 
         Entity enemy1;
         enemy1 = new Entity(   new Sprite(Assets.impTexture), 
-                                    new RandomBrain(), 
+                                    new NoBrain(), 
                                     new SimplePhysic(new RandomJump()));
 
+        enemy1.damage = 1;
+        enemy1.hitpoints = int.MaxValue;
         enemy1.boundingBox = new BoundingBox(0, 0, 32, 32);
-        enemy1.setPosition(240, 50);
+        enemy1.position = new Vector2f(240, 50);
 
         enemies.Add(enemy1);
 
@@ -48,6 +51,7 @@ public class InGame : IGameState
         keys.Add(Keyboard.Key.D);
         keys.Add(Keyboard.Key.E);
         keys.Add(Keyboard.Key.Q);
+        keys.Add(Keyboard.Key.F1);
         keys.Add(Keyboard.Key.Escape);
         keys.Add(Keyboard.Key.Space);
 
@@ -68,32 +72,65 @@ public class InGame : IGameState
         input.update();
         pad.update();
 
+        if (input.isClicked(Keyboard.Key.F1))
+            Settings.drawBoundings = !Settings.drawBoundings;
+
+
+      //  for (int i = 0; i < combatText.Count; i++)
+        {
+
+        }
+
         for (int i = 0; i < bullets.Count; i++)
         {
             bullets[i].update(gameTime, this);
 
             foreach (Entity e in enemies)
             {
-                if (bullets[i].boundingBox.intersects(e.boundingBox))
+                if (e.inviTime <= 0 && bullets[i].boundingBox.intersects(e.boundingBox))
                 {
-                    e.exists = false;
-                    bullets[i].exists = false;
-                    break;
+                    bullets[i].hitpoints--;
+
+                    e.hitpoints -= bullets[i].damage;
+                    e.inviTime = Settings.INVITIME;
+
+                    if (bullets[i].hitpoints <= 0)
+                    {
+                        bullets[i].exists = false;
+                        break;
+                    }
+
                 }
             }
 
             if (!bullets[i].exists)
-                this.bullets.Remove(bullets[i]);
+            {
+                this.bullets.Remove(bullets[i]); 
+                i--;
+            }
         }
 
 
         this.player.update(gameTime, this);
 
-
+        if(player.inviTime > 0)
+            this.player.inviTime -= gameTime.ElapsedTime.TotalSeconds;
 
         for (int i = 0; i < enemies.Count; i++)
         {
             enemies[i].update(gameTime, this);
+
+            if(enemies[i].inviTime > 0)
+                enemies[i].inviTime -= gameTime.ElapsedTime.TotalSeconds;
+
+            if (player.inviTime <= 0 && enemies[i].boundingBox.intersects(player.boundingBox))
+            {
+                player.inviTime = Settings.INVITIME;
+                player.hitpoints -= enemies[i].damage;
+            }
+
+            if (enemies[i].hitpoints <= 0)
+                enemies[i].exists = false;
 
             if (!enemies[i].exists)
                 this.enemies.Remove(enemies[i]);

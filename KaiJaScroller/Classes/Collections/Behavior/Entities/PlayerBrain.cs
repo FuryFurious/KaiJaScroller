@@ -30,12 +30,13 @@ public class PlayerBrain : ABehavior
         if (InGame.input.isClicked(Keyboard.Key.E))
         {
 
-            Entity bull = new Entity(   new Sprite(Assets.zombieTexture), 
-                                        new SimpleBullet(this.entity.position), 
+            Entity bull = new Entity(   new Sprite(Assets.fireballTexture), 
+                                        new SimpleBullet(), 
                                         new NoPhysics());
-
-            bull.boundingBox = new BoundingBox(this.entity.position.X, this.entity.position.Y, 32,32);
+            bull.damage = 99;
+            bull.boundingBox = new BoundingBox(this.entity.position.X, this.entity.position.Y, 32, 32);
             bull.setPosition(this.entity.position.X, this.entity.position.Y);
+            
 
             this.entity.ingame.bullets.Add(bull);
         }
@@ -43,7 +44,7 @@ public class PlayerBrain : ABehavior
         float leftX = InGame.pad.getLeftX();
         
         if (leftX > 0)
-            leftX = ((Help.Clamp(leftX, 5, 95) - 5.0f )/90.0f);
+            leftX = ((Help.Clamp(leftX, 5, 95) - 5.0f ) / 90.0f);
 
         else if (leftX < 0)
             leftX = ((Help.Clamp(leftX, -95, -5) + 5.0f) / 90.0f);
@@ -61,8 +62,4 @@ public class PlayerBrain : ABehavior
         }
     }
 
-    public override void init()
-    {
-        
-    }
 }

@@ -74,10 +74,12 @@
     <Compile Include="Classes\Collections\Actions\PlayerJump.cs" />
     <Compile Include="Classes\Collections\Actions\RandomJump.cs" />
     <Compile Include="Classes\BoundingBox.cs" />
+    <Compile Include="Classes\Collections\Behavior\Entities\NoBrain.cs" />
     <Compile Include="Classes\Collections\Behavior\Entities\RandomBrain.cs" />
     <Compile Include="Classes\Collections\Behavior\Projectiles\SimpleBullet.cs" />
     <Compile Include="Classes\Collections\Physics\NoPhysics.cs" />
     <Compile Include="Classes\Collections\Physics\SimplePhysic.cs" />
+    <Compile Include="Classes\CombatText.cs" />
     <Compile Include="Classes\InterfacesAbstracts\ABehavior.cs" />
     <Compile Include="Classes\Entity.cs" />
     <Compile Include="Classes\GameTemplate\Gamepad.cs" />
@@ -108,6 +110,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\fireball.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\golemSide.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -19,7 +19,7 @@ public abstract class Game
     public Game(int width, int height, String title, Styles style)
     {
         window = new RenderWindow(new VideoMode((uint)width, (uint)height), title, style);
-
+        
         window.SetMouseCursorVisible(true);
 
         window.Closed += closeHandler;

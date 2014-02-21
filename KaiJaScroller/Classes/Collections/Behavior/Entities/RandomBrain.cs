@@ -30,8 +30,4 @@ public class RandomBrain : ABehavior
             this.entity.moveHorz(3);
     }
 
-    public override void init()
-    {
-    
-    }
 }

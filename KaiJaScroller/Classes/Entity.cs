@@ -25,6 +25,15 @@ public class Entity
 
     public InGame ingame;
 
+    public int damage = 0;
+    public int hitpoints = 1;
+
+    public double inviTime = Settings.INVITIME;
+
+
+    public Entity()
+    {
+    }
 
     public Entity(Sprite s, ABehavior b, APhysicComponent p)
     {
@@ -57,7 +66,8 @@ public class Entity
     {
         target.Draw(sprite);
 
-        boundingBox.draw(target);
+        if(Settings.drawBoundings)
+            boundingBox.draw(target);
     }
 
     public void moveHorz(float x)
@@ -125,11 +135,13 @@ public class Entity
     }
 
 
-
     public void setPosition(float x, float y)
     {
         this.position = new Vector2f(x, y);
+        this.sprite.Position = this.position;
     }
+
+
 
     public void setSprite(Sprite s)
     {

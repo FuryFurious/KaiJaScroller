@@ -10,26 +10,36 @@ public class SimpleBullet : ABehavior
 {
     public double lifeTime = 5;
     public float speed = 3;
-    private Vector2f startPos;
 
-    public SimpleBullet(Vector2f start)
+    public SimpleBullet()
     {
-       this.startPos = start;
     }
 
     public override void update(GameTime gameTime)
     {
         lifeTime -= gameTime.ElapsedTime.TotalSeconds;
 
-        this.entity.position += new Vector2f(speed, 0);
+
+        if (speed > 0)
+        {
+            if (this.entity.canMoveRight(speed))
+                this.entity.position += new Vector2f(speed, 0);
+            else
+                this.entity.exists = false;
+        }
+
+        else if (speed < 0)
+        {
+            if (this.entity.canMoveLeft(speed))
+                this.entity.position += new Vector2f(speed, 0);
+            else
+                this.entity.exists = false;
+        }
+   
 
         if (lifeTime <= 0)
             this.entity.exists = false;
     }
 
-    public override void init()
-    {
-        this.entity.position = startPos;
-    }
 }
 
