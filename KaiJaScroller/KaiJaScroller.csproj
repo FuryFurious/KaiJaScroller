@@ -70,11 +70,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ABrain.cs" />
+    <Compile Include="Classes\ComponentCollection\Physics\SimplePhysic.cs" />
+    <Compile Include="Classes\Components\ABrain.cs" />
+    <Compile Include="Classes\Components\CombatComponent.cs" />
     <Compile Include="Classes\Entity.cs" />
     <Compile Include="Classes\GameTemplate\Gamepad.cs" />
     <Compile Include="Classes\InGame.cs" />
-    <Compile Include="Classes\PlayerBrain.cs" />
+    <Compile Include="Classes\ComponentCollection\Brains\PlayerBrain.cs" />
     <Compile Include="Classes\Statics\Assets.cs" />
     <Compile Include="Classes\Statics\Enums.cs" />
     <Compile Include="Classes\GameStateManager.cs" />
@@ -83,7 +85,9 @@
     <Compile Include="Classes\GameTemplate\Input.cs" />
     <Compile Include="Classes\GameTemplate\KeyboardReader.cs" />
     <Compile Include="Classes\GameTemplate\IGameState.cs" />
+    <Compile Include="Classes\Statics\Help.cs" />
     <Compile Include="Classes\Statics\Settings.cs" />
+    <Compile Include="Classes\Components\PhysicComponent.cs" />
     <Compile Include="Classes\Tiled\TiledMap.cs" />
     <Compile Include="Classes\Tiled\TiledRectangle.cs" />
     <Compile Include="Program.cs" />
@@ -112,6 +116,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
