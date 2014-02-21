@@ -70,14 +70,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Collections\Actions\PlayerJump.cs" />
+    <Compile Include="Classes\Collections\Actions\RandomJump.cs" />
     <Compile Include="Classes\BoundingBox.cs" />
-    <Compile Include="Classes\ComponentCollection\Physics\SimplePhysic.cs" />
-    <Compile Include="Classes\Components\ABrain.cs" />
-    <Compile Include="Classes\Components\CombatComponent.cs" />
+    <Compile Include="Classes\Collections\Brains\RandomBrain.cs" />
+    <Compile Include="Classes\Collections\Physics\SimplePhysic.cs" />
+    <Compile Include="Classes\InterfacesAbstracts\ABrain.cs" />
     <Compile Include="Classes\Entity.cs" />
     <Compile Include="Classes\GameTemplate\Gamepad.cs" />
+    <Compile Include="Classes\InterfacesAbstracts\IAction.cs" />
     <Compile Include="Classes\InGame.cs" />
-    <Compile Include="Classes\ComponentCollection\Brains\PlayerBrain.cs" />
+    <Compile Include="Classes\Collections\Brains\PlayerBrain.cs" />
     <Compile Include="Classes\Statics\Assets.cs" />
     <Compile Include="Classes\Statics\Enums.cs" />
     <Compile Include="Classes\GameStateManager.cs" />
@@ -88,7 +91,7 @@
     <Compile Include="Classes\GameTemplate\IGameState.cs" />
     <Compile Include="Classes\Statics\Help.cs" />
     <Compile Include="Classes\Statics\Settings.cs" />
-    <Compile Include="Classes\Components\PhysicComponent.cs" />
+    <Compile Include="Classes\InterfacesAbstracts\APhysicComponent.cs" />
     <Compile Include="Classes\Tiled\TiledMap.cs" />
     <Compile Include="Classes\Tiled\TiledRectangle.cs" />
     <Compile Include="Program.cs" />
@@ -101,10 +104,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\golemSide.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\impSide.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\wall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\zombie_front.png">
+    <Content Include="Content\zombieSide.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="csfml-audio-2.dll">

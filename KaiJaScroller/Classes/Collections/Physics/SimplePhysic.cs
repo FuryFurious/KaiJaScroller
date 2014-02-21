@@ -7,16 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class SimplePhysic : PhysicComponent
+public class SimplePhysic : APhysicComponent
 {
     bool isFalling = true;
 
     double fallTime = 0;
     float fallSpeed = 0;
 
-    public SimplePhysic()
-    {
+    IAction jumpPerformance;
 
+    public SimplePhysic(IAction jumpPerformance)
+    {
+        this.jumpPerformance = jumpPerformance;
     }
 
     public override void update(GameTime gameTime, InGame ingame)
@@ -48,7 +50,7 @@ public class SimplePhysic : PhysicComponent
                 isFalling = true;
             }
 
-            if (InGame.input.isClicked(Keyboard.Key.Space) || InGame.pad.isClicked(Help.A))
+            if (jumpPerformance.performed(gameTime,ingame))
             {
                 resetPhysics();
                 isFalling = true;

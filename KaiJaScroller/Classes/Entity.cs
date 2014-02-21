@@ -15,7 +15,7 @@ public class Entity
     ABrain brain;
 
     //physicComponent
-    PhysicComponent physic;
+    APhysicComponent physic;
 
 
 
@@ -25,7 +25,7 @@ public class Entity
     InGame ingame;
 
 
-    public Entity(Sprite s, ABrain b, PhysicComponent p)
+    public Entity(Sprite s, ABrain b, APhysicComponent p)
     {
         this.sprite = s;
         this.brain = b;
@@ -125,6 +125,11 @@ public class Entity
 
 
 
+    public void setPosition(float x, float y)
+    {
+        this.position = new Vector2f(x, y);
+    }
+
     public void setSprite(Sprite s)
     {
         this.sprite = s;
@@ -136,7 +141,11 @@ public class Entity
         this.brain.setEntity(this);
     }
 
-
+    public void setPhysics(APhysicComponent physics)
+    {
+        this.physic = physic;
+        this.physic.setEntity(this);
+    }
 
 }
 

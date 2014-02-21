@@ -10,23 +10,32 @@ using System.Threading.Tasks;
 public class InGame : IGameState
 {
     public static Input input;
+    public static Gamepad pad = new Gamepad();
+
+    public BoundingBox[] collisionRects;
 
     Entity player;
     Sprite[, ,] sprites;
-    public static Gamepad pad = new Gamepad();
 
 
-    public BoundingBox[] collisionRects;
+    Entity enemy1;
+
+
 
     View view;
 
     public InGame()
     {
-        this.player = new Entity(   new Sprite(Assets.zombieTexture), 
+        this.player = new Entity(   new Sprite(Assets.golemTexture), 
                                     new PlayerBrain(), 
-                                    new SimplePhysic());
+                                    new SimplePhysic(new PlayerJump()));
 
         this.player.boundingBox = new BoundingBox(0, 0, 32, 32);
+
+ 
+        this.enemy1 = new Entity(new Sprite(Assets.impTexture), new RandomBrain(), new SimplePhysic(new RandomJump()));
+        this.enemy1.boundingBox = new BoundingBox(0, 0, 32, 32);
+        this.enemy1.setPosition(240, 50);
 
         List<Keyboard.Key> keys = new List<Keyboard.Key>();
         keys.Add(Keyboard.Key.W);
@@ -50,18 +59,19 @@ public class InGame : IGameState
 
     public EGameState update(GameTime gameTime)
     {
+     
+
         input.update();
         pad.update();
 
         this.player.update(gameTime, this);
+        this.enemy1.update(gameTime, this);
 
         return EGameState.InGame;
     }
 
     public void draw(GameTime gameTime, RenderWindow window)
     {
-        
-
         if (input.leftPressed())
         {
             view = window.GetView();
@@ -81,7 +91,7 @@ public class InGame : IGameState
             view.Zoom(0.9f);
             window.SetView(view);
         }
-     
+
 
         window.Clear(Game.CornflowerBlue);
 
@@ -94,6 +104,7 @@ public class InGame : IGameState
                 bb.draw(window);
 
         this.player.draw(gameTime, window);
+        this.enemy1.draw(gameTime, window);
 
 
     }
