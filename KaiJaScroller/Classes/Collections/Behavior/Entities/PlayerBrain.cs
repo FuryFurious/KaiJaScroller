@@ -10,6 +10,9 @@ public class PlayerBrain : ABehavior
 {
     float speed = 3;
 
+    //TODO: remove cooldown from button1Action and add elsewhere better
+    IAction action1 = new Button1Action();
+
     public PlayerBrain()
     {
 
@@ -27,12 +30,20 @@ public class PlayerBrain : ABehavior
             this.entity.moveHorz(speed);
         }
 
-        if (InGame.input.isClicked(Keyboard.Key.E) || InGame.pad.isClicked(Help.X))
+        if (action1.performed(gameTime, this.entity.ingame))
         {
 
-            Entity bull = new Entity(   new Sprite(Assets.fireballTexture), 
-                                        new SimpleBullet(), 
-                                        new NoPhysics());
+            Entity bull = new Entity();//   new Sprite(Assets.fireballTexture), 
+                                        //new SimpleBullet(), 
+                                        //new NoPhysics());
+            
+            Sprite sp = new Sprite(Assets.fireballTexture);
+            sp.TextureRect = new IntRect(0, 0, 32, 32);
+
+            bull.setSprite(sp);
+            bull.setBrain(new SimpleBullet(this.entity.direction));
+            bull.setPhysics(new NoPhysics());
+
             bull.damage = 99;
             bull.boundingBox = new BoundingBox(this.entity.position.X, this.entity.position.Y, 32, 32);
             bull.setPosition(this.entity.position.X, this.entity.position.Y);
@@ -60,6 +71,11 @@ public class PlayerBrain : ABehavior
             else if (xHelp < 0 && this.entity.canMoveLeft(xHelp))
                 this.entity.moveHorz(xHelp);
         }
+    }
+
+    public override void onKill()
+    {
+
     }
 
 }

@@ -11,9 +11,20 @@ public class BoundingBox
 {
     FloatRect rectangle;
 
+    public float offsetX;
+    public float offsetY;
+
     public BoundingBox(float x, float y, float width, float height)
     {
         this.rectangle = new FloatRect(x, y, width, height);
+    }
+
+    public BoundingBox(float x, float y, float width, float height, float offsetX, float offsetY)
+    {
+        this.rectangle = new FloatRect(x, y, width, height);
+
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
     }
 
     // ______________________ GETTER AND SETTER____________________________
@@ -124,7 +135,7 @@ public class BoundingBox
         shape.Position = new Vector2f(rectangle.Left, rectangle.Top);
 
         //transparent red:
-        shape.FillColor = new Color(255, 0, 0, 127);
+        shape.FillColor = Settings.boundingBoxColor;
 
         target.Draw(shape);
     }

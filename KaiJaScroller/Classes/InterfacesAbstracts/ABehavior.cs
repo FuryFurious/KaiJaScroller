@@ -15,6 +15,7 @@ public abstract class ABehavior
         this.entity = e;
     }
 
-    //TODO: add onKill function();
     public abstract void update(GameTime gameTime);
+
+    public abstract void onKill();
 }

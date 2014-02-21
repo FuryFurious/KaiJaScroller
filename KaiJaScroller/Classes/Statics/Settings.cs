@@ -1,4 +1,5 @@
-﻿using SFML.Window;
+﻿using SFML.Graphics;
+using SFML.Window;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,17 @@ public static class Settings
 
     public static Styles windowStyles = Styles.Default;
 
-    //________________________OTHER STUFF__________________________//
-    public static bool drawBoundings = false;
+    //________________________DEBUG STUFF__________________________//
+    public static bool drawBoundings        = false;
+    public static Color boundingBoxColor    = new Color(255, 0, 0, 127);
+
+    //________________________COMBAT_______________________________//
+    public const double INVITIME = 0.4;
 
 
-
-    public static double INVITIME = 0.2;
-
-
+    //_______________________COMBAT TEXT___________________//
+    public const float COMBATTEXTSPEED  = -0.5f;
+    public const float COMBATTEXTOFFSET = 4.0f;
+    public const float COMBATTEXTSIZE   = 0.5f;
 }
 

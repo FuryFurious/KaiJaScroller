@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Collections\Actions\Button1Action.cs" />
     <Compile Include="Classes\Collections\Actions\NoAction.cs" />
     <Compile Include="Classes\Collections\Actions\PlayerJump.cs" />
     <Compile Include="Classes\Collections\Actions\RandomJump.cs" />
@@ -79,7 +80,7 @@
     <Compile Include="Classes\Collections\Behavior\Projectiles\SimpleBullet.cs" />
     <Compile Include="Classes\Collections\Physics\NoPhysics.cs" />
     <Compile Include="Classes\Collections\Physics\SimplePhysic.cs" />
-    <Compile Include="Classes\CombatText.cs" />
+    <Compile Include="Classes\DynamicText.cs" />
     <Compile Include="Classes\InterfacesAbstracts\ABehavior.cs" />
     <Compile Include="Classes\Entity.cs" />
     <Compile Include="Classes\GameTemplate\Gamepad.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Classes\InGame.cs" />
     <Compile Include="Classes\Collections\Behavior\Entities\PlayerBrain.cs" />
     <Compile Include="Classes\Statics\Assets.cs" />
+    <Compile Include="Classes\Statics\EntityLibrary.cs" />
     <Compile Include="Classes\Statics\Enums.cs" />
     <Compile Include="Classes\GameStateManager.cs" />
     <Compile Include="Classes\GameTemplate\Game.cs" />

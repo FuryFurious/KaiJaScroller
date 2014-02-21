@@ -12,32 +12,47 @@ public class InGame : IGameState
     public static Input input;
     public static Gamepad pad = new Gamepad();
 
-    public BoundingBox[] collisionRects;
+    public List<BoundingBox> collisionRects = new List<BoundingBox>();
 
     public Entity player;
 
     public List<Entity> bullets = new List<Entity>();
     public List<Entity> enemies = new List<Entity>();
 
+    public List<DynamicText> text = new List<DynamicText>();
 
     View view;
     Sprite[, ,] sprites;
 
     public InGame()
     {
-        this.player = new Entity(   new Sprite(Assets.golemTexture), 
-                                    new PlayerBrain(), 
-                                    new SimplePhysic(new PlayerJump()));
+        //   new Sprite(Assets.zombieTexture), 
+                                 //   new PlayerBrain(), 
+                                //    new SimplePhysic(new PlayerJump()));
+        this.player = new Entity();
+        this.player.setBrain(new PlayerBrain());
+        this.player.setPhysics(new SimplePhysic(new PlayerJump()));
+        this.player.boundingBox = new BoundingBox(0, 0, 16, 32);
+        this.player.boundingBox.offsetX = 8;
 
-        this.player.boundingBox = new BoundingBox(0, 0, 32, 32);
+        Sprite playerSprite = new Sprite(Assets.zombieTexture);
+        playerSprite.TextureRect = new IntRect(0, 0, 32, 32);
 
+        this.player.setSprite(playerSprite);
+        Entity player1 = EntityLibrary.getEntity(EEntityType.Player);
 
         Entity enemy1;
-        enemy1 = new Entity(   new Sprite(Assets.impTexture), 
-                                    new NoBrain(), 
-                                    new SimplePhysic(new RandomJump()));
+        enemy1 = new Entity();//   new Sprite(Assets.impTexture), 
+                                //    new NoBrain(), 
+                                  //  new SimplePhysic(new RandomJump()));
 
-        enemy1.damage = 1;
+        Sprite s = new Sprite(Assets.impTexture);
+        s.TextureRect = new IntRect(0, 0, 32, 32);
+        enemy1.setSprite(s);
+        enemy1.setBrain(new RandomBrain());
+        enemy1.setPhysics(new SimplePhysic(new NoAction()));
+
+        enemy1.damage = 42;
         enemy1.hitpoints = int.MaxValue;
         enemy1.boundingBox = new BoundingBox(0, 0, 32, 32);
         enemy1.position = new Vector2f(240, 50);
@@ -76,9 +91,15 @@ public class InGame : IGameState
             Settings.drawBoundings = !Settings.drawBoundings;
 
 
-      //  for (int i = 0; i < combatText.Count; i++)
+        for (int i = 0; i < text.Count; i++)
         {
+            text[i].update(gameTime);
 
+            if (text[i].lifeTime <= 0)
+            {
+                text.Remove(text[i]);
+                i--;
+            }
         }
 
         for (int i = 0; i < bullets.Count; i++)
@@ -90,6 +111,9 @@ public class InGame : IGameState
                 if (e.inviTime <= 0 && bullets[i].boundingBox.intersects(e.boundingBox))
                 {
                     bullets[i].hitpoints--;
+
+                    DynamicText dT = new DynamicText(e.position, "" + bullets[i].damage, 3);
+                    text.Add(dT);
 
                     e.hitpoints -= bullets[i].damage;
                     e.inviTime = Settings.INVITIME;
@@ -105,6 +129,7 @@ public class InGame : IGameState
 
             if (!bullets[i].exists)
             {
+                bullets[i].onKill();
                 this.bullets.Remove(bullets[i]); 
                 i--;
             }
@@ -120,11 +145,14 @@ public class InGame : IGameState
         {
             enemies[i].update(gameTime, this);
 
-            if(enemies[i].inviTime > 0)
+            if (enemies[i].inviTime > 0)
                 enemies[i].inviTime -= gameTime.ElapsedTime.TotalSeconds;
 
             if (player.inviTime <= 0 && enemies[i].boundingBox.intersects(player.boundingBox))
             {
+                DynamicText dT = new DynamicText(player.position, "" + enemies[i].damage, 3);
+                text.Add(dT);
+
                 player.inviTime = Settings.INVITIME;
                 player.hitpoints -= enemies[i].damage;
             }
@@ -133,7 +161,11 @@ public class InGame : IGameState
                 enemies[i].exists = false;
 
             if (!enemies[i].exists)
+            {
+                enemies[i].onKill();
                 this.enemies.Remove(enemies[i]);
+                i--;
+            }
         }
 
         return EGameState.InGame;
@@ -154,6 +186,7 @@ public class InGame : IGameState
             view.Zoom(1.1f);
             window.SetView(view);
         }
+
         else if (input.mouseWheelUp())
         {
             view = window.GetView();
@@ -180,6 +213,8 @@ public class InGame : IGameState
 
         this.player.draw(gameTime, window);
 
+        foreach (DynamicText t in text)
+            t.draw(gameTime, window);
 
     }
 
@@ -192,13 +227,21 @@ public class InGame : IGameState
         Texture texture = new Texture("Content/" + map.getTileSetName() + ".png");
         sprites = new Sprite[ids.GetLength(0), ids.GetLength(1), ids.GetLength(2)];
 
-        collisionRects = new BoundingBox[map.rectangles.Count];
 
-        for (int i = 0; i < collisionRects.Length; i++)
+        foreach (TiledMap.TiledRectangle rec in map.rectangles)
         {
-            TiledMap.TiledRectangle r = map.rectangles[i];
-            collisionRects[i] = new BoundingBox(r.x, r.y, r.width, r.height);
+
+            if (rec.type.Equals("Collision"))
+            {
+                collisionRects.Add(new BoundingBox(rec.x, rec.y, rec.width, rec.height));
+            }
+            else if (rec.type.Equals("PlayerSpawn"))
+            {
+                player.setPosition(rec.x, rec.y);
+            }
+
         }
+
 
         for (int z = 0; z < ids.GetLength(2); z++)
         {
