@@ -86,7 +86,8 @@ public class InGame : IGameState
         window.Clear(Game.CornflowerBlue);
 
         foreach (Sprite s in sprites)
-            window.Draw(s);
+            if(s != null)
+                window.Draw(s);
 
         if (Settings.drawBoundings)
             foreach (BoundingBox bb in collisionRects)

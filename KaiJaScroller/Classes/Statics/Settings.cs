@@ -17,7 +17,7 @@ public static class Settings
     public static Styles windowStyles = Styles.Default;
 
     //________________________OTHER STUFF__________________________//
-    public static bool drawBoundings = false;
+    public static bool drawBoundings = true;
 
 
 }

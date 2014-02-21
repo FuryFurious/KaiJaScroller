@@ -69,8 +69,6 @@ public class Entity
         this.position += new Vector2f(0, y);
     }
 
-
-
     public bool canMoveLeft(float dx)
     {
         float x = this.boundingBox.Left + dx;

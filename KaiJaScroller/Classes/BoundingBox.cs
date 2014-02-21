@@ -93,11 +93,11 @@ public class BoundingBox
 
         float right = this.Right;
         //x0 is inside, x1 isInside, both are outside
-        return  (y < this.Bottom && y > this.Top) 
+        return  (y <= this.Bottom && y >= this.Top) 
             && (
-                        (x0 > this.Left && x0 < right)
-                    ||  (x1 > this.Left && x1 < right)
-                    ||  (x0 < this.Left && x1 > right)  );
+                        (x0 >= this.Left && x0 <= right)
+                    ||  (x1 >= this.Left && x1 <= right)
+                    ||  (x0 <= this.Left && x1 >= right)  );
     }
 
     public bool intersectsVertLine(float x, float y0, float y1)
@@ -107,11 +107,11 @@ public class BoundingBox
 
         float bot = this.Bottom;
 
-        return (x < this.Right && x > this.Left) && 
+        return (x <= this.Right && x >= this.Left) && 
                 ( 
-                    (y0 > this.Top && y0 < bot) || 
-                    (y1 > this.Top && y1 < bot) || 
-                    (y0 > this.Top && y1 < bot));
+                    (y0 >= this.Top && y0 <= bot) || 
+                    (y1 >= this.Top && y1 <= bot) || 
+                    (y0 >= this.Top && y1 <= bot));
     }
 
 
