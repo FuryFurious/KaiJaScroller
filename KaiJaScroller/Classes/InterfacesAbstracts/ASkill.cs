@@ -18,10 +18,11 @@ public abstract class ASkill
 
     public void update(GameTime gameTime)
     {
+
         if (curCooldown > 0)
             curCooldown -= gameTime.ElapsedTime.TotalSeconds;
 
-        else if (curCooldown <= 0 && action.performed(gameTime, entity.ingame))
+        else if (curCooldown <= 0 && action.performed(gameTime, entity))
         {
             curCooldown = maxCooldown;
             onUse(gameTime);

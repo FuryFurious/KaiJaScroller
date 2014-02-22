@@ -14,6 +14,8 @@ public abstract class APhysicComponent
         this.entity = e;
     }
 
+    public abstract void init();
+
     public abstract void update(GameTime gameTime);
 }
 

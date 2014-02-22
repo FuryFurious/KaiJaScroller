@@ -18,6 +18,7 @@ public class Entity
     APhysicComponent physic;
 
 
+    public bool isFriendly = true;
 
     public bool exists = true;
 
@@ -37,6 +38,12 @@ public class Entity
 
     }
 
+    public void init()
+    {
+        behavior.init();
+        physic.init();
+    }
+
 
     public void update(GameTime gameTime, InGame ingame)
     {
@@ -44,18 +51,17 @@ public class Entity
         physic.update(gameTime);
         behavior.update(gameTime);
 
-
         this.sprite.Position = position;
         boundingBox.X = position.X + boundingBox.offsetX;
         boundingBox.Y = position.Y + boundingBox.offsetY;
     }
 
-    public void draw(GameTime gameTime, RenderTarget target)
+    public void draw(GameTime gameTime, RenderTarget[] target)
     {
-        target.Draw(sprite);
+        target[0].Draw(sprite);
 
         if(Settings.drawBoundings)
-            boundingBox.draw(target);
+            boundingBox.draw(target[0]);
     }
 
     public void moveHorz(float x)

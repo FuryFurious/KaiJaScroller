@@ -50,7 +50,7 @@ public class SimplePhysic : APhysicComponent
                 isFalling = true;
             }
 
-            if (jumpPerformance.performed(gameTime,this.entity.ingame))
+            if (jumpPerformance.performed(gameTime, this.entity))
             {
                 resetPhysics();
                 isFalling = true;
@@ -115,4 +115,9 @@ public class SimplePhysic : APhysicComponent
         isFalling = false;
     }
 
+
+    public override void init()
+    {
+       
+    }
 }

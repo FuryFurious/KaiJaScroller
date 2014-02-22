@@ -10,8 +10,6 @@ public class PlayerBrain : ABehavior
 {
     float speed = 3;
 
-    ASkill skill1;
-
     public PlayerBrain()
     {
     }
@@ -28,7 +26,7 @@ public class PlayerBrain : ABehavior
             this.entity.moveHorz(speed);
         }
 
-        skill1.update(gameTime);
+        updateSkills(gameTime);
 
         float leftX = GameStateManager.pad.getLeftX();
         
@@ -59,8 +57,10 @@ public class PlayerBrain : ABehavior
 
     public override void init()
     {
-        skill1 = new Fireball();
+        ASkill skill1 = new Fireball();
         skill1.setAction(new Button1Action());
         skill1.setEntity(this.entity);
+
+        skills.Add(skill1);
     }
 }

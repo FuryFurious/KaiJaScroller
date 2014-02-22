@@ -13,19 +13,34 @@ public class InGame : IGameState
 
     public Entity player;
 
-    public List<Entity> bullets = new List<Entity>();
+    public List<Entity> friendlyBullets = new List<Entity>();
+    public List<Entity> hostileBullets = new List<Entity>();
+
     public List<Entity> enemies = new List<Entity>();
 
     public List<DynamicText> text = new List<DynamicText>();
+
+
+    private RenderTarget[] targets;
+    private RenderTexture finalTarget;
+
+    Text fps;
 
     View view;
     Sprite[, ,] sprites;
 
     public InGame()
     {
-        //   new Sprite(Assets.zombieTexture), 
-                                 //   new PlayerBrain(), 
-                                //    new SimplePhysic(new PlayerJump()));
+        fps = new Text("", Assets.font1);
+
+        targets = new RenderTarget[2];
+
+        finalTarget = new RenderTexture((uint)Settings.windowWidth, (uint)Settings.windowHeight);
+
+        for(int i = 0; i < targets.Length; i++)
+            targets[i] = new RenderTexture((uint)Settings.windowWidth, (uint)Settings.windowHeight);
+
+
         this.player = new Entity();
       
         this.player.setPhysics(new SimplePhysic(new PlayerJump()));
@@ -40,39 +55,16 @@ public class InGame : IGameState
         PlayerBrain brain = new PlayerBrain();
         this.player.setBrain(brain);
 
-        brain.init();
-
-
-
-
-
-        Entity enemy1;
-        enemy1 = new Entity();//   new Sprite(Assets.impTexture), 
-                                //    new NoBrain(), 
-                                  //  new SimplePhysic(new RandomJump()));
-
-        Sprite s = new Sprite(Assets.impTexture);
-        s.TextureRect = new IntRect(0, 0, 32, 32);
-        enemy1.setSprite(s);
-        enemy1.setBrain(new ChaseBrain());
-        enemy1.setPhysics(new SimplePhysic(new NoAction()));
-
-        enemy1.damage = 42;
-        enemy1.hitpoints = int.MaxValue;
-        enemy1.boundingBox = new BoundingBox(0, 0, 32, 32);
-        enemy1.position = new Vector2f(240, 50);
-
-        enemies.Add(enemy1);
-
 
         fillSprites("Content/testLevel.tmx");
-
-        
     }
 
     public void init()
     {
-    
+        foreach (Entity e in enemies)
+            e.init();
+
+        player.init();
     }
 
     public EGameState update(GameTime gameTime)
@@ -85,6 +77,96 @@ public class InGame : IGameState
             Settings.drawBoundings = !Settings.drawBoundings;
 
 
+        updateBattleText(gameTime);
+
+        updateFriendlyBullets(gameTime);
+
+        updateHostileBullets(gameTime);
+
+
+        this.player.update(gameTime, this);
+
+        if(player.inviTime > 0)
+            this.player.inviTime -= gameTime.ElapsedTime.TotalSeconds;
+
+        updateEnemies(gameTime);
+
+        return EGameState.InGame;
+    }
+
+    public void draw(GameTime gameTime, RenderWindow window)
+    {
+        if (GameStateManager.input.leftPressed())
+        {
+            view = targets[0].GetView();
+            view.Center -= GameStateManager.input.getDeltaMousePos();
+
+            targets[0].SetView(view);
+        }
+
+        if (GameStateManager.input.mouseWheelDown())
+        {
+            view = targets[0].GetView();
+            view.Zoom(1.1f);
+            targets[0].SetView(view);
+        }
+
+        else if (GameStateManager.input.mouseWheelUp())
+        {
+            view = targets[0].GetView();
+            view.Zoom(0.9f);
+            targets[0].SetView(view);
+        }
+
+
+        finalTarget.Clear(Color.Transparent);
+        targets[0].Clear(Color.Transparent);
+        targets[1].Clear(Color.Transparent);
+        window.Clear(Game.CornflowerBlue);
+
+        foreach (Sprite s in sprites)
+            if(s != null)
+                targets[0].Draw(s);
+
+        foreach (Entity e in friendlyBullets)
+            e.draw(gameTime, targets);
+
+        foreach (Entity e in hostileBullets)
+            e.draw(gameTime, targets);
+
+        foreach (Entity e in enemies)
+            e.draw(gameTime, targets);
+
+        if (Settings.drawBoundings)
+            foreach (BoundingBox bb in collisionRects)
+                bb.draw(targets[0]);
+
+        this.player.draw(gameTime, targets);
+
+        foreach (DynamicText t in text)
+            t.draw(gameTime, targets[0]);
+
+
+        fps.DisplayedString = "" + 1.0f / (float)gameTime.ElapsedTime.TotalSeconds;
+        if (Settings.drawBoundings)
+            targets[1].Draw(fps);
+
+
+        (targets[0] as RenderTexture).Display();
+        (targets[1] as RenderTexture).Display();
+
+
+        finalTarget.Draw(new Sprite((targets[0] as RenderTexture).Texture));
+        finalTarget.Draw(new Sprite((targets[1] as RenderTexture).Texture));
+
+        finalTarget.Display();
+
+        window.Draw(new Sprite(finalTarget.Texture));
+
+    }
+
+    private void updateBattleText(GameTime gameTime)
+    {
         for (int i = 0; i < text.Count; i++)
         {
             text[i].update(gameTime);
@@ -95,46 +177,46 @@ public class InGame : IGameState
                 i--;
             }
         }
+    }
 
-        for (int i = 0; i < bullets.Count; i++)
+    private void updateFriendlyBullets(GameTime gameTime)
+    {
+        for (int i = 0; i < friendlyBullets.Count; i++)
         {
-            bullets[i].update(gameTime, this);
+            friendlyBullets[i].update(gameTime, this);
 
             foreach (Entity e in enemies)
             {
-                if (e.inviTime <= 0 && bullets[i].boundingBox.intersects(e.boundingBox))
+                if (e.inviTime <= 0 && friendlyBullets[i].boundingBox.intersects(e.boundingBox))
                 {
-                    bullets[i].hitpoints--;
+                    friendlyBullets[i].hitpoints--;
 
-                    DynamicText dT = new DynamicText(e.position, "" + bullets[i].damage, 3);
+                    DynamicText dT = new DynamicText(e.position, "" + friendlyBullets[i].damage, 3);
                     text.Add(dT);
 
-                    e.hitpoints -= bullets[i].damage;
+                    e.hitpoints -= friendlyBullets[i].damage;
                     e.inviTime = Settings.INVITIME;
 
-                    if (bullets[i].hitpoints <= 0)
+                    if (friendlyBullets[i].hitpoints <= 0)
                     {
-                        bullets[i].exists = false;
+                        friendlyBullets[i].exists = false;
                         break;
                     }
 
                 }
             }
 
-            if (!bullets[i].exists)
+            if (!friendlyBullets[i].exists)
             {
-                bullets[i].onKill();
-                this.bullets.Remove(bullets[i]); 
+                friendlyBullets[i].onKill();
+                this.friendlyBullets.Remove(friendlyBullets[i]);
                 i--;
             }
         }
+    }
 
-
-        this.player.update(gameTime, this);
-
-        if(player.inviTime > 0)
-            this.player.inviTime -= gameTime.ElapsedTime.TotalSeconds;
-
+    private void updateEnemies(GameTime gameTime)
+    {
         for (int i = 0; i < enemies.Count; i++)
         {
             enemies[i].update(gameTime, this);
@@ -161,56 +243,41 @@ public class InGame : IGameState
                 i--;
             }
         }
-
-        return EGameState.InGame;
     }
 
-    public void draw(GameTime gameTime, RenderWindow window)
+    private void updateHostileBullets(GameTime gameTime)
     {
-        if (GameStateManager.input.leftPressed())
+        for (int i = 0; i < hostileBullets.Count; i++)
         {
-            view = window.GetView();
-            view.Center -= GameStateManager.input.getDeltaMousePos();
+            hostileBullets[i].update(gameTime, this);
 
-            window.SetView(view);
+
+            if (player.inviTime <= 0 && hostileBullets[i].boundingBox.intersects(player.boundingBox))
+            {
+                hostileBullets[i].hitpoints--;
+
+                DynamicText dT = new DynamicText(player.position, "" + hostileBullets[i].damage, 3);
+                text.Add(dT);
+
+                player.hitpoints -= hostileBullets[i].damage;
+                player.inviTime = Settings.INVITIME;
+
+                if (hostileBullets[i].hitpoints <= 0)
+                {
+                    hostileBullets[i].exists = false;
+                    break;
+                }
+
+            }
+            
+
+            if (!hostileBullets[i].exists)
+            {
+                hostileBullets[i].onKill();
+                this.hostileBullets.Remove(hostileBullets[i]);
+                i--;
+            }
         }
-
-        if (GameStateManager.input.mouseWheelDown())
-        {
-            view = window.GetView();
-            view.Zoom(1.1f);
-            window.SetView(view);
-        }
-
-        else if (GameStateManager.input.mouseWheelUp())
-        {
-            view = window.GetView();
-            view.Zoom(0.9f);
-            window.SetView(view);
-        }
-
-
-        window.Clear(Game.CornflowerBlue);
-
-        foreach (Sprite s in sprites)
-            if(s != null)
-                window.Draw(s);
-
-        foreach (Entity e in bullets)
-            e.draw(gameTime, window);
-
-        foreach (Entity e in enemies)
-            e.draw(gameTime, window);
-
-        if (Settings.drawBoundings)
-            foreach (BoundingBox bb in collisionRects)
-                bb.draw(window);
-
-        this.player.draw(gameTime, window);
-
-        foreach (DynamicText t in text)
-            t.draw(gameTime, window);
-
     }
 
     //TODO: remove to better place:
@@ -237,10 +304,12 @@ public class InGame : IGameState
 
         }
 
-        Console.WriteLine(map.pictures.Count);
         foreach (TiledMap.TiledPicture pic in map.pictures)
         {
             Console.WriteLine(pic);
+            Entity ene = EntityLibrary.getEntity((EEntityType)pic.id);
+            ene.setPosition(pic.x, pic.y);
+            enemies.Add(ene);
         }
 
 

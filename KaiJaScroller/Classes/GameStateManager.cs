@@ -17,8 +17,6 @@ class GameStateManager : Game
 
     IGameState gameState;
 
-    Text fps;
-
     public GameStateManager()
         : base(Settings.windowWidth, Settings.windowHeight, Settings.WINDOWTITLE, Settings.windowStyles)
     {
@@ -36,8 +34,6 @@ class GameStateManager : Game
 
         input = new Input(keys);
 
-        fps = new Text("", Assets.font1);
-
         handleNewGameState();
     }
 
@@ -54,12 +50,7 @@ class GameStateManager : Game
 
     public override void draw(GameTime gameTime, RenderWindow window)
     {
-        fps.DisplayedString = "" + 1.0f / (float)gameTime.ElapsedTime.TotalSeconds;
-
         gameState.draw(gameTime, window);
-
-        if(Settings.drawBoundings)
-            window.Draw(fps);
     }
 
     private void handleNewGameState()

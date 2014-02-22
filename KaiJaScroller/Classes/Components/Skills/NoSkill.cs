@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class NoAction : IActionListener
+public class NoSkill : ASkill
 {
-    public bool performed(GameTime gameTime, Entity source)
+
+    public override void onUse(GameTime gameTime)
     {
-        return false;
+       
     }
 }

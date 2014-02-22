@@ -70,6 +70,8 @@
  </objectgroup>
  <objectgroup name="EventsStuff" width="20" height="20">
   <object type="PlayerSpawn" x="304" y="56" width="55" height="51"/>
-  <object type="EnemySpawn" gid="16" x="488" y="131"/>
+  <object type="EnemySpawn" gid="16" x="490" y="129"/>
+  <object type="EnemySpawn" gid="16" x="123" y="45"/>
+  <object type="EnemySpawn" gid="16" x="101" y="163"/>
  </objectgroup>
 </map>

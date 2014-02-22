@@ -71,20 +71,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Components\Actions\Button1Action.cs" />
+    <Compile Include="Classes\Components\Actions\ChaseJump.cs" />
     <Compile Include="Classes\Components\Actions\NoAction.cs" />
     <Compile Include="Classes\Components\Actions\PlayerJump.cs" />
-    <Compile Include="Classes\Components\Actions\RandomJump.cs" />
+    <Compile Include="Classes\Components\Actions\RandomAction.cs" />
     <Compile Include="Classes\Components\Behavior\Entities\ChaseBrain.cs" />
     <Compile Include="Classes\Components\Skills\Fireball.cs" />
-    <Compile Include="Classes\GameObjects\BoundingBox.cs" />
+    <Compile Include="Classes\Components\GameObjects\BoundingBox.cs" />
     <Compile Include="Classes\Components\Behavior\Entities\NoBrain.cs" />
     <Compile Include="Classes\Components\Behavior\Entities\RandomBrain.cs" />
     <Compile Include="Classes\Components\Behavior\Projectiles\SimpleBullet.cs" />
     <Compile Include="Classes\Components\Physics\NoPhysics.cs" />
     <Compile Include="Classes\Components\Physics\SimplePhysic.cs" />
-    <Compile Include="Classes\GameObjects\DynamicText.cs" />
+    <Compile Include="Classes\Components\GameObjects\DynamicText.cs" />
+    <Compile Include="Classes\Components\Skills\NoSkill.cs" />
     <Compile Include="Classes\InterfacesAbstracts\ABehavior.cs" />
-    <Compile Include="Classes\GameObjects\Entity.cs" />
+    <Compile Include="Classes\Components\GameObjects\Entity.cs" />
     <Compile Include="Classes\GameTemplate\Gamepad.cs" />
     <Compile Include="Classes\InterfacesAbstracts\ASkill.cs" />
     <Compile Include="Classes\InterfacesAbstracts\IActionListener.cs" />
