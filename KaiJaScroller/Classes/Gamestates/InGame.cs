@@ -15,7 +15,8 @@ public class InGame : IGameState
 
     public Entity player;
 
-
+    public List<Entity> friendlyBullets = new List<Entity>();
+    public List<Entity> hostileBullets = new List<Entity>();
     public List<Entity> enemies             = new List<Entity>();
 
     public List<DynamicText> text           = new List<DynamicText>();
