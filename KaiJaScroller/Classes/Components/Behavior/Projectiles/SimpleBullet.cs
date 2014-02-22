@@ -50,7 +50,18 @@ public class SimpleBullet : ABehavior
 
     public override void onKill()
     {
-     
+        Sprite s1 = new Sprite(Assets.flameParticle);
+
+        s1.Scale = new Vector2f(0.5f, 0.5f);
+        s1.Rotation = (float)(Help.random.NextDouble() * 360.0);
+
+        Particle p = new Particle(Help.random.NextDouble() * 2);
+
+        p.setBehavior(new RandomFloat());
+        p.setSprite(s1);
+        p.setPosition(this.entity.position);
+
+        this.entity.ingame.particles.Add(p);
     }
 
     public override void init()

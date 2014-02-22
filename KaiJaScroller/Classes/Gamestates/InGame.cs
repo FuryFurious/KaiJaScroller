@@ -17,11 +17,14 @@ public class InGame : IGameState
 
     public List<Entity> friendlyBullets     = new List<Entity>();
     public List<Entity> hostileBullets      = new List<Entity>();
+
     public List<Entity> enemies             = new List<Entity>();
 
     public List<DynamicText> text           = new List<DynamicText>();
 
     List<Sprite> passiveSprites             = new List<Sprite>();
+
+    public List<Particle> particles         = new List<Particle>();
 
     private RenderTarget[] targets;
     private RenderTexture finalTarget;
@@ -43,6 +46,7 @@ public class InGame : IGameState
 
     public InGame()
     {
+
         fps = new Text("", Assets.font1);
         lifeframe = new Sprite(Assets.lifebar);
         lifeframe.Position = new Vector2f(20, 15);
@@ -146,6 +150,8 @@ public class InGame : IGameState
 
             updateHostileBullets(gameTime);
 
+            updateParticles(gameTime);
+
             this.player.update(gameTime, this);
 
             if (player.inviTime > 0)
@@ -231,19 +237,17 @@ public class InGame : IGameState
 
         this.player.draw(gameTime, targets);
 
+        foreach (Particle p in particles)
+            p.draw(gameTime, targets[0]);
+
         foreach (DynamicText t in text)
             t.draw(gameTime, targets[0]);
-
-
-
-        if (Settings.drawBoundings)
-            targets[1].Draw(fps);
-
-        
 
         targets[1].Draw(lifeframe);
         targets[1].Draw(lifebar);
 
+        if (Settings.drawBoundings)
+            targets[1].Draw(fps);
 
         overlay.draw(gameTime, targets[1]);
 
@@ -265,6 +269,20 @@ public class InGame : IGameState
 
         window.Draw(new Sprite(finalTarget.Texture));
 
+    }
+
+    private void updateParticles(GameTime gameTime)
+    {
+        for (int i = 0; i < particles.Count; i++)
+        {
+            particles[i].update(gameTime);
+
+            if (particles[i].lifeTime <= 0)
+            {
+                particles.Remove(particles[i]);
+                i--;
+            }
+        }
     }
 
     private void updateBattleText(GameTime gameTime)
