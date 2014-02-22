@@ -84,7 +84,7 @@ public class InGame : IGameState
         this.player.setBrain(brain);
 
         view = targets[0].GetView();
-        view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, Settings.windowWidth/Settings.viewportWidth, Settings.windowHeight/Settings.viewportHight);
+        view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, Settings.windowWidth/Settings.viewportWidth, Settings.windowHeight/Settings.viewportHeight);
         targets[0].SetView(view);
         load();
 
@@ -97,10 +97,32 @@ public class InGame : IGameState
             e.init();
 
         player.init();
+        updateViewport();
+
 
         updateLifebar();
 
     }
+
+    private void updateViewport()
+    {
+        view = targets[0].GetView();
+
+        Vector2f playerCenter = player.boundingBox.Center;
+
+        if ((playerCenter.X > Settings.viewportWidth / 2 &&
+            playerCenter.X  + Settings.viewportWidth / 2 < sprites.GetLength(0) * 32))
+            view.Center = (new Vector2f(playerCenter.X, view.Center.Y) + new Vector2f(Settings.viewportWidth / 2, 0));
+
+        if ((playerCenter.Y > Settings.viewportHeight / 2 &&
+            playerCenter.Y + Settings.viewportHeight / 2 < sprites.GetLength(1) * 32))
+        {
+            view.Center = (new Vector2f(view.Center.X, playerCenter.Y) + new Vector2f(0, Settings.viewportHeight / 2));
+        }
+        //   
+        targets[0].SetView(view);
+    }
+
 
     public EGameState update(GameTime gameTime)
     {
@@ -138,7 +160,11 @@ public class InGame : IGameState
                 save();
                 return EGameState.Restart;
             }
+
+
+            updateViewport();
         }
+
         return returnGameState();
     }
 
@@ -172,12 +198,6 @@ public class InGame : IGameState
                 targets[0].SetView(view);
             }
         }
-
-
-        
-        view = targets[0].GetView();
-        view.Center = (player.boundingBox.Center + new Vector2f(200, 150));
-        targets[0].SetView(view);
 
 
         finalTarget.Clear(Color.Transparent);
@@ -396,12 +416,22 @@ public class InGame : IGameState
         foreach (TiledMap.TiledPicture pic in map.pictures)
         {
 
-            if (pic.type.Equals("EnemySpawn"))
+            if (pic.type.Equals("EnemySpawnLeft"))
             {
                 Entity ene = EntityLibrary.getEntity((EEntityType)pic.id);
                 ene.setPosition(pic.x, pic.y);
                 enemies.Add(ene);
             }
+
+            else if (pic.type.Equals("EnemySpawnRight"))
+            {
+                Entity ene = EntityLibrary.getEntity((EEntityType)pic.id);
+                ene.direction = EDirection.Right;
+                ene.moveHorz(0.01f);
+                ene.setPosition(pic.x, pic.y);
+                enemies.Add(ene);
+            }
+
             else if (pic.type.Equals("Picture"))
             {
                 pic.id -= 1;

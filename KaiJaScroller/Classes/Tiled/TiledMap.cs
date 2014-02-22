@@ -110,7 +110,7 @@ namespace TiledMap
                                     }
 
 
-                                    else if (reader.Value.Equals("EnemySpawn"))
+                                    else if (reader.Value.Equals("EnemySpawnLeft") || reader.Value.Equals("EnemySpawnRight"))
                                     {
                                         TiledPicture currentPic = new TiledPicture();
                                         currentPic.type = reader.Value;
