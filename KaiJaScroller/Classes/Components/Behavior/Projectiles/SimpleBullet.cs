@@ -28,7 +28,7 @@ public class SimpleBullet : ABehavior
 
         if (speed > 0)
         {
-            if (this.entity.canMoveRight(nextSpeed))
+            if (this.entity.canMoveRight(nextSpeed, 0))
                 this.entity.moveHorz(nextSpeed);
             else
                 this.entity.exists = false;
@@ -36,7 +36,7 @@ public class SimpleBullet : ABehavior
 
         else if (speed < 0)
         {
-            if (this.entity.canMoveLeft(nextSpeed))
+            if (this.entity.canMoveLeft(nextSpeed, 0))
                 this.entity.moveHorz(nextSpeed);
             else
                 this.entity.exists = false;

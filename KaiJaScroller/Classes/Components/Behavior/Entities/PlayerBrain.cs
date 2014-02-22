@@ -17,11 +17,11 @@ public class PlayerBrain : ABehavior
     public override void update(GameTime gameTime)
     {
 
-        if (GameStateManager.input.isPressed(Keyboard.Key.A) && this.entity.canMoveLeft(-speed))
+        if (GameStateManager.input.isPressed(Keyboard.Key.A) && this.entity.canMoveLeft(-speed, 0))
         {
             this.entity.moveHorz(-speed);
         }
-        else if (GameStateManager.input.isPressed(Keyboard.Key.D) && this.entity.canMoveRight(speed))
+        else if (GameStateManager.input.isPressed(Keyboard.Key.D) && this.entity.canMoveRight(speed, 0))
         {
             this.entity.moveHorz(speed);
         }
@@ -41,10 +41,10 @@ public class PlayerBrain : ABehavior
         {
             float xHelp = leftX * speed;
 
-            if (xHelp > 0 && this.entity.canMoveRight(xHelp))
+            if (xHelp > 0 && this.entity.canMoveRight(xHelp, 0))
                 this.entity.moveHorz(xHelp);
 
-            else if (xHelp < 0 && this.entity.canMoveLeft(xHelp))
+            else if (xHelp < 0 && this.entity.canMoveLeft(xHelp, 0))
                 this.entity.moveHorz(xHelp);
         }
     }

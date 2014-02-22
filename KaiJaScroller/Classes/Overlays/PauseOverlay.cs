@@ -20,7 +20,7 @@ public class PauseOverlay : IOverlayState
 
     public EOverlayState update(GameTime gameTime)
     {
-        if (GameStateManager.pad.isClicked(Help.LB) || GameStateManager.input.isClicked(Keyboard.Key.Escape))
+        if (GameStateManager.pad.isClicked(Help.Start) || GameStateManager.input.isClicked(Keyboard.Key.Escape))
             return EOverlayState.None;
 
         return EOverlayState.Pause;

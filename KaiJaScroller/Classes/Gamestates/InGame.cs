@@ -135,6 +135,9 @@ public class InGame : IGameState
         if (GameStateManager.pad.isClicked(Help.RB))
             return EGameState.None;
 
+        if (GameStateManager.pad.isClicked(Help.LB))
+            return  EGameState.Restart;
+
         if (GameStateManager.input.isClicked(Keyboard.Key.F1))
             Settings.drawBoundings = !Settings.drawBoundings;
 
