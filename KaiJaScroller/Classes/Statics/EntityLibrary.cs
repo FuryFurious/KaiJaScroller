@@ -15,7 +15,20 @@ public static class EntityLibrary
         {
             case EEntityType.Player:
 
-                break;
+                Entity player = new Entity();
+
+                player.setPhysics(new SimplePhysic(new PlayerJump()));
+                player.boundingBox = new BoundingBox(0, 0, 16, 32);
+                player.boundingBox.offsetX = 8;
+
+                Sprite playerSprite = new Sprite(Assets.zombieTexture);
+                playerSprite.TextureRect = new IntRect(0, 0, 32, 32);
+
+                player.setSprite(playerSprite);
+
+                PlayerBrain brain = new PlayerBrain();
+                player.setBrain(brain);
+                return player;
 
 
             case EEntityType.Imp:

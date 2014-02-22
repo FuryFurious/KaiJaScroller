@@ -9,20 +9,25 @@ using System.Threading.Tasks;
 
 public class InGame : IGameState
 {
+    static String nextLevel = "testLevel.tmx";
+
     public List<BoundingBox> collisionRects = new List<BoundingBox>();
 
     public Entity player;
 
-    public List<Entity> friendlyBullets = new List<Entity>();
-    public List<Entity> hostileBullets = new List<Entity>();
+    public List<Entity> friendlyBullets     = new List<Entity>();
+    public List<Entity> hostileBullets      = new List<Entity>();
 
-    public List<Entity> enemies = new List<Entity>();
+    public List<Entity> enemies             = new List<Entity>();
 
-    public List<DynamicText> text = new List<DynamicText>();
+    public List<DynamicText> text           = new List<DynamicText>();
 
+    List<Sprite> passiveSprites             = new List<Sprite>();
 
     private RenderTarget[] targets;
     private RenderTexture finalTarget;
+
+    private Teleporter teleport;
 
     Text fps;
 
@@ -55,8 +60,11 @@ public class InGame : IGameState
         PlayerBrain brain = new PlayerBrain();
         this.player.setBrain(brain);
 
+        view = targets[0].GetView();
+        view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, 2f, 2f);
+        targets[0].SetView(view);
 
-        fillSprites("Content/testLevel.tmx");
+        loadLevel(nextLevel);
     }
 
     public void init()
@@ -83,7 +91,6 @@ public class InGame : IGameState
 
         updateHostileBullets(gameTime);
 
-
         this.player.update(gameTime, this);
 
         if(player.inviTime > 0)
@@ -91,42 +98,58 @@ public class InGame : IGameState
 
         updateEnemies(gameTime);
 
+        if (player.boundingBox.intersects(teleport.bb))
+        {
+            nextLevel = teleport.targetMap;
+            return EGameState.Restart;
+        }
+
         return EGameState.InGame;
     }
 
     public void draw(GameTime gameTime, RenderWindow window)
     {
-        if (GameStateManager.input.leftPressed())
+        if (Settings.drawBoundings)
         {
-            view = targets[0].GetView();
-            view.Center -= GameStateManager.input.getDeltaMousePos();
+            if (GameStateManager.input.leftPressed())
+            {
+                view = targets[0].GetView();
+                view.Center -= GameStateManager.input.getDeltaMousePos();
 
-            targets[0].SetView(view);
+                targets[0].SetView(view);
+            }
+
+            if (GameStateManager.input.mouseWheelDown())
+            {
+                view = targets[0].GetView();
+                view.Zoom(1.1f);
+                targets[0].SetView(view);
+            }
+
+            else if (GameStateManager.input.mouseWheelUp())
+            {
+                view = targets[0].GetView();
+                view.Zoom(0.9f);
+                targets[0].SetView(view);
+            }
         }
 
-        if (GameStateManager.input.mouseWheelDown())
-        {
-            view = targets[0].GetView();
-            view.Zoom(1.1f);
-            targets[0].SetView(view);
-        }
-
-        else if (GameStateManager.input.mouseWheelUp())
-        {
-            view = targets[0].GetView();
-            view.Zoom(0.9f);
-            targets[0].SetView(view);
-        }
+        view = targets[0].GetView();
+        view.Center = (player.boundingBox.Center + new Vector2f(200, 150));
+        targets[0].SetView(view);
 
 
         finalTarget.Clear(Color.Transparent);
         targets[0].Clear(Color.Transparent);
         targets[1].Clear(Color.Transparent);
-        window.Clear(Game.CornflowerBlue);
+        window.Clear(Color.Transparent);
 
         foreach (Sprite s in sprites)
             if(s != null)
                 targets[0].Draw(s);
+
+        foreach (Sprite s in passiveSprites)
+            targets[0].Draw(s);
 
         foreach (Entity e in friendlyBullets)
             e.draw(gameTime, targets);
@@ -141,10 +164,15 @@ public class InGame : IGameState
             foreach (BoundingBox bb in collisionRects)
                 bb.draw(targets[0]);
 
+        if(Settings.drawBoundings)
+            teleport.draw(targets[0]);
+
         this.player.draw(gameTime, targets);
 
         foreach (DynamicText t in text)
             t.draw(gameTime, targets[0]);
+
+
 
 
         fps.DisplayedString = "" + 1.0f / (float)gameTime.ElapsedTime.TotalSeconds;
@@ -281,9 +309,9 @@ public class InGame : IGameState
     }
 
     //TODO: remove to better place:
-    private void fillSprites(String path)
+    private void loadLevel(String path)
     {
-        TiledMap.TiledMapInfo map = TiledMap.TiledMapInfo.getMap(path);
+        TiledMap.TiledMapInfo map = TiledMap.TiledMapInfo.getMap("Content/"+path);
 
         int[, ,] ids = map.getTileIds();
         Texture texture = new Texture("Content/" + map.getTileSetName() + ".png");
@@ -301,15 +329,42 @@ public class InGame : IGameState
             {
                 player.setPosition(rec.x, rec.y);
             }
+            if (rec.type.Equals("Teleporter"))
+            {
+                teleport = new Teleporter(rec.x, rec.y, rec.width, rec.height, rec.name);
+            }
 
         }
 
         foreach (TiledMap.TiledPicture pic in map.pictures)
         {
-            Console.WriteLine(pic);
-            Entity ene = EntityLibrary.getEntity((EEntityType)pic.id);
-            ene.setPosition(pic.x, pic.y);
-            enemies.Add(ene);
+
+            if (pic.type.Equals("EnemySpawn"))
+            {
+                Entity ene = EntityLibrary.getEntity((EEntityType)pic.id);
+                ene.setPosition(pic.x, pic.y);
+                enemies.Add(ene);
+            }
+            else if (pic.type.Equals("Picture"))
+            {
+                pic.id -= 1;
+
+                int xPos = pic.id % ((int)texture.Size.X / map.getTileWidth());
+                int yPos = pic.id / ((int)texture.Size.X / map.getTileHeight());
+
+                xPos *= map.getTileWidth();
+                yPos *= map.getTileHeight();
+
+                Console.WriteLine(pic.id);
+                Console.WriteLine(pic.x + ", " + pic.y);
+
+                Sprite s = new Sprite(texture);
+
+                s.TextureRect = new IntRect(xPos, yPos, map.getTileWidth(), map.getTileHeight());
+                s.Position = new Vector2f(pic.x, pic.y - map.getTileHeight());
+
+                passiveSprites.Add(s);
+            }
         }
 
 

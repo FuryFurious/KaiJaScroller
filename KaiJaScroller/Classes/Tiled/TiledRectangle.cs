@@ -13,6 +13,7 @@ namespace TiledMap
         public float width;
         public float height;
 
+        public String name;
         public String type;
  
         public TiledRectangle()
@@ -29,7 +30,7 @@ namespace TiledMap
 
         public override String ToString()
         {
-            return "Type: " + type + ", X: " + x + ", Y: " + y + ", Width: " + width + ", Height: " + height;
+            return "Name: "+ name + "Type: " + type + ", X: " + x + ", Y: " + y + ", Width: " + width + ", Height: " + height;
         }
     }
 }

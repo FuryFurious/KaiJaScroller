@@ -142,6 +142,8 @@ public class Entity
     public void setPosition(float x, float y)
     {
         this.position = new Vector2f(x, y);
+        this.boundingBox.X = x;
+        this.boundingBox.Y = y;
         this.sprite.Position = this.position;
     }
 

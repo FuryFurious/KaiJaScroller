@@ -23,7 +23,6 @@ public class SimplePhysic : APhysicComponent
 
     public override void update(GameTime gameTime)
     {
-
         //standing:
         if (!isFalling)
         {
@@ -95,6 +94,7 @@ public class SimplePhysic : APhysicComponent
                     if (bb.intersectsHorzLine(y, x0, x1))
                     {
                         resetPhysics();
+                        isFalling = true;
                         return;
                     }
 

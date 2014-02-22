@@ -92,26 +92,23 @@ namespace TiledMap
 
                                         map.rectangles.Add(currentRect);
                                     }
-
-                                    else if (reader.Value.Equals("Event"))
+                                    else if (reader.Value.Equals("Picture"))
                                     {
-                                        TiledRectangle currentRect = new TiledRectangle();
-                                        currentRect.type = reader.Value;
+                                        TiledPicture currentPic = new TiledPicture();
+                                        currentPic.type = reader.Value;
 
                                         reader.MoveToNextAttribute();
-                                        currentRect.x = float.Parse(reader.Value);
+                                        currentPic.id = int.Parse(reader.Value);
 
                                         reader.MoveToNextAttribute();
-                                        currentRect.y = float.Parse(reader.Value);
+                                        currentPic.x = float.Parse(reader.Value);
 
                                         reader.MoveToNextAttribute();
-                                        currentRect.width = float.Parse(reader.Value);
+                                        currentPic.y = float.Parse(reader.Value);
 
-                                        reader.MoveToNextAttribute();
-                                        currentRect.height = float.Parse(reader.Value);
-
-                                        map.rectangles.Add(currentRect);
+                                        map.pictures.Add(currentPic);
                                     }
+
 
                                     else if (reader.Value.Equals("EnemySpawn"))
                                     {
@@ -145,6 +142,30 @@ namespace TiledMap
 
                                         reader.MoveToNextAttribute();
                                         currentRect.height = float.Parse(reader.Value);
+
+                                        map.rectangles.Add(currentRect);
+                                    }
+                                    //teleporter:
+                                    else if (reader.Name.Equals("name"))
+                                    {
+                                        TiledRectangle currentRect = new TiledRectangle();
+                                        currentRect.name = reader.Value;
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.type = reader.Value;
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.x = float.Parse(reader.Value);
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.y = float.Parse(reader.Value);
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.width = float.Parse(reader.Value);
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.height = float.Parse(reader.Value);
+
 
                                         map.rectangles.Add(currentRect);
                                     }
