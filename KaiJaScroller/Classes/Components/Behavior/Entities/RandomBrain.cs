@@ -23,7 +23,7 @@ public class RandomBrain : ABehavior
             thinkCooldown = 5;
         }
 
-        if (moveLeft && this.entity.canMoveLeft(-3, 0))
+        if (moveLeft && this.entity.canMoveLeft(3, 0))
             this.entity.moveLeft(-3);
 
         else if(!moveLeft && this.entity.canMoveRight(3, 0))
