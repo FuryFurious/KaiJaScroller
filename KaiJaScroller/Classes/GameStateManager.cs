@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 class GameStateManager : Game
 {
 
-    EGameState currentGameState = EGameState.MainMenu;
+    EGameState currentGameState = EGameState.InGame;
     EGameState prevGameState;
 
     IGameState gameState;
