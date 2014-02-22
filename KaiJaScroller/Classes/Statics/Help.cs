@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 public static class Help
 {
     public static Random random = new Random();
+    public static MyReader reader = new MyReader();
 
     public const uint A         = 0;
     public const uint B         = 1;
@@ -21,6 +22,9 @@ public static class Help
     public const uint Start     = 7;
     public const uint LS        = 8;
     public const uint RS        = 9;
+
+
+
 
     public static void swap<T>(ref T lhs, ref T rhs)
     {
