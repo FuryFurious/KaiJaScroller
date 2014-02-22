@@ -179,8 +179,10 @@ public class InGame : IGameState
         {
             view = window.GetView();
             view.Center -= input.getDeltaMousePos();
+
             window.SetView(view);
         }
+
 
         if (input.mouseWheelDown())
         {
