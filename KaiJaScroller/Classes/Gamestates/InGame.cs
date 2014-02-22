@@ -237,6 +237,12 @@ public class InGame : IGameState
 
         }
 
+        Console.WriteLine(map.pictures.Count);
+        foreach (TiledMap.TiledPicture pic in map.pictures)
+        {
+            Console.WriteLine(pic);
+        }
+
 
         for (int z = 0; z < ids.GetLength(2); z++)
         {
