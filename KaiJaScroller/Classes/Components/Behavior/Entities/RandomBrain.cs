@@ -35,4 +35,9 @@ public class RandomBrain : ABehavior
 
     }
 
+
+    public override void init()
+    {
+        
+    }
 }

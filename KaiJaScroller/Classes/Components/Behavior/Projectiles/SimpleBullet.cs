@@ -52,5 +52,10 @@ public class SimpleBullet : ABehavior
     {
      
     }
+
+    public override void init()
+    {
+        
+    }
 }
 

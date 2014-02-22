@@ -17,4 +17,9 @@ public class NoBrain : ABehavior
     {
 
     }
+
+    public override void init()
+    {
+       
+    }
 }

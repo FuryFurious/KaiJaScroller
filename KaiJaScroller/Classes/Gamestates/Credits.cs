@@ -27,7 +27,7 @@ using SFML.Window;
             text1.Position = new Vector2f(200, text1.Position.Y - speed);
             text2.Position = new Vector2f(200, text2.Position.Y - speed);
 
-            if (InGame.pad.isClicked(Help.Start))
+            if (GameStateManager.pad.isClicked(Help.Start))
             {
                 
                 return EGameState.MainMenu;

@@ -53,13 +53,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="sfmlnet-audio-2">
-      <HintPath>..\..\..\Desktop\gj_game\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-audio-2.dll</HintPath>
+      <HintPath>..\..\TimeFreeze\gj_game\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-audio-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-graphics-2">
-      <HintPath>..\..\..\Desktop\gj_game\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-graphics-2.dll</HintPath>
+      <HintPath>..\..\TimeFreeze\gj_game\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-graphics-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-window-2">
-      <HintPath>..\..\..\Desktop\gj_game\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-window-2.dll</HintPath>
+      <HintPath>..\..\TimeFreeze\gj_game\SFML.Net-2.1-32bits\SFML.Net-2.1\lib\sfmlnet-window-2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -70,23 +70,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Collections\Actions\Button1Action.cs" />
-    <Compile Include="Classes\Collections\Actions\NoAction.cs" />
-    <Compile Include="Classes\Collections\Actions\PlayerJump.cs" />
-    <Compile Include="Classes\Collections\Actions\RandomJump.cs" />
-    <Compile Include="Classes\BoundingBox.cs" />
-    <Compile Include="Classes\Collections\Behavior\Entities\NoBrain.cs" />
-    <Compile Include="Classes\Collections\Behavior\Entities\RandomBrain.cs" />
-    <Compile Include="Classes\Collections\Behavior\Projectiles\SimpleBullet.cs" />
-    <Compile Include="Classes\Collections\Physics\NoPhysics.cs" />
-    <Compile Include="Classes\Collections\Physics\SimplePhysic.cs" />
-    <Compile Include="Classes\DynamicText.cs" />
+    <Compile Include="Classes\Components\Actions\Button1Action.cs" />
+    <Compile Include="Classes\Components\Actions\NoAction.cs" />
+    <Compile Include="Classes\Components\Actions\PlayerJump.cs" />
+    <Compile Include="Classes\Components\Actions\RandomJump.cs" />
+    <Compile Include="Classes\Components\Behavior\Entities\ChaseBrain.cs" />
+    <Compile Include="Classes\Components\Skills\Fireball.cs" />
+    <Compile Include="Classes\GameObjects\BoundingBox.cs" />
+    <Compile Include="Classes\Components\Behavior\Entities\NoBrain.cs" />
+    <Compile Include="Classes\Components\Behavior\Entities\RandomBrain.cs" />
+    <Compile Include="Classes\Components\Behavior\Projectiles\SimpleBullet.cs" />
+    <Compile Include="Classes\Components\Physics\NoPhysics.cs" />
+    <Compile Include="Classes\Components\Physics\SimplePhysic.cs" />
+    <Compile Include="Classes\GameObjects\DynamicText.cs" />
     <Compile Include="Classes\InterfacesAbstracts\ABehavior.cs" />
-    <Compile Include="Classes\Entity.cs" />
+    <Compile Include="Classes\GameObjects\Entity.cs" />
     <Compile Include="Classes\GameTemplate\Gamepad.cs" />
+    <Compile Include="Classes\InterfacesAbstracts\ASkill.cs" />
     <Compile Include="Classes\InterfacesAbstracts\IAction.cs" />
-    <Compile Include="Classes\InGame.cs" />
-    <Compile Include="Classes\Collections\Behavior\Entities\PlayerBrain.cs" />
+    <Compile Include="Classes\Gamestates\InGame.cs" />
+    <Compile Include="Classes\Components\Behavior\Entities\PlayerBrain.cs" />
     <Compile Include="Classes\Statics\Assets.cs" />
     <Compile Include="Classes\Statics\EntityLibrary.cs" />
     <Compile Include="Classes\Statics\Enums.cs" />
@@ -95,16 +98,16 @@
     <Compile Include="Classes\GameTemplate\GameTime.cs" />
     <Compile Include="Classes\GameTemplate\Input.cs" />
     <Compile Include="Classes\GameTemplate\KeyboardReader.cs" />
-    <Compile Include="Classes\GameTemplate\IGameState.cs" />
+    <Compile Include="Classes\InterfacesAbstracts\IGameState.cs" />
     <Compile Include="Classes\Statics\Help.cs" />
     <Compile Include="Classes\Statics\Settings.cs" />
     <Compile Include="Classes\InterfacesAbstracts\APhysicComponent.cs" />
     <Compile Include="Classes\Tiled\TiledMap.cs" />
     <Compile Include="Classes\Tiled\TiledPicture.cs" />
     <Compile Include="Classes\Tiled\TiledRectangle.cs" />
-    <Compile Include="Gamestates\Credits.cs" />
-    <Compile Include="Gamestates\MainMenu.cs" />
-    <Compile Include="Gamestates\Restart.cs" />
+    <Compile Include="Classes\Gamestates\Credits.cs" />
+    <Compile Include="Classes\Gamestates\MainMenu.cs" />
+    <Compile Include="Classes\Gamestates\Restart.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
