@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class PlayerJump : IAction
+public class PlayerJump : IActionListener
 {
 
     public bool performed(GameTime gameTime, InGame ingame)

@@ -78,7 +78,8 @@ class GameStateManager : Game
                 gameState = new Credits();
                 break;
             case EGameState.Restart:
-                gameState = new Restart();
+                gameState = new InGame();
+                currentGameState = EGameState.InGame;
                 break;
 
             default:

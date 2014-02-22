@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class Button1Action : IAction
+public class Button1Action : IActionListener
 {
 
     public bool performed(GameTime gameTime, InGame ingame)

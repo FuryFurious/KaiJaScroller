@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class RandomJump : IAction
+public class RandomJump : IActionListener
 {
 
     double cooldown = 4;
