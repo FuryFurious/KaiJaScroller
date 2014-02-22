@@ -29,7 +29,7 @@ public class NoneOverlay : IOverlayState
 
     public EOverlayState update(GameTime gameTime)
     {
-        if (GameStateManager.pad.isClicked(Help.LB) || GameStateManager.input.isClicked(Keyboard.Key.Escape))
+        if (GameStateManager.pad.isClicked(Help.Start) || GameStateManager.input.isClicked(Keyboard.Key.Escape))
             return EOverlayState.Pause;
 
         if (player.hitpoints[0] <= 0)

@@ -106,11 +106,11 @@ public class Entity
         this.position += new Vector2f(0, y);
     }
 
-    public bool canMoveLeft(float dx)
+    public bool canMoveLeft(float dx, float dy)
     {
         float x = this.boundingBox.Left + dx;
-        float y0 = this.boundingBox.Top + 3;
-        float y1 = this.boundingBox.Bottom - 1;
+        float y0 = this.boundingBox.Top + 3 - dy;
+        float y1 = this.boundingBox.Bottom - 1 - dy;
 
         foreach (BoundingBox bb in ingame.collisionRects)
             if (bb.intersectsVertLine(x, y0, y1))
@@ -119,11 +119,11 @@ public class Entity
         return true;
     }
 
-    public bool canMoveRight(float dx)
+    public bool canMoveRight(float dx, float dy)
     {
         float x = this.boundingBox.Right + dx;
-        float y0 = this.boundingBox.Top + 3;
-        float y1 = this.boundingBox.Bottom - 1;
+        float y0 = this.boundingBox.Top + 3 -dy;
+        float y1 = this.boundingBox.Bottom - 1 -dy;
 
         foreach (BoundingBox bb in ingame.collisionRects)
             if (bb.intersectsVertLine(x, y0, y1))

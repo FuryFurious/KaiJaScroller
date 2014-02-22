@@ -27,7 +27,7 @@ public class SimpleBullet : ABehavior
 
         if (dir == EDirection.Right)
         {
-            if (this.entity.canMoveRight(nextSpeed))
+            if (this.entity.canMoveRight(nextSpeed, 0))
                 this.entity.moveRight(nextSpeed);
             else
                 this.entity.exists = false;
@@ -35,7 +35,7 @@ public class SimpleBullet : ABehavior
 
         else if (dir == EDirection.Left)
         {
-            if (this.entity.canMoveLeft(nextSpeed))
+            if (this.entity.canMoveLeft(nextSpeed, 0))
                 this.entity.moveLeft(nextSpeed);
             else
                 this.entity.exists = false;

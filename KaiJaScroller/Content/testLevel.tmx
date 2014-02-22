@@ -80,5 +80,6 @@
   <object type="PlayerSpawn" x="96" y="32" width="32" height="32"/>
   <object type="EnemySpawnLeft" gid="16" x="287" y="157"/>
   <object name="testLevel2.tmx" type="Teleporter" x="32" y="0" width="32" height="64"/>
+  <object x="-448" y="-70" width="1"/>
  </objectgroup>
 </map>
