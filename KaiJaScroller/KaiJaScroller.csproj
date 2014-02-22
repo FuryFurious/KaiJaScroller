@@ -77,6 +77,10 @@
     <Compile Include="Classes\Components\Actions\RandomAction.cs" />
     <Compile Include="Classes\Components\Behavior\Entities\ChaseBrain.cs" />
     <Compile Include="Classes\Components\Skills\Fireball.cs" />
+    <Compile Include="Classes\GameTemplate\MyReader.cs" />
+    <Compile Include="Classes\InterfacesAbstracts\IOverlayState.cs" />
+    <Compile Include="Classes\Overlays\GameOver.cs" />
+    <Compile Include="Classes\Overlays\NoneOverlay.cs" />
     <Compile Include="Classes\Objects\BoundingBox.cs" />
     <Compile Include="Classes\Components\Behavior\Entities\NoBrain.cs" />
     <Compile Include="Classes\Components\Behavior\Entities\RandomBrain.cs" />
@@ -93,6 +97,7 @@
     <Compile Include="Classes\Gamestates\InGame.cs" />
     <Compile Include="Classes\Components\Behavior\Entities\PlayerBrain.cs" />
     <Compile Include="Classes\Objects\Teleporter.cs" />
+    <Compile Include="Classes\Overlays\PauseOverlay.cs" />
     <Compile Include="Classes\Statics\Assets.cs" />
     <Compile Include="Classes\Statics\EntityLibrary.cs" />
     <Compile Include="Classes\Statics\Enums.cs" />
@@ -142,6 +147,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\lifeMarker.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\save.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\wall.png">

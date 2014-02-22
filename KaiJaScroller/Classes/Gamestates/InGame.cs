@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 public class InGame : IGameState
 {
-    static String nextLevel = "testLevel.tmx";
+    static String nextLevel;
 
     public List<BoundingBox> collisionRects = new List<BoundingBox>();
 
-    public Entity player;
+    public Entity player                    = new Entity();
 
-    public List<Entity> friendlyBullets = new List<Entity>();
-    public List<Entity> hostileBullets = new List<Entity>();
+    public List<Entity> friendlyBullets     = new List<Entity>();
+    public List<Entity> hostileBullets      = new List<Entity>();
     public List<Entity> enemies             = new List<Entity>();
 
     public List<DynamicText> text           = new List<DynamicText>();
@@ -35,6 +35,11 @@ public class InGame : IGameState
 
     View view;
     Sprite[, ,] sprites;
+
+    EOverlayState currentOverlay = EOverlayState.None;
+    EOverlayState prevOverlay;
+
+    IOverlayState overlay;
 
     public InGame()
     {
@@ -55,10 +60,17 @@ public class InGame : IGameState
 
         for(int i = 0; i < targets.Length; i++)
             targets[i] = new RenderTexture((uint)Settings.windowWidth, (uint)Settings.windowHeight);
-
-
-        this.player = new Entity();
       
+
+        view = targets[0].GetView();
+        view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, 2f, 2f);
+        targets[0].SetView(view);
+
+        handleNewOverlayState();
+    }
+
+    public void init()
+    {
         this.player.setPhysics(new SimplePhysic(new PlayerJump()));
         this.player.boundingBox = new BoundingBox(0, 0, 16, 32);
         this.player.boundingBox.offsetX = 8;
@@ -67,63 +79,63 @@ public class InGame : IGameState
         playerSprite.TextureRect = new IntRect(0, 0, 32, 32);
 
         this.player.setSprite(playerSprite);
-        this.player.hitpoints[1] = 300;
-        this.player.hitpoints[0] = this.player.hitpoints[1];
 
         PlayerBrain brain = new PlayerBrain();
         this.player.setBrain(brain);
-        
-      
 
-        view = targets[0].GetView();
-        view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, 2f, 2f);
-        targets[0].SetView(view);
+        load();
 
         loadLevel(nextLevel);
-    }
 
-    public void init()
-    {
         foreach (Entity e in enemies)
             e.init();
 
         player.init();
+
+        updateLifebar();
+
     }
 
     public EGameState update(GameTime gameTime)
     {
+        Console.WriteLine(currentOverlay);
 
-        if (GameStateManager.pad.isClicked(Help.LB) || GameStateManager.input.isClicked(Keyboard.Key.Escape))
-            return EGameState.Restart;
+        currentOverlay = overlay.update(gameTime);
 
-        if (GameStateManager.pad.isClicked(Help.RB) || GameStateManager.input.isClicked(Keyboard.Key.Escape))
+        if (currentOverlay != prevOverlay)
+            handleNewOverlayState();
+
+        if (GameStateManager.pad.isClicked(Help.RB))
             return EGameState.None;
 
         if (GameStateManager.input.isClicked(Keyboard.Key.F1))
             Settings.drawBoundings = !Settings.drawBoundings;
 
-
-        updateBattleText(gameTime);
-
-        updateFriendlyBullets(gameTime);
-
-        updateHostileBullets(gameTime);
-
-        this.player.update(gameTime, this);
-
-        if(player.inviTime > 0)
-            this.player.inviTime -= gameTime.ElapsedTime.TotalSeconds;
-
-        updateEnemies(gameTime);
-
-        if (((float)player.hitpoints[0] / (float)player.hitpoints[1]) > 0)
-            lifebar.Size = new Vector2f((lifeWidth - 8.4f) * ((float)player.hitpoints[0] / (float)player.hitpoints[1]), 16);
-        else lifebar.Size = new Vector2f(0, 0);        if (player.boundingBox.intersects(teleport.bb))
+        if (!overlay.isPaused())
         {
-            nextLevel = teleport.targetMap;
-            return EGameState.Restart;
+            updateBattleText(gameTime);
+
+            updateFriendlyBullets(gameTime);
+
+            updateHostileBullets(gameTime);
+
+            this.player.update(gameTime, this);
+
+            if (player.inviTime > 0)
+                this.player.inviTime -= gameTime.ElapsedTime.TotalSeconds;
+
+            updateEnemies(gameTime);
+
+
+
+            if (player.boundingBox.intersects(teleport.bb))
+            {
+                nextLevel = teleport.targetMap;
+                save();
+                return EGameState.Restart;
+            }
         }
-        return EGameState.InGame;
+        return returnGameState();
     }
 
     public void draw(GameTime gameTime, RenderWindow window)
@@ -204,6 +216,8 @@ public class InGame : IGameState
         targets[1].Draw(lifebar);
 
 
+        overlay.draw(gameTime, targets[1]);
+
         (targets[0] as RenderTexture).Display();
         (targets[1] as RenderTexture).Display();
 
@@ -283,6 +297,8 @@ public class InGame : IGameState
 
                 player.inviTime = Settings.INVITIME;
                 player.hitpoints[0] -= enemies[i].damage;
+
+                updateLifebar();
             }
 
             if (enemies[i].hitpoints[0] <= 0)
@@ -313,6 +329,8 @@ public class InGame : IGameState
 
                 player.hitpoints[0] -= hostileBullets[i].damage;
                 player.inviTime = Settings.INVITIME;
+
+                updateLifebar();
 
                 if (hostileBullets[i].hitpoints[0] <= 0)
                 {
@@ -379,9 +397,6 @@ public class InGame : IGameState
                 xPos *= map.getTileWidth();
                 yPos *= map.getTileHeight();
 
-                Console.WriteLine(pic.id);
-                Console.WriteLine(pic.x + ", " + pic.y);
-
                 Sprite s = new Sprite(texture);
 
                 s.TextureRect = new IntRect(xPos, yPos, map.getTileWidth(), map.getTileHeight());
@@ -412,6 +427,83 @@ public class InGame : IGameState
 
                 }
             }
+        }
+    }
+
+    private void updateLifebar()
+    {
+
+        if (((float)player.hitpoints[0] / (float)player.hitpoints[1]) > 0)
+            lifebar.Size = new Vector2f((lifeWidth - 8.4f) * ((float)player.hitpoints[0] / (float)player.hitpoints[1]), 16);
+
+        else
+            lifebar.Size = new Vector2f(0, 0);  
+    }
+
+    private void save()
+    {
+        Help.reader.open("Content/save.txt");
+
+        Help.reader.setValue("hp0", ""+player.hitpoints[0]);
+        Help.reader.setValue("hp1", "" + player.hitpoints[1]);
+        Help.reader.setValue("level", nextLevel);
+
+        Help.reader.save();
+
+        Help.reader.close();
+    }
+
+    private void load()
+    {
+        Help.reader.open("Content/save.txt");
+
+        int hp0 = int.Parse(Help.reader.getValue("hp0"));
+        int hp1 = int.Parse(Help.reader.getValue("hp1"));
+
+        player.hitpoints[0] = hp0;
+        player.hitpoints[1] = hp1;
+
+        nextLevel = Help.reader.getValue("level");
+
+        Help.reader.close();
+    }
+
+    private void handleNewOverlayState()
+    {
+        switch (currentOverlay)
+        {
+            case EOverlayState.None:
+                overlay = new NoneOverlay();
+                break;
+
+            case EOverlayState.GameOver:
+                overlay = new GameOver();
+                break;
+
+            case EOverlayState.Pause:
+                overlay = new PauseOverlay();
+                break;
+
+            default:
+                break;
+        }
+
+        overlay.init();
+        prevOverlay = currentOverlay;
+    }
+
+    private EGameState returnGameState()
+    {
+        switch (currentOverlay)
+        {
+            case EOverlayState.Restart:
+                return EGameState.Restart;
+
+            case EOverlayState.MainMenu:
+                return EGameState.MainMenu;
+
+            default:
+                return EGameState.InGame;
         }
     }
 }
