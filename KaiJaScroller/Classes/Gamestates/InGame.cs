@@ -33,7 +33,6 @@ public class InGame : IGameState
     RectangleShape lifebar;
     float lifeWidth;
 
-
     View view;
     Sprite[, ,] sprites;
 
