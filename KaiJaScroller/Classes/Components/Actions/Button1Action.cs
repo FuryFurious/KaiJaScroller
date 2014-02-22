@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 public class Button1Action : IActionListener
 {
 
-    public bool performed(GameTime gameTime, InGame ingame)
+    public bool performed(GameTime gameTime, Entity source)
     {
        return GameStateManager.input.isClicked(Keyboard.Key.E) || GameStateManager.pad.isClicked(Help.X);
     }

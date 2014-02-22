@@ -32,6 +32,12 @@ public class Fireball : ASkill
             bull.setPosition(this.entity.position.X, this.entity.position.Y);
 
             //TODO: put in a possibilty to let enemies add their bullet list
-            this.entity.ingame.bullets.Add(bull);
+        if(this.entity.isFriendly)
+            this.entity.ingame.friendlyBullets.Add(bull);
+
+        else
+            this.entity.ingame.hostileBullets.Add(bull);
+
+       
     }
 }

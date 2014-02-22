@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 public interface IActionListener
 {
-    bool performed(GameTime gameTime, InGame ingame);
+    bool performed(GameTime gameTime, Entity source);
 }

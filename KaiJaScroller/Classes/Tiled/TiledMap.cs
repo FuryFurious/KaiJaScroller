@@ -113,7 +113,7 @@ namespace TiledMap
                                         map.rectangles.Add(currentRect);
                                     }
 
-                                    else if (reader.Value.Equals("Picture"))
+                                    else if (reader.Value.Equals("EnemySpawn"))
                                     {
                                         TiledPicture currentPic = new TiledPicture();
                                         currentPic.type = reader.Value;
@@ -235,8 +235,6 @@ namespace TiledMap
         //    map.convertTilesToIntArray();
             map.tileIds = map.convertTilesToIntArray();
 
-            foreach (TiledPicture pic in map.pictures)
-                Console.WriteLine(pic.ToString());
 
             return map;
         }

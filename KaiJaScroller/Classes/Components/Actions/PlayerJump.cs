@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 public class PlayerJump : IActionListener
 {
 
-    public bool performed(GameTime gameTime, InGame ingame)
+    public bool performed(GameTime gameTime, Entity source)
     {
         return GameStateManager.input.isClicked(Keyboard.Key.Space) || GameStateManager.pad.isClicked(Help.A);
     }

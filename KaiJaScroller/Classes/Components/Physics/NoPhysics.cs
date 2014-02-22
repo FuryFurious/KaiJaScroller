@@ -11,5 +11,10 @@ public class NoPhysics : APhysicComponent
     {
         
     }
+
+    public override void init()
+    {
+      
+    }
 }
 
