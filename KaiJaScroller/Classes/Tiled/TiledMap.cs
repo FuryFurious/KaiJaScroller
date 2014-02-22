@@ -75,6 +75,7 @@ namespace TiledMap
                                     if (reader.Value.Equals("Collision"))
                                     {
                                         TiledRectangle currentRect = new TiledRectangle();
+
                                         currentRect.type = reader.Value;
 
                                         reader.MoveToNextAttribute();

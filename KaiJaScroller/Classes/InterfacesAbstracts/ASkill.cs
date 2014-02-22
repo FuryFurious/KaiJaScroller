@@ -11,7 +11,7 @@ public abstract class ASkill
 
     protected String name;
 
-    protected IAction action;
+    protected IActionListener action;
 
     protected double curCooldown;
     protected double maxCooldown;
@@ -33,7 +33,7 @@ public abstract class ASkill
         this.entity = e;
     }
 
-    public void setAction(IAction action)
+    public void setAction(IActionListener action)
     {
         this.action = action;
     }

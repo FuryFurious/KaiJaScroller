@@ -14,9 +14,9 @@ public class SimplePhysic : APhysicComponent
     double fallTime = 0;
     float fallSpeed = 0;
 
-    IAction jumpPerformance;
+    IActionListener jumpPerformance;
 
-    public SimplePhysic(IAction jumpPerformance)
+    public SimplePhysic(IActionListener jumpPerformance)
     {
         this.jumpPerformance = jumpPerformance;
     }

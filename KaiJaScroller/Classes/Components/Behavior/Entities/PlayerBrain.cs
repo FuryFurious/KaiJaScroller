@@ -10,7 +10,6 @@ public class PlayerBrain : ABehavior
 {
     float speed = 3;
 
-    //TODO: remove cooldown from button1Action and add elsewhere better
     ASkill skill1;
 
     public PlayerBrain()

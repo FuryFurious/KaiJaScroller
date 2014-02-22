@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class NoAction : IAction
+public class NoAction : IActionListener
 {
     public bool performed(GameTime gameTime, InGame ingame)
     {

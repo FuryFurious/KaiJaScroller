@@ -171,6 +171,7 @@ public class InGame : IGameState
         {
             view = window.GetView();
             view.Center -= GameStateManager.input.getDeltaMousePos();
+
             window.SetView(view);
         }
 
