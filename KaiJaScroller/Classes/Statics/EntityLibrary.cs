@@ -42,6 +42,8 @@ public static class EntityLibrary
                 bb = new BoundingBox(0, 0, 16, 32);
                 bb.offsetX = 8;
 
+                e.damage = 1;
+
                 sprite = new Sprite(Assets.impTexture);
                 sprite.TextureRect = new IntRect(0, 0, 32, 32);
 

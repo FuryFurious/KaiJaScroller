@@ -46,11 +46,9 @@ public class PlayerBrain : ABehavior
                 this.entity.moveRight(xHelp);
 
             else if (xHelp < 0 && this.entity.canMoveLeft(xHelp, 0))
-                this.entity.moveLeft(xHelp);
-
-
-
+                this.entity.moveLeft(-xHelp);
         }
+
     }
 
     public override void onKill()
