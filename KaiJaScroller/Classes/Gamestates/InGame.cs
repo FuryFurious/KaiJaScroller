@@ -88,6 +88,9 @@ public class InGame : IGameState
         targets[0].SetView(view);
         load();
 
+        if (player.hitpoints[0] <= 0)
+            player.hitpoints[0] = 1;
+
         loadLevel(nextLevel);
 
         foreach (Entity e in enemies)
@@ -101,7 +104,6 @@ public class InGame : IGameState
 
     public EGameState update(GameTime gameTime)
     {
-        Console.WriteLine(currentOverlay);
 
         currentOverlay = overlay.update(gameTime);
 
@@ -130,7 +132,6 @@ public class InGame : IGameState
             updateEnemies(gameTime);
 
 
-
             if (player.boundingBox.intersects(teleport.bb))
             {
                 nextLevel = teleport.targetMap;
@@ -143,8 +144,12 @@ public class InGame : IGameState
 
     public void draw(GameTime gameTime, RenderWindow window)
     {
+
+
         if (Settings.drawBoundings)
         {
+            fps.DisplayedString = "" + 1.0f / (float)gameTime.ElapsedTime.TotalSeconds;
+
             if (GameStateManager.input.leftPressed())
             {
                 view = targets[0].GetView();
@@ -211,8 +216,6 @@ public class InGame : IGameState
 
 
 
-
-        fps.DisplayedString = "" + 1.0f / (float)gameTime.ElapsedTime.TotalSeconds;
         if (Settings.drawBoundings)
             targets[1].Draw(fps);
 
@@ -363,7 +366,6 @@ public class InGame : IGameState
         }
     }
 
-    //TODO: remove to better place:
     private void loadLevel(String path)
     {
         TiledMap.TiledMapInfo map = TiledMap.TiledMapInfo.getMap("Content/"+path);
@@ -486,11 +488,15 @@ public class InGame : IGameState
         switch (currentOverlay)
         {
             case EOverlayState.None:
-                overlay = new NoneOverlay();
+                overlay = new NoneOverlay(player);
                 break;
 
             case EOverlayState.GameOver:
                 overlay = new GameOver();
+
+                player.hitpoints[0] = player.hitpoints[1];
+                save();
+
                 break;
 
             case EOverlayState.Pause:

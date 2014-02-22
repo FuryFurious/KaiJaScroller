@@ -28,6 +28,9 @@ public class GameOver : IOverlayState
 
     public EOverlayState update(GameTime gameTime)
     {
+        if (GameStateManager.input.isClicked(SFML.Window.Keyboard.Key.Escape))
+            return EOverlayState.Restart;
+
         return EOverlayState.GameOver;
     }
 
