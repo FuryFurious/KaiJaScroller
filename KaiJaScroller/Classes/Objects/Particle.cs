@@ -14,9 +14,8 @@ public class Particle
 
     public double lifeTime;
 
-    public Particle(double lifeTime)
+    public Particle()
     {
-        this.lifeTime = lifeTime;
     }
 
     public void setSprite(Sprite s)
@@ -34,8 +33,9 @@ public class Particle
         this.behavior = behavior;
 
         this.behavior.parent = this;
-
         this.behavior.init();
+
+        this.lifeTime = this.behavior.lifeTime;
     }
 
     public void update(GameTime gameTime)

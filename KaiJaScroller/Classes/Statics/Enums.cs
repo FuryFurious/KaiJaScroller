@@ -9,3 +9,5 @@ public enum EDirection { Left, Right, DirectionCount }
 
 public enum EEntityType {None, Player, Imp = 16 };
 
+public enum EParticleType {Smoke, ParticleCount };
+

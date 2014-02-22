@@ -1,4 +1,5 @@
 ﻿using SFML.Graphics;
+using SFML.Window;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,26 +19,32 @@ public class Fireball : ASkill
 
     public override void onUse(GameTime gameTime)
     {
-            Entity bull = new Entity();
+        Entity bull = new Entity();
 
-            Sprite sp = new Sprite(Assets.fireballTexture);
-            sp.TextureRect = new IntRect(0, 0, 32, 32);
+        Sprite sp = new Sprite(Assets.fireballTexture);
+        sp.TextureRect = new IntRect(0, 0, 32, 32);
 
-            bull.setSprite(sp);
-            bull.setBrain(new SimpleBullet(this.entity.direction));
-            bull.setPhysics(new NoPhysics());
+        bull.setSprite(sp);
+        bull.setBrain(new SimpleBullet(this.entity.direction));
+        bull.setPhysics(new NoPhysics());
 
-            bull.damage = 99;
-            bull.boundingBox = new BoundingBox(this.entity.position.X, this.entity.position.Y, 32, 32);
-            bull.setPosition(this.entity.position.X, this.entity.position.Y);
+        Vector2f startPos = this.entity.boundingBox.Center - new Vector2f(16,16);
 
-            //TODO: put in a possibilty to let enemies add their bullet list
-        if(this.entity.isFriendly)
+        bull.damage = 99;
+        bull.boundingBox = new BoundingBox(startPos.X, startPos.Y, 16, 16);
+
+        bull.boundingBox.offsetX = 8;
+        bull.boundingBox.offsetY = 8;
+
+        bull.setPosition(startPos.X, startPos.Y);
+
+
+
+        if (this.entity.isFriendly)
             this.entity.ingame.friendlyBullets.Add(bull);
 
         else
             this.entity.ingame.hostileBullets.Add(bull);
-
-       
     }
 }
+

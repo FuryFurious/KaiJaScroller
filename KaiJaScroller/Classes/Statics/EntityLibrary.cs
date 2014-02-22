@@ -55,5 +55,28 @@ public static class EntityLibrary
         return null;
 
     }
+
+    public static Particle getParticle( EParticleType type, Vector2f start)
+    {
+        switch (type)
+        {
+            case EParticleType.Smoke:
+
+                Particle p = new Particle();
+
+                Sprite s1 = new Sprite(Assets.smokeParticle);
+               // s1.Color = Color.Black;
+                s1.Origin = new Vector2f(16, 16);
+                s1.Rotation = (float)(Help.random.NextDouble() * 360.0);
+
+                p.setSprite(s1);
+                p.setPosition(start);
+                p.setBehavior(new Smoke());
+
+
+                return p;
+        }
+        return null;
+    }
 }
 

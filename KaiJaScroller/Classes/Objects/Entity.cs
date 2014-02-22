@@ -33,6 +33,9 @@ public class Entity
     public double inviTime = Settings.INVITIME;
     public EDirection direction = EDirection.Left;
 
+    public float xHelp;
+    public float yHelp;
+
     public Entity()
     {
         hitpoints[0] = 1;

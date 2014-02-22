@@ -100,10 +100,6 @@ public class SimplePhysic : APhysicComponent
 
                 this.entity.moveVert(fallSpeed);
             }
-
-       
-
-
            
         }
     }
