@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 public class Entity
 {
     //gfxComponent
-    Sprite sprite;
+    AGfxComp gfxComp;
 
     //update/think Component:
     ABehavior behavior;
@@ -33,57 +33,71 @@ public class Entity
     public double inviTime = Settings.INVITIME;
     public EDirection direction = EDirection.Left;
 
-    public float xHelp;
-    public float yHelp;
 
     public Entity()
     {
         hitpoints[0] = 1;
         hitpoints[1] = 1;
-
-
-
     }
 
-    public void init()
-    {
-        
-        behavior.init();
-        physic.init();
-    }
-
-
-    public void update(GameTime gameTime, InGame ingame)
+    public void init(InGame ingame)
     {
         this.ingame = ingame;
+
+        behavior.init();
+        physic.init();
+        gfxComp.init();
+    }
+
+
+    public void update(GameTime gameTime)
+    {
+
         physic.update(gameTime);
         behavior.update(gameTime);
+        gfxComp.update(gameTime);
 
-        this.sprite.Position = position;
         boundingBox.X = position.X + boundingBox.offsetX;
         boundingBox.Y = position.Y + boundingBox.offsetY;
     }
 
     public void draw(GameTime gameTime, RenderTarget[] target)
     {
-        target[0].Draw(sprite);
+        gfxComp.draw(gameTime, target[0]);
 
         if(Settings.drawBoundings)
             boundingBox.draw(target[0]);
     }
 
-    public void moveHorz(float x)
+    public void moveLeft(float x)
     {
-        if (x < 0)
-        {
-            this.direction = EDirection.Left;
-            this.sprite.TextureRect = new IntRect(0, 0, this.sprite.TextureRect.Width, this.sprite.TextureRect.Height);
-        }
-        else if (x > 0)
-        {
-            this.direction = EDirection.Right;
-            this.sprite.TextureRect = new IntRect(this.sprite.TextureRect.Width, 0, this.sprite.TextureRect.Width, this.sprite.TextureRect.Height);
-        }
+     //   if (x < 0)
+      //  {
+        //    this.direction = EDirection.Left;
+          //  this.sprite.TextureRect = new IntRect(0, 0, this.sprite.TextureRect.Width, this.sprite.TextureRect.Height);
+       // }
+       // else if (x > 0)
+       // {
+         //   this.direction = EDirection.Right;
+            //this.sprite.TextureRect = new IntRect(this.sprite.TextureRect.Width, 0, this.sprite.TextureRect.Width, this.sprite.TextureRect.Height);
+        //}
+        this.direction = EDirection.Left;
+        this.position -= new Vector2f(x, 0);
+    }
+
+    public void moveRight(float x)
+    {
+        //   if (x < 0)
+        //  {
+        //    this.direction = EDirection.Left;
+        //  this.sprite.TextureRect = new IntRect(0, 0, this.sprite.TextureRect.Width, this.sprite.TextureRect.Height);
+        // }
+        // else if (x > 0)
+        // {
+        //   this.direction = EDirection.Right;
+        //this.sprite.TextureRect = new IntRect(this.sprite.TextureRect.Width, 0, this.sprite.TextureRect.Width, this.sprite.TextureRect.Height);
+        //}
+        this.direction = EDirection.Right;
         this.position += new Vector2f(x, 0);
     }
 
@@ -152,15 +166,16 @@ public class Entity
         this.position = new Vector2f(x, y);
         this.boundingBox.X = x;
         this.boundingBox.Y = y;
-        this.sprite.Position = this.position;
+       // this.gfxComp..Position = this.position;
     }
 
 
   
 
-    public void setSprite(Sprite s)
+    public void setGfxComp(AGfxComp s)
     {
-        this.sprite = s;
+        this.gfxComp = s;
+        this.gfxComp.setEntity(this);
     }
 
     public void setBrain(ABehavior b)

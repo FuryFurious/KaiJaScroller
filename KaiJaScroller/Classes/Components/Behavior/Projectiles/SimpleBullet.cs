@@ -11,13 +11,12 @@ public class SimpleBullet : ABehavior
 {
     public double lifeTime = 5;
     public float speed = 3;
+    EDirection dir;
+
 
     public SimpleBullet(EDirection direction)
     {
-        if (direction == EDirection.Left)
-            speed = -3;
-        else
-            speed = 3;
+        this.dir = direction;
     }
 
     public override void update(GameTime gameTime)
@@ -26,18 +25,18 @@ public class SimpleBullet : ABehavior
 
         float nextSpeed = speed + 20 * speed * (1 - ((float)lifeTime / 5.0f));
 
-        if (speed > 0)
+        if (dir == EDirection.Right)
         {
             if (this.entity.canMoveRight(nextSpeed))
-                this.entity.moveHorz(nextSpeed);
+                this.entity.moveRight(nextSpeed);
             else
                 this.entity.exists = false;
         }
 
-        else if (speed < 0)
+        else if (dir == EDirection.Left)
         {
             if (this.entity.canMoveLeft(nextSpeed))
-                this.entity.moveHorz(nextSpeed);
+                this.entity.moveLeft(nextSpeed);
             else
                 this.entity.exists = false;
         }
@@ -58,7 +57,7 @@ public class SimpleBullet : ABehavior
 
     public override void init()
     {
-        
+
     }
 }
 

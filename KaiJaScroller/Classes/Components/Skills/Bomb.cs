@@ -25,7 +25,10 @@ public class Bomb : ASkill
         Sprite sp = new Sprite(Assets.bomb);
         sp.TextureRect = new IntRect(0, 0, 32, 32);
 
-        bull.setSprite(sp);
+        AGfxComp comp = new ProjectileGfx();
+        comp.setSprite(sp);
+
+        bull.setGfxComp(comp);
         bull.setBrain(new SimpleBomb(this.entity.direction));
         bull.setPhysics(new SimplePhysic(new NoAction()));
 
@@ -42,11 +45,8 @@ public class Bomb : ASkill
         else
             bull.setPosition(startPos.X - 16 + 8, startPos.Y - 40);
 
-        if (this.entity.isFriendly)
-            this.entity.ingame.friendlyBullets.Add(bull);
 
-        else
-            this.entity.ingame.hostileBullets.Add(bull);
+        this.entity.ingame.addBullet(bull, this.entity.isFriendly);
 
     }
 }

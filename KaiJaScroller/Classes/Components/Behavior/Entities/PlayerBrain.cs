@@ -17,13 +17,13 @@ public class PlayerBrain : ABehavior
     public override void update(GameTime gameTime)
     {
 
-        if (GameStateManager.input.isPressed(Keyboard.Key.A) && this.entity.canMoveLeft(-speed))
+        if (GameStateManager.input.isPressed(Keyboard.Key.A) && this.entity.canMoveLeft(speed))
         {
-            this.entity.moveHorz(-speed);
+            this.entity.moveLeft(speed);
         }
         else if (GameStateManager.input.isPressed(Keyboard.Key.D) && this.entity.canMoveRight(speed))
         {
-            this.entity.moveHorz(speed);
+            this.entity.moveRight(speed);
         }
 
         updateSkills(gameTime);
@@ -36,16 +36,17 @@ public class PlayerBrain : ABehavior
         else if (leftX < 0)
             leftX = ((Help.Clamp(leftX, -95, -5) + 5.0f) / 90.0f);
 
+        //TODO direction zeugs ist falsch, weil moveLeft jetzt positive werte annimmt!! PSSST
 
         if (Math.Abs(leftX) > 0.2f)
         {
             float xHelp = leftX * speed;
 
             if (xHelp > 0 && this.entity.canMoveRight(xHelp))
-                this.entity.moveHorz(xHelp);
+                this.entity.moveRight(xHelp);
 
-            else if (xHelp < 0 && this.entity.canMoveLeft(xHelp))
-                this.entity.moveHorz(xHelp);
+            else if (xHelp < 0 && this.entity.canMoveLeft(-xHelp))
+                this.entity.moveLeft(-xHelp);
         }
     }
 
@@ -60,7 +61,6 @@ public class PlayerBrain : ABehavior
         ASkill skill1 = new Fireball();
         skill1.setAction(new Button1Action());
         skill1.setEntity(this.entity);
-
         skills.Add(skill1);
     }
 }

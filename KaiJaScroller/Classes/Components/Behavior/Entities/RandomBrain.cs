@@ -24,10 +24,10 @@ public class RandomBrain : ABehavior
         }
 
         if (moveLeft && this.entity.canMoveLeft(-3))
-            this.entity.moveHorz(-3);
+            this.entity.moveLeft(-3);
 
         else if(!moveLeft && this.entity.canMoveRight(3))
-            this.entity.moveHorz(3);
+            this.entity.moveLeft(3);
     }
 
     public override void onKill()

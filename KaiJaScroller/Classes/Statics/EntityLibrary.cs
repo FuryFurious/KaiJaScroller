@@ -11,49 +11,55 @@ public static class EntityLibrary
 {
     public static Entity getEntity(EEntityType type)
     {
+        Entity e = new Entity();
+        e.isFriendly = false;
+        BoundingBox bb = null;
+        Sprite sprite = null;
+        AGfxComp gfxComp = null;
+        ABehavior behavior = null;
+        APhysicComponent physics = null;
+
         switch (type)
         {
             case EEntityType.Player:
 
-                Entity player = new Entity();
+                e.isFriendly = true;
+                bb = new BoundingBox(0, 0, 16, 32);
+                bb.offsetX = 8;
 
-                player.setPhysics(new SimplePhysic(new PlayerJump()));
-                player.boundingBox = new BoundingBox(0, 0, 16, 32);
-                player.boundingBox.offsetX = 8;
+                sprite = new Sprite(Assets.zombieTexture);
+                sprite.TextureRect = new IntRect(0, 0, 32, 32);
 
-                Sprite playerSprite = new Sprite(Assets.zombieTexture);
-                playerSprite.TextureRect = new IntRect(0, 0, 32, 32);
+                gfxComp = new ProjectileGfx();
 
-                player.setSprite(playerSprite);
+                behavior = new PlayerBrain();
+                physics = new SimplePhysic(new PlayerJump());
 
-                PlayerBrain brain = new PlayerBrain();
-                player.setBrain(brain);
-                return player;
-
+                break;
 
             case EEntityType.Imp:
 
-                Entity enemy1 = new Entity();
-                enemy1.isFriendly = false;
+                bb = new BoundingBox(0, 0, 16, 32);
+                bb.offsetX = 8;
 
-                Sprite s = new Sprite(Assets.impTexture);
-                s.TextureRect = new IntRect(0, 0, 32, 32);
-                ABehavior enemyBehave = new ChaseBrain();
+                sprite = new Sprite(Assets.impTexture);
+                sprite.TextureRect = new IntRect(0, 0, 32, 32);
 
-                enemy1.setSprite(s);
-                enemy1.setBrain(enemyBehave);
-                enemy1.setPhysics(new SimplePhysic(new ChaseJump()));
+                gfxComp = new ProjectileGfx();
 
-                enemy1.hitpoints[1] = 10;
-                enemy1.damage = 3;
-                enemy1.boundingBox = new BoundingBox(0, 0, 32, 32);
-
-                return enemy1;
+                behavior = new ChaseBrain();
+                physics = new SimplePhysic(new ChaseJump());
+                break;
 
         }
 
-        return null;
-
+        gfxComp.setSprite(sprite);
+        e.setPhysics(physics);
+        e.setBrain(behavior);
+        e.boundingBox = bb;
+        e.setGfxComp(gfxComp);
+     
+        return e;
     }
 
     public static Particle getParticle( EParticleType type, Vector2f start)

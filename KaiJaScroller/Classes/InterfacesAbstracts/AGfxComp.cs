@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 public abstract class AGfxComp
 {
-    Entity entity;
-    Sprite sprite;
+    protected Entity entity;
+    protected Sprite sprite;
 
     public abstract void init();
 

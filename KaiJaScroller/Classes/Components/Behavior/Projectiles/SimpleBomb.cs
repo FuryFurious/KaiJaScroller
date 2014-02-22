@@ -28,7 +28,7 @@ public class SimpleBomb : ABehavior
         if (!this.entity.canMoveLeft(-3) || !this.entity.canMoveRight(3) || !this.entity.canMoveUp(-3) || !this.entity.canMoveDown(3))
             this.entity.exists = false;
 
-        this.entity.moveHorz(xSpeed);
+        this.entity.moveLeft(xSpeed);
 
         this.entity.moveVert(ySpeed);
     }

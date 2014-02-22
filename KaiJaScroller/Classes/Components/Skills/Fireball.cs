@@ -24,9 +24,13 @@ public class Fireball : ASkill
         Sprite sp = new Sprite(Assets.fireballTexture);
         sp.TextureRect = new IntRect(0, 0, 32, 32);
 
-        bull.setSprite(sp);
+        AGfxComp comp = new ProjectileGfx();
+        comp.setSprite(sp);
+
+        bull.setGfxComp(comp);
         bull.setBrain(new SimpleBullet(this.entity.direction));
         bull.setPhysics(new NoPhysics());
+
 
         Vector2f startPos = this.entity.boundingBox.Center - new Vector2f(16,16);
 
@@ -38,13 +42,7 @@ public class Fireball : ASkill
 
         bull.setPosition(startPos.X, startPos.Y);
 
-
-
-        if (this.entity.isFriendly)
-            this.entity.ingame.friendlyBullets.Add(bull);
-
-        else
-            this.entity.ingame.hostileBullets.Add(bull);
+        this.entity.ingame.addBullet(bull, this.entity.isFriendly);
     }
 }
 

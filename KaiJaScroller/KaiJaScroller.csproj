@@ -78,6 +78,7 @@
     <Compile Include="Classes\Components\Behavior\Entities\ChaseBrain.cs" />
     <Compile Include="Classes\Components\Behavior\Particles\Smoke.cs" />
     <Compile Include="Classes\Components\Behavior\Projectiles\SimpleBomb.cs" />
+    <Compile Include="Classes\Components\GfxComps\ProjectileGfx.cs" />
     <Compile Include="Classes\InterfacesAbstracts\AGfxComp.cs" />
     <Compile Include="Classes\Components\Skills\Bomb.cs" />
     <Compile Include="Classes\Components\Skills\Fireball.cs" />

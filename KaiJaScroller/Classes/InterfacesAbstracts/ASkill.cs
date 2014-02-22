@@ -16,8 +16,10 @@ public abstract class ASkill
     protected double curCooldown;
     protected double maxCooldown;
 
+
     public void update(GameTime gameTime)
     {
+
 
         if (curCooldown > 0)
             curCooldown -= gameTime.ElapsedTime.TotalSeconds;
@@ -38,6 +40,8 @@ public abstract class ASkill
     {
         this.action = action;
     }
+
+
 
     public abstract void onUse(GameTime gameTime);
 }

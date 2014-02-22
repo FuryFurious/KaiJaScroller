@@ -70,22 +70,12 @@ public class InGame : IGameState
         view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, 2f, 2f);
         targets[0].SetView(view);
 
-        handleNewOverlayState();
+    
     }
 
     public void init()
     {
-        this.player.setPhysics(new SimplePhysic(new PlayerJump()));
-        this.player.boundingBox = new BoundingBox(0, 0, 16, 32);
-        this.player.boundingBox.offsetX = 8;
-
-        Sprite playerSprite = new Sprite(Assets.zombieTexture);
-        playerSprite.TextureRect = new IntRect(0, 0, 32, 32);
-
-        this.player.setSprite(playerSprite);
-
-        PlayerBrain brain = new PlayerBrain();
-        this.player.setBrain(brain);
+        player = EntityLibrary.getEntity(EEntityType.Player);
 
         view = targets[0].GetView();
         view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, Settings.windowWidth/Settings.viewportWidth, Settings.windowHeight/Settings.viewportHeight);
@@ -98,13 +88,14 @@ public class InGame : IGameState
         loadLevel(nextLevel);
 
         foreach (Entity e in enemies)
-            e.init();
+            e.init(this);
 
-        player.init();
+        player.init(this);
         updateViewport();
 
 
         updateLifebar();
+        handleNewOverlayState();
 
     }
 
@@ -155,7 +146,7 @@ public class InGame : IGameState
 
             updateParticles(gameTime);
 
-            this.player.update(gameTime, this);
+            this.player.update(gameTime);
 
             if (player.inviTime > 0)
                 this.player.inviTime -= gameTime.ElapsedTime.TotalSeconds;
@@ -306,7 +297,7 @@ public class InGame : IGameState
     {
         for (int i = 0; i < friendlyBullets.Count; i++)
         {
-            friendlyBullets[i].update(gameTime, this);
+            friendlyBullets[i].update(gameTime);
 
             foreach (Entity e in enemies)
             {
@@ -342,7 +333,7 @@ public class InGame : IGameState
     {
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].update(gameTime, this);
+            enemies[i].update(gameTime);
 
             if (enemies[i].inviTime > 0)
                 enemies[i].inviTime -= gameTime.ElapsedTime.TotalSeconds;
@@ -374,7 +365,7 @@ public class InGame : IGameState
     {
         for (int i = 0; i < hostileBullets.Count; i++)
         {
-            hostileBullets[i].update(gameTime, this);
+            hostileBullets[i].update(gameTime);
 
 
             if (player.inviTime <= 0 && hostileBullets[i].boundingBox.intersects(player.boundingBox))
@@ -436,7 +427,7 @@ public class InGame : IGameState
 
         foreach (TiledMap.TiledPicture pic in map.pictures)
         {
-
+            
             if (pic.type.Equals("EnemySpawnLeft"))
             {
                 Entity ene = EntityLibrary.getEntity((EEntityType)pic.id);
@@ -448,11 +439,11 @@ public class InGame : IGameState
             {
                 Entity ene = EntityLibrary.getEntity((EEntityType)pic.id);
                 ene.direction = EDirection.Right;
-                ene.moveHorz(0.01f);
+                ene.moveLeft(0.01f);
                 ene.setPosition(pic.x, pic.y);
                 enemies.Add(ene);
             }
-
+            
             else if (pic.type.Equals("Picture"))
             {
                 pic.id -= 1;
@@ -575,5 +566,16 @@ public class InGame : IGameState
             default:
                 return EGameState.InGame;
         }
+    }
+
+    public void addBullet(Entity e, bool friendly)
+    {
+        e.ingame = this;
+
+        if (friendly)
+            friendlyBullets.Add(e);
+        else
+            hostileBullets.Add(e);
+        
     }
 }
