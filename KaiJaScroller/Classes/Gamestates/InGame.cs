@@ -21,6 +21,10 @@ public class InGame : IGameState
     View view;
     Sprite[, ,] sprites;
 
+    public List<RenderTexture> renderTargets;
+    
+    private RenderTexture finalTexture;
+
     public InGame()
     {
         //   new Sprite(Assets.zombieTexture), 
@@ -66,6 +70,11 @@ public class InGame : IGameState
 
 
         fillSprites("Content/testLevel.tmx");
+
+        renderTargets = new List<RenderTexture>();
+        renderTargets.Add(new RenderTexture((uint)Settings.windowWidth, (uint)Settings.windowHeight));
+        renderTargets.Add(new RenderTexture((uint)Settings.windowWidth, (uint)Settings.windowHeight));
+        finalTexture = new RenderTexture((uint)Settings.windowWidth, (uint)Settings.windowHeight);
 
         
     }
@@ -128,6 +137,8 @@ public class InGame : IGameState
                 i--;
             }
         }
+
+        
 
 
         this.player.update(gameTime, this);
@@ -211,6 +222,8 @@ public class InGame : IGameState
         foreach (DynamicText t in text)
             t.draw(gameTime, window);
 
+
+        
     }
 
     //TODO: remove to better place:
