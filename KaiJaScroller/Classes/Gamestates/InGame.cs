@@ -84,7 +84,7 @@ public class InGame : IGameState
         this.player.setBrain(brain);
 
         view = targets[0].GetView();
-        view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, Settings.windowWidth/Settings.viewportWidth, Settings.windowHeight/Settings.viewportHight);
+        view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, Settings.windowWidth/Settings.viewportWidth, Settings.windowHeight/Settings.viewportHeight);
         targets[0].SetView(view);
         load();
 

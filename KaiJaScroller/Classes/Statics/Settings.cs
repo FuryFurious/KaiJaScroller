@@ -16,7 +16,7 @@ public static class Settings
     public static int windowHeight = 600;
 
     public static int viewportWidth = 400;
-    public static int viewportHight = 300;
+    public static int viewportHeight = 300;
 
     public static Styles windowStyles = Styles.Default;
 
