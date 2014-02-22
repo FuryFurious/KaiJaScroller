@@ -44,7 +44,7 @@ public static class EntityLibrary
                 enemy1.setBrain(enemyBehave);
                 enemy1.setPhysics(new SimplePhysic(new ChaseJump()));
 
-                enemy1.hitpoints = 10;
+                enemy1.hitpoints[1] = 10;
                 enemy1.damage = 3;
                 enemy1.boundingBox = new BoundingBox(0, 0, 32, 32);
 

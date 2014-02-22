@@ -28,18 +28,23 @@ public class Entity
     public InGame ingame;
 
     public int damage = 0;
-    public int hitpoints = 1;
+    public int[] hitpoints = new int[2];
 
     public double inviTime = Settings.INVITIME;
     public EDirection direction = EDirection.Left;
 
     public Entity()
     {
+        hitpoints[0] = 1;
+        hitpoints[1] = 1;
+
+
 
     }
 
     public void init()
     {
+        
         behavior.init();
         physic.init();
     }
@@ -148,6 +153,7 @@ public class Entity
     }
 
 
+  
 
     public void setSprite(Sprite s)
     {

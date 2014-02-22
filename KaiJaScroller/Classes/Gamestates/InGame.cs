@@ -15,8 +15,6 @@ public class InGame : IGameState
 
     public Entity player;
 
-    public List<Entity> friendlyBullets     = new List<Entity>();
-    public List<Entity> hostileBullets      = new List<Entity>();
 
     public List<Entity> enemies             = new List<Entity>();
 
@@ -30,6 +28,10 @@ public class InGame : IGameState
     private Teleporter teleport;
 
     Text fps;
+    Sprite lifeframe;
+    RectangleShape lifebar;
+    float lifeWidth;
+
 
     View view;
     Sprite[, ,] sprites;
@@ -37,6 +39,15 @@ public class InGame : IGameState
     public InGame()
     {
         fps = new Text("", Assets.font1);
+        lifeframe = new Sprite(Assets.lifebar);
+        lifeframe.Position = new Vector2f(20, 15);
+        lifebar = new RectangleShape();
+
+        lifebar.Position = new Vector2f(24, 23);
+        lifebar.FillColor = Color.Red;
+        lifebar.Size = new Vector2f(1, 16);
+
+        lifeWidth = (float)Assets.lifebar.Size.X;
 
         targets = new RenderTarget[2];
 
@@ -56,9 +67,13 @@ public class InGame : IGameState
         playerSprite.TextureRect = new IntRect(0, 0, 32, 32);
 
         this.player.setSprite(playerSprite);
+        this.player.hitpoints[1] = 300;
+        this.player.hitpoints[0] = this.player.hitpoints[1];
 
         PlayerBrain brain = new PlayerBrain();
         this.player.setBrain(brain);
+        
+      
 
         view = targets[0].GetView();
         view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, 2f, 2f);
@@ -81,6 +96,9 @@ public class InGame : IGameState
         if (GameStateManager.pad.isClicked(Help.LB) || GameStateManager.input.isClicked(Keyboard.Key.Escape))
             return EGameState.Restart;
 
+        if (GameStateManager.pad.isClicked(Help.RB) || GameStateManager.input.isClicked(Keyboard.Key.Escape))
+            return EGameState.None;
+
         if (GameStateManager.input.isClicked(Keyboard.Key.F1))
             Settings.drawBoundings = !Settings.drawBoundings;
 
@@ -98,12 +116,13 @@ public class InGame : IGameState
 
         updateEnemies(gameTime);
 
-        if (player.boundingBox.intersects(teleport.bb))
+        if (((float)player.hitpoints[0] / (float)player.hitpoints[1]) > 0)
+            lifebar.Size = new Vector2f((lifeWidth - 8.4f) * ((float)player.hitpoints[0] / (float)player.hitpoints[1]), 16);
+        else lifebar.Size = new Vector2f(0, 0);        if (player.boundingBox.intersects(teleport.bb))
         {
             nextLevel = teleport.targetMap;
             return EGameState.Restart;
         }
-
         return EGameState.InGame;
     }
 
@@ -179,6 +198,11 @@ public class InGame : IGameState
         if (Settings.drawBoundings)
             targets[1].Draw(fps);
 
+        
+
+        targets[1].Draw(lifeframe);
+        targets[1].Draw(lifebar);
+
 
         (targets[0] as RenderTexture).Display();
         (targets[1] as RenderTexture).Display();
@@ -217,15 +241,15 @@ public class InGame : IGameState
             {
                 if (e.inviTime <= 0 && friendlyBullets[i].boundingBox.intersects(e.boundingBox))
                 {
-                    friendlyBullets[i].hitpoints--;
+                    friendlyBullets[i].hitpoints[0]--;
 
                     DynamicText dT = new DynamicText(e.position, "" + friendlyBullets[i].damage, 3);
                     text.Add(dT);
 
-                    e.hitpoints -= friendlyBullets[i].damage;
+                    e.hitpoints[0] -= friendlyBullets[i].damage;
                     e.inviTime = Settings.INVITIME;
 
-                    if (friendlyBullets[i].hitpoints <= 0)
+                    if (friendlyBullets[i].hitpoints[0] <= 0)
                     {
                         friendlyBullets[i].exists = false;
                         break;
@@ -258,10 +282,10 @@ public class InGame : IGameState
                 text.Add(dT);
 
                 player.inviTime = Settings.INVITIME;
-                player.hitpoints -= enemies[i].damage;
+                player.hitpoints[0] -= enemies[i].damage;
             }
 
-            if (enemies[i].hitpoints <= 0)
+            if (enemies[i].hitpoints[0] <= 0)
                 enemies[i].exists = false;
 
             if (!enemies[i].exists)
@@ -282,15 +306,15 @@ public class InGame : IGameState
 
             if (player.inviTime <= 0 && hostileBullets[i].boundingBox.intersects(player.boundingBox))
             {
-                hostileBullets[i].hitpoints--;
+                hostileBullets[i].hitpoints[0]--;
 
                 DynamicText dT = new DynamicText(player.position, "" + hostileBullets[i].damage, 3);
                 text.Add(dT);
 
-                player.hitpoints -= hostileBullets[i].damage;
+                player.hitpoints[0] -= hostileBullets[i].damage;
                 player.inviTime = Settings.INVITIME;
 
-                if (hostileBullets[i].hitpoints <= 0)
+                if (hostileBullets[i].hitpoints[0] <= 0)
                 {
                     hostileBullets[i].exists = false;
                     break;
