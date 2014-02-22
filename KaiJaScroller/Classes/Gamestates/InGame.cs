@@ -49,7 +49,7 @@ public class InGame : IGameState
 
         lifeWidth = (float)Assets.lifebar.Size.X;
 
-        targets = new RenderTarget[2];
+        targets = new RenderTarget[3];
 
         finalTarget = new RenderTexture((uint)Settings.windowWidth, (uint)Settings.windowHeight);
 
@@ -76,7 +76,7 @@ public class InGame : IGameState
       
 
         view = targets[0].GetView();
-        view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, 2f, 2f);
+        view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, Settings.windowWidth/Settings.viewportWidth, Settings.windowHeight/Settings.viewportHight);
         targets[0].SetView(view);
 
         loadLevel(nextLevel);
@@ -153,6 +153,8 @@ public class InGame : IGameState
             }
         }
 
+
+        
         view = targets[0].GetView();
         view.Center = (player.boundingBox.Center + new Vector2f(200, 150));
         targets[0].SetView(view);
@@ -161,6 +163,7 @@ public class InGame : IGameState
         finalTarget.Clear(Color.Transparent);
         targets[0].Clear(Color.Transparent);
         targets[1].Clear(Color.Transparent);
+        targets[2].Clear(Color.Transparent);
         window.Clear(Color.Transparent);
 
         foreach (Sprite s in sprites)
@@ -206,10 +209,17 @@ public class InGame : IGameState
 
         (targets[0] as RenderTexture).Display();
         (targets[1] as RenderTexture).Display();
+        (targets[2] as RenderTexture).Display();
 
 
         finalTarget.Draw(new Sprite((targets[0] as RenderTexture).Texture));
         finalTarget.Draw(new Sprite((targets[1] as RenderTexture).Texture));
+
+        if (!player.exists)
+        {
+            (targets[2] as RenderTexture).Display();
+            finalTarget.Draw(new Sprite((targets[2] as RenderTexture).Texture));
+        }
 
         finalTarget.Display();
 
