@@ -25,7 +25,7 @@ public class SimpleBomb : ABehavior
     public override void update(GameTime gameTime)
     {
 
-        if (!this.entity.canMoveLeft(-3) || !this.entity.canMoveRight(3) || !this.entity.canMoveUp(-3) || !this.entity.canMoveDown(3))
+        if (!this.entity.canMoveLeft(3,0) || !this.entity.canMoveRight(3,0) || !this.entity.canMoveUp(3) || !this.entity.canMoveDown(3))
             this.entity.exists = false;
 
         this.entity.moveLeft(xSpeed);

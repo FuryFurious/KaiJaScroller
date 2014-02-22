@@ -24,10 +24,10 @@ public class ChaseBrain : ABehavior
     public override void update(GameTime gameTime)
     {
         if (this.entity.ingame.player.position.X - this.entity.position.X < -5 && this.entity.ingame.player.position.X - this.entity.position.X > -150 && this.entity.canMoveLeft(-2, 0))
-            this.entity.moveHorz(-2);
+            this.entity.moveLeft(2);
 
         else if (this.entity.ingame.player.position.X - this.entity.position.X > 5 && this.entity.ingame.player.position.X - this.entity.position.X < 150 && this.entity.canMoveRight(2, 0))
-            this.entity.moveHorz(2);
+            this.entity.moveRight(2);
 
         updateSkills(gameTime);
     }
