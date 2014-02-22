@@ -11,6 +11,6 @@ public class PlayerJump : IAction
 
     public bool performed(GameTime gameTime, InGame ingame)
     {
-        return InGame.input.isClicked(Keyboard.Key.Space) || InGame.pad.isClicked(Help.A);
+        return GameStateManager.input.isClicked(Keyboard.Key.Space) || GameStateManager.pad.isClicked(Help.A);
     }
 }

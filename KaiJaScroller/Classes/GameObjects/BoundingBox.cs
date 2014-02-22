@@ -73,6 +73,21 @@ public class BoundingBox
         get { return rectangle.Left + rectangle.Width; }
     }
 
+    public float CenterY
+    {
+        get { return rectangle.Top + rectangle.Height / 2; }
+    }
+
+    public float CenterX
+    {
+        get { return rectangle.Left + rectangle.Width / 2; }
+    }
+
+    public Vector2f Center
+    {
+        get { return new Vector2f(CenterX, CenterY); }
+    }
+
 
     //__________________________________ METHODS ___________________________
 

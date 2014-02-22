@@ -51,11 +51,11 @@ using System.Threading.Tasks;
 
         public EGameState update(GameTime gameTime)
         {
-            
 
-            if (InGame.pad.leftDown())
+
+            if (GameStateManager.pad.leftDown())
                 count = (count+ 1) % 3;
-            if (InGame.pad.leftUp())
+            if (GameStateManager.pad.leftUp())
                 count = (count + 2) % 3;
 
             if (count == 0)
@@ -63,7 +63,7 @@ using System.Threading.Tasks;
                 start.Size = new Vector2f(100, 50) * (float)(Math.Pow(Math.Sin(gameTime.TotalTime.TotalSeconds), 2)) + new Vector2f(95, 40);
                 credits.Size = new Vector2f(100,50);
                 exit.Size = new Vector2f(100, 50);
-                if (InGame.pad.isClicked(Help.A))
+                if (GameStateManager.pad.isClicked(Help.A))
                     return EGameState.InGame;
             }
 
@@ -72,7 +72,7 @@ using System.Threading.Tasks;
                 credits.Size = new Vector2f(100, 50) * (float)(Math.Pow(Math.Sin(gameTime.TotalTime.TotalSeconds), 2)) + new Vector2f(95, 40);
                 start.Size = new Vector2f(100, 50);
                 exit.Size = new Vector2f(100, 50);
-                if (InGame.pad.isClicked(Help.A))
+                if (GameStateManager.pad.isClicked(Help.A))
                     return EGameState.Credits;
             }
 
@@ -81,7 +81,7 @@ using System.Threading.Tasks;
                 exit.Size = new Vector2f(100, 50) * (float)(Math.Pow(Math.Sin(gameTime.TotalTime.TotalSeconds), 2)) + new Vector2f(95, 40);
                 credits.Size = new Vector2f(100, 50);
                 start.Size = new Vector2f(100, 50);
-                if (InGame.pad.isClicked(Help.A))
+                if (GameStateManager.pad.isClicked(Help.A))
                     return EGameState.None;
             }
             Console.WriteLine(count);

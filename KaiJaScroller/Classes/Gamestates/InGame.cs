@@ -9,9 +9,6 @@ using System.Threading.Tasks;
 
 public class InGame : IGameState
 {
-    public static Input input;
-    public static Gamepad pad = new Gamepad();
-
     public List<BoundingBox> collisionRects = new List<BoundingBox>();
 
     public Entity player;
@@ -30,7 +27,7 @@ public class InGame : IGameState
                                  //   new PlayerBrain(), 
                                 //    new SimplePhysic(new PlayerJump()));
         this.player = new Entity();
-        this.player.setBrain(new PlayerBrain());
+      
         this.player.setPhysics(new SimplePhysic(new PlayerJump()));
         this.player.boundingBox = new BoundingBox(0, 0, 16, 32);
         this.player.boundingBox.offsetX = 8;
@@ -39,7 +36,15 @@ public class InGame : IGameState
         playerSprite.TextureRect = new IntRect(0, 0, 32, 32);
 
         this.player.setSprite(playerSprite);
-        Entity player1 = EntityLibrary.getEntity(EEntityType.Player);
+
+        PlayerBrain brain = new PlayerBrain();
+        this.player.setBrain(brain);
+
+        brain.init();
+
+
+
+
 
         Entity enemy1;
         enemy1 = new Entity();//   new Sprite(Assets.impTexture), 
@@ -49,7 +54,7 @@ public class InGame : IGameState
         Sprite s = new Sprite(Assets.impTexture);
         s.TextureRect = new IntRect(0, 0, 32, 32);
         enemy1.setSprite(s);
-        enemy1.setBrain(new RandomBrain());
+        enemy1.setBrain(new ChaseBrain());
         enemy1.setPhysics(new SimplePhysic(new NoAction()));
 
         enemy1.damage = 42;
@@ -59,18 +64,6 @@ public class InGame : IGameState
 
         enemies.Add(enemy1);
 
-        List<Keyboard.Key> keys = new List<Keyboard.Key>();
-        keys.Add(Keyboard.Key.W);
-        keys.Add(Keyboard.Key.A);
-        keys.Add(Keyboard.Key.S);
-        keys.Add(Keyboard.Key.D);
-        keys.Add(Keyboard.Key.E);
-        keys.Add(Keyboard.Key.Q);
-        keys.Add(Keyboard.Key.F1);
-        keys.Add(Keyboard.Key.Escape);
-        keys.Add(Keyboard.Key.Space);
-
-        input = new Input(keys);
 
         fillSprites("Content/testLevel.tmx");
 
@@ -84,12 +77,11 @@ public class InGame : IGameState
 
     public EGameState update(GameTime gameTime)
     {
-        input.update();
 
-        if (InGame.pad.isClicked(Help.LB))
+        if (GameStateManager.pad.isClicked(Help.LB) || GameStateManager.input.isClicked(Keyboard.Key.Escape))
             return EGameState.Restart;
 
-        if (input.isClicked(Keyboard.Key.F1))
+        if (GameStateManager.input.isClicked(Keyboard.Key.F1))
             Settings.drawBoundings = !Settings.drawBoundings;
 
 
@@ -175,21 +167,21 @@ public class InGame : IGameState
 
     public void draw(GameTime gameTime, RenderWindow window)
     {
-        if (input.leftPressed())
+        if (GameStateManager.input.leftPressed())
         {
             view = window.GetView();
-            view.Center -= input.getDeltaMousePos();
+            view.Center -= GameStateManager.input.getDeltaMousePos();
             window.SetView(view);
         }
 
-        if (input.mouseWheelDown())
+        if (GameStateManager.input.mouseWheelDown())
         {
             view = window.GetView();
             view.Zoom(1.1f);
             window.SetView(view);
         }
 
-        else if (input.mouseWheelUp())
+        else if (GameStateManager.input.mouseWheelUp())
         {
             view = window.GetView();
             view.Zoom(0.9f);
