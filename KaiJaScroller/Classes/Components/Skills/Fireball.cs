@@ -36,7 +36,6 @@ public class Fireball : ASkill
 
         bull.damage = 99;
         bull.boundingBox = new BoundingBox(startPos.X, startPos.Y, 16, 16);
-
         bull.boundingBox.offsetX = 8;
         bull.boundingBox.offsetY = 8;
 

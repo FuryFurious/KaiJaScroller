@@ -79,6 +79,7 @@ public class InGame : IGameState
 
         view = targets[0].GetView();
         view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, Settings.windowWidth/Settings.viewportWidth, Settings.windowHeight/Settings.viewportHeight);
+
         targets[0].SetView(view);
         load();
 
@@ -94,6 +95,14 @@ public class InGame : IGameState
         updateViewport();
 
 
+        //TODO: viewport position ist falsch, wenn spieler mit dem viewport nicht an 0,0
+        view = targets[0].GetView();
+        Vector2f playerCenter = player.boundingBox.Center;
+        view.Center = (new Vector2f(playerCenter.X, view.Center.Y) + new Vector2f(Settings.viewportWidth / 2, 0));
+        view.Center = (new Vector2f(view.Center.X, playerCenter.Y) + new Vector2f(0, Settings.viewportHeight / 2));
+
+        targets[0].SetView(view);
+
         updateLifebar();
         handleNewOverlayState();
 
@@ -106,15 +115,13 @@ public class InGame : IGameState
         Vector2f playerCenter = player.boundingBox.Center;
 
         if ((playerCenter.X > Settings.viewportWidth / 2 &&
-            playerCenter.X  + Settings.viewportWidth / 2 < sprites.GetLength(0) * 32))
+            playerCenter.X  + Settings.viewportWidth / 2 < sprites.GetLength(1) * 32))
             view.Center = (new Vector2f(playerCenter.X, view.Center.Y) + new Vector2f(Settings.viewportWidth / 2, 0));
 
         if ((playerCenter.Y > Settings.viewportHeight / 2 &&
-            playerCenter.Y + Settings.viewportHeight / 2 < sprites.GetLength(1) * 32))
-        {
+            playerCenter.Y + Settings.viewportHeight / 2 < sprites.GetLength(0) * 32))
             view.Center = (new Vector2f(view.Center.X, playerCenter.Y) + new Vector2f(0, Settings.viewportHeight / 2));
-        }
-        //   
+
         targets[0].SetView(view);
     }
 
