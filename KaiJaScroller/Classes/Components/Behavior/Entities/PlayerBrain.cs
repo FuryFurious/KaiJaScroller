@@ -64,5 +64,7 @@ public class PlayerBrain : ABehavior
         skill1.setEntity(this.entity);
 
         skills.Add(skill1);
+
+      
     }
 }
