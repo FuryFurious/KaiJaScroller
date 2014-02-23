@@ -352,6 +352,7 @@ public class InGame : IGameState
             {
                 friendlyBullets[i].onKill();
                 this.friendlyBullets.Remove(friendlyBullets[i]);
+           //     continue;
                 i--;
             }
         }

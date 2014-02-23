@@ -79,7 +79,7 @@ public class SimplePhysic : APhysicComponent
                     if (bb.intersectsHorzLine(y, x0, x1))
                     {
                         
-                        if(bb.Top + 15 > this.entity.boundingBox.Bottom)
+                        if(bb.Top + 20 > this.entity.boundingBox.Bottom)
                             this.entity.position.Y = bb.Y - this.entity.boundingBox.Height;
 
                         resetPhysics();

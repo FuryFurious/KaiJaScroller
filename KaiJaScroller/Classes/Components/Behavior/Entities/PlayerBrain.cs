@@ -77,6 +77,7 @@ public class PlayerBrain : ABehavior
 
     public void updateSkills(GameTime gameTime)
     {
+
         foreach (ASkill skill in skills)
             skill.update(gameTime);
     }
