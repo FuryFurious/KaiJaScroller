@@ -109,7 +109,7 @@ public class Entity
     public bool canMoveLeft(float dx, float dy)
     {
         float x = this.boundingBox.Left - dx;
-        float y0 = this.boundingBox.Top + 3 + dy;
+        float y0 = this.boundingBox.Top + 3 - dy;
         float y1 = this.boundingBox.Bottom - 1 - dy;
 
         foreach (BoundingBox bb in ingame.collisionRects)
@@ -122,7 +122,7 @@ public class Entity
     public bool canMoveRight(float dx, float dy)
     {
         float x = this.boundingBox.Right + dx;
-        float y0 = this.boundingBox.Top + 3 + dy;
+        float y0 = this.boundingBox.Top + 3 - dy;
         float y1 = this.boundingBox.Bottom - 1 -dy;
 
         foreach (BoundingBox bb in ingame.collisionRects)
