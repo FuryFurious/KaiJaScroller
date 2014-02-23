@@ -49,7 +49,7 @@ public static class EntityLibrary
 
                 gfxComp = new ProjectileGfx();
 
-                behavior = new ChaseBrain();
+                behavior = new ChaseBombBrain();
                 physics = new SimplePhysic();
                 break;
 

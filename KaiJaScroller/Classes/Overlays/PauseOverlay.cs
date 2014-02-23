@@ -40,10 +40,9 @@ public class PauseOverlay : IOverlayState
     //TODO: add gamepad input
     public EOverlayState update(GameTime gameTime)
     {
-        if (GameStateManager.pad.isClicked(Help.Start) || GameStateManager.input.isClicked(Keyboard.Key.Escape))
-            return EOverlayState.None;
+        
 
-        if (GameStateManager.input.isClicked(Keyboard.Key.W) || GameStateManager.input.isClicked(Keyboard.Key.S))
+        if (GameStateManager.input.isClicked(Keyboard.Key.W) || GameStateManager.input.isClicked(Keyboard.Key.S) || GameStateManager.pad.leftDown() || GameStateManager.pad.leftUp())
             index = (index + 1) % 2;
 
         if (index == 0)
@@ -51,7 +50,7 @@ public class PauseOverlay : IOverlayState
             returnText.Scale = new Vector2f(1.5f, 1.5f);
             exitText.Scale = new Vector2f(1, 1);
 
-            if (GameStateManager.input.isClicked(Keyboard.Key.Space))
+            if (GameStateManager.input.isClicked(Keyboard.Key.Space) || GameStateManager.pad.isClicked(Help.Start))
                 return EOverlayState.None;
         }
         else
@@ -59,7 +58,7 @@ public class PauseOverlay : IOverlayState
             exitText.Scale = new Vector2f(1.5f, 1.5f);
             returnText.Scale = new Vector2f(1, 1);
 
-            if (GameStateManager.input.isClicked(Keyboard.Key.Space))
+            if (GameStateManager.input.isClicked(Keyboard.Key.Space) || GameStateManager.pad.isClicked(Help.Start))
                 return EOverlayState.MainMenu;
         }
 

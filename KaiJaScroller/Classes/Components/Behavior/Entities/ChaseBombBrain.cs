@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class ChaseBrain : ABehavior , IActionListener
+public class ChaseBombBrain : ABehavior, IActionListener
 {
     float pX;
     float pY;
@@ -16,9 +16,8 @@ public class ChaseBrain : ABehavior , IActionListener
     Fireball fireball;
     Bomb bomb;
 
-    public ChaseBrain()
+    public ChaseBombBrain()
     {
-        
 
     }
 
@@ -34,7 +33,7 @@ public class ChaseBrain : ABehavior , IActionListener
         //skills.Add(skill1);
         canLeft = false;
         canRight = false;
-        
+
         bomb = new Bomb();
         bomb.setAction(this);
         bomb.setEntity(this.entity);
@@ -60,11 +59,11 @@ public class ChaseBrain : ABehavior , IActionListener
         }
         Console.Clear();
 
-   //     fireball.update(gameTime);
+        //     fireball.update(gameTime);
 
-  //      bomb.update(gameTime);
+              bomb.update(gameTime);
 
-        //updateSkills(gameTime);
+        
         //jumping  
         if (pX - eX > 5 && pX - eX < 150)
         {
@@ -74,17 +73,12 @@ public class ChaseBrain : ABehavior , IActionListener
                 {
                     if (this.entity.canMoveRight(2, 32) || this.entity.canMoveRight(2, 64))
                     {
-                        Console.WriteLine("Wrong");
-                        Console.WriteLine("Wrong");
-                        Console.WriteLine("Wrong");
-                        Console.WriteLine("Wrong");
                         this.entity.jump(5);
                     }
                 }
             }
             if (this.entity.canMoveRight(2, -32) && pX > eX && pY < eY)
             {
-                Console.WriteLine("Right");
                 this.entity.jump(5);
             }
         }
@@ -96,24 +90,16 @@ public class ChaseBrain : ABehavior , IActionListener
                 {
                     if (this.entity.canMoveLeft(2, 32) || this.entity.canMoveLeft(2, 64))
                     {
-                        Console.WriteLine("Wrong");
-                        Console.WriteLine("Wrong");
-                        Console.WriteLine("Wrong");
 
                         this.entity.jump(5);
                     }
                 }
             }
-            if (this.entity.canMoveLeft(2, -32) && pX < eX && pY < eY )
+            if (this.entity.canMoveLeft(2, -32) && pX < eX && pY < eY)
             {
-                Console.WriteLine("Right");
                 this.entity.jump(5);
             }
-            
         }
-
-
-
     }
 
     public override void onKill()
@@ -131,9 +117,7 @@ public class ChaseBrain : ABehavior , IActionListener
         else if (name == bomb.name)
         {
             //bomb.xSpeed = (float)Help.random.NextDouble() * 10.0f;
-
-
-
+            //if(Math.Abs(pX - eX) < 100)
             return true;
         }
 
