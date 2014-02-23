@@ -75,8 +75,12 @@ public class SimplePhysic : APhysicComponent
                 foreach (BoundingBox bb in this.entity.ingame.collisionRects)
                     if (bb.intersectsHorzLine(y, x0, x1))
                     {
+                        
+                        //TODO: make this better: made for bombs not being affected by setting ontop
+                        if(this.entity.boundingBox.Height > 16)
+                            this.entity.position.Y = bb.Y - this.entity.boundingBox.Height;
+
                         resetPhysics();
-                        this.entity.position.Y = bb.Y - this.entity.boundingBox.Height;
                         return;
                     }
 

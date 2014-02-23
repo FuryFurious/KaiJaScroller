@@ -45,7 +45,7 @@ public class PlayerBrain : ABehavior
             if (xHelp > 0 && this.entity.canMoveRight(xHelp, 0))
                 this.entity.moveRight(xHelp);
 
-            else if (xHelp < 0 && this.entity.canMoveLeft(xHelp, 0))
+            else if (xHelp < 0 && this.entity.canMoveLeft(-xHelp, 0))
                 this.entity.moveLeft(-xHelp);
         }
 
@@ -59,9 +59,10 @@ public class PlayerBrain : ABehavior
 
     public override void init()
     {
-        ASkill skill1 = new Fireball();
+        ASkill skill1 = new Bomb();
         skill1.setAction(new Button1Action());
         skill1.setEntity(this.entity);
+
         skills.Add(skill1);
     }
 }
