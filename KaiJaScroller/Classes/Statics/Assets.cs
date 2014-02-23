@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 public static class Assets
 {
-    public static Texture zombieTexture     = new Texture("Content/zombieSide.png");
-    public static Texture impTexture        = new Texture("Content/impSide.png");
-    public static Texture golemTexture      = new Texture("Content/golemSide.png");
-    public static Texture fireballTexture   = new Texture("Content/fireball.png");
-    public static Texture lifebar           = new Texture("Content/lifebar.png");
-    public static Texture gameOver          = new Texture("Content/gameOver.png");
-    public static Texture smokeParticle     = new Texture("Content/smoke.png");
-    public static Texture bomb              = new Texture("Content/bomb.png");
+    public static Texture zombieTexture     = new Texture("Content/Gfx/zombieSide.png");
+    public static Texture impTexture        = new Texture("Content/Gfx/impSide.png");
+    public static Texture golemTexture      = new Texture("Content/Gfx/golemSide.png");
+    public static Texture fireballTexture   = new Texture("Content/Gfx/fireball.png");
+    public static Texture lifebar           = new Texture("Content/Gfx/lifebar.png");
+    public static Texture gameOver          = new Texture("Content/Gfx/gameOver.png");
+    public static Texture smokeParticle     = new Texture("Content/Gfx/smoke.png");
+    public static Texture bomb              = new Texture("Content/Gfx/bomb.png");
 
-    public static Font font1 = new Font("Content/Gargoyles.ttf");
+    public static Font font1 = new Font("Content/Other/Gargoyles.ttf");
 
 }

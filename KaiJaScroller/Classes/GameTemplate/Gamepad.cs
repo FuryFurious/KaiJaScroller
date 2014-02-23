@@ -38,7 +38,8 @@ public class Gamepad
         y = Joystick.GetAxisPosition(0, Joystick.Axis.Y);
 
         /*
-        Console.Clear();
+        Console.
+         * ();
 
         for (uint i = 0; i < 10; i++)
         {

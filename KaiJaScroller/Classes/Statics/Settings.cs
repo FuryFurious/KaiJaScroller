@@ -18,10 +18,10 @@ public static class Settings
     public static int viewportWidth     = 400;
     public static int viewportHeight    = 300;
 
-    public static Styles windowStyles   = Styles.Fullscreen;
+    public static Styles windowStyles   = Styles.Default;
 
     //________________________DEBUG STUFF__________________________//
-    public static bool drawBoundings        = false;
+    public static bool inDebug              = false;
     public static Color boundingBoxColor    = new Color(255, 0, 0, 127);
 
     //________________________COMBAT_______________________________//
@@ -33,7 +33,7 @@ public static class Settings
 
     //_______________________COMBAT TEXT___________________//
     public const float COMBATTEXTSPEED  = -0.5f;
-    public const float COMBATTEXTOFFSET = 4.0f;
+    public const float COMBATTEXTOFFSET = 4.0f; //maximum randaom offset left and right at spawn
     public const float COMBATTEXTSIZE   = 0.5f;
 }
 
