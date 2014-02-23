@@ -62,8 +62,6 @@ public static class EntityLibrary
                 bb = new BoundingBox(0, 0, 32, 32);
                 bb.offsetX = 0;
 
-
-
                 e.damage = 0;
                 e.hitpoints[0] = int.MaxValue;
 

@@ -32,7 +32,7 @@ public class Entity
 
     public double inviTime = Settings.ENEMYINVITIME;
     public EDirection direction = EDirection.Left;
-    public bool isMoving = false;
+
 
     public Entity()
     {
@@ -52,16 +52,11 @@ public class Entity
 
     public void update(GameTime gameTime)
     {
-        isMoving = false;
         behavior.update(gameTime);
         physic.update(gameTime);
 
         gfxComp.update(gameTime);
 
-        if (isMoving)
-        {
-            position.Y -= (float)Math.Pow(Math.Sin(gameTime.TotalTime.TotalSeconds / 4),2);
-        }
 
         boundingBox.X = position.X + boundingBox.offsetX;
         boundingBox.Y = position.Y + boundingBox.offsetY;  
@@ -91,7 +86,6 @@ public class Entity
         //}
         this.direction = EDirection.Left;
         this.position -= new Vector2f(x, 0);
-        this.isMoving = true;
     }
 
     public void moveRight(float x)
@@ -108,7 +102,6 @@ public class Entity
         //}
         this.direction = EDirection.Right;
         this.position += new Vector2f(x, 0);
-        this.isMoving = true;
     }
 
     public void moveVert(float y)

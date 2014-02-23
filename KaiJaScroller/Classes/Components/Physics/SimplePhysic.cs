@@ -10,15 +10,11 @@ using System.Threading.Tasks;
 public class SimplePhysic : APhysicComponent
 {
     bool isFalling = true;
-
-    public double fallTime = 0;
-
+    double fallTime = 0;
     float fallSpeed = 0;
 
     public float fallSpeedStart = 2;
-    public bool enableAccel = true;
-    public float fallSpeedConstant = 0;
-
+   // public bool enableAccel = true;
 
     public SimplePhysic()
     {
@@ -67,13 +63,9 @@ public class SimplePhysic : APhysicComponent
         //jumping or falling:
         else
         {
-            if (enableAccel)
-                fallTime += gameTime.ElapsedTime.TotalSeconds;
-            else
-                fallTime = 0;
+            fallTime += gameTime.ElapsedTime.TotalSeconds;
 
-            fallSpeed += (float)fallTime + fallSpeedConstant;
-
+            fallSpeed += (float)fallTime;
 
             //falling:
             if (fallSpeed > 0)
@@ -86,7 +78,6 @@ public class SimplePhysic : APhysicComponent
                 foreach (BoundingBox bb in this.entity.ingame.collisionRects)
                     if (bb.intersectsHorzLine(y, x0, x1))
                     {
-                        
                         if(bb.Top + 20 > this.entity.boundingBox.Bottom)
                             this.entity.position.Y = bb.Y - this.entity.boundingBox.Height;
 
