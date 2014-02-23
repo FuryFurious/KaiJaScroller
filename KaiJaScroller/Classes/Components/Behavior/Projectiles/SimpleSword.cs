@@ -12,20 +12,24 @@ public class SimpleSword : ABehavior
     public double lifeTime = 0.5;
     public float count = 0.5f;
     public float reach = 12;
+
+    public Entity e;
     
     
 
-    EDirection direction;
+  //  EDirection direction;
 
     public SimpleSword(EDirection direction)
     {
-        this.direction = direction;
+    //    this.direction = direction;
     }
 
     public override void init()
     {
-        if (this.entity.direction == EDirection.Left)
-            this.entity.gfxComp.mirror();
+      //  if (this.entity.direction == EDirection.Left)
+     //       this.entity.gfxComp.mirror();
+
+        //this.entity.direction = EDirection.Right;
     }
 
     public override void update(GameTime gameTime)
@@ -37,11 +41,18 @@ public class SimpleSword : ABehavior
             count += 2f;
         }
 
-        if (direction == EDirection.Left)
-                 this.entity.setPosition(this.entity.ingame.player.boundingBox.CenterX - 20 - count, this.entity.ingame.player.boundingBox.CenterY - 13);
+        if (e.direction != this.entity.direction)
+        {
+            //this.entity.direction = e.direction;
+            this.entity.direction = e.direction;
+            this.entity.gfxComp.mirror();
+        }
 
-        else if (direction == EDirection.Right)
-                this.entity.setPosition(this.entity.ingame.player.boundingBox.CenterX - 12 + count, this.entity.ingame.player.boundingBox.CenterY - 13);
+        if (this.entity.direction == EDirection.Left)
+                 this.entity.setPosition(e.boundingBox.CenterX - 20 - count, e.boundingBox.CenterY - 13);
+
+        else if (this.entity.direction == EDirection.Right)
+                this.entity.setPosition(e.boundingBox.CenterX - 12 + count, e.boundingBox.CenterY - 13);
         
         if (lifeTime <= 0)
             this.entity.exists = false;

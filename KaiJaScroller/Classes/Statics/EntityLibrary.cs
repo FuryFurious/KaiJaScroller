@@ -44,6 +44,8 @@ public static class EntityLibrary
                 bb = new BoundingBox(0, 0, 16, 32);
                 bb.offsetX = 8;
 
+
+
                 e.damage = 0;
 
                 sprite = new Sprite(Assets.impTexture);
@@ -51,8 +53,27 @@ public static class EntityLibrary
 
                 gfxComp = new EntityGfx();
 
-                behavior = new ChaseBombBrain();
+                behavior =new ChaseBombBrain();
                 physics = new SimplePhysic();
+                break;
+
+            case EEntityType.Turret:
+
+                bb = new BoundingBox(0, 0, 32, 32);
+                bb.offsetX = 8;
+
+
+
+                e.damage = 0;
+                e.hitpoints[0] = Int16.MaxValue;
+
+                sprite = new Sprite(Assets.turretTexture);
+                sprite.TextureRect = new IntRect(0, 0, 32, 32);
+
+                gfxComp = new EntityGfx();
+
+                behavior = new TurretBrain();
+                physics = new NoPhysics();
                 break;
 
         }

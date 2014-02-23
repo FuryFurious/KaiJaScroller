@@ -73,6 +73,7 @@
     <Compile Include="Classes\Components\Actions\Button1Action.cs" />
     <Compile Include="Classes\Components\Actions\Button2Action.cs" />
     <Compile Include="Classes\Components\Actions\NoAction.cs" />
+    <Compile Include="Classes\Components\Behavior\Entities\TurretBrain.cs" />
     <Compile Include="Classes\Components\Behavior\Projectiles\SimpleSword.cs" />
     <Compile Include="Classes\Components\Behavior\RandomAction.cs" />
     <Compile Include="Classes\Components\Behavior\Entities\ChaseBombBrain.cs" />

@@ -19,6 +19,7 @@ public class SmallSword : ASkill
 
         this.maxCooldown = 0.5;
         this.curCooldown = 0.5;
+        
     }
 
     public override void onUse(GameTime gameTime)
@@ -45,6 +46,7 @@ public class SmallSword : ASkill
         bull.boundingBox = new BoundingBox(startPos.X, startPos.Y, 16, 6);
         bull.boundingBox.offsetX = 7;
         bull.boundingBox.offsetY = 13;
+        s.e = this.entity;
 
         if (this.entity.direction == EDirection.Left)
         {
