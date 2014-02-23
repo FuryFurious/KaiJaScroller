@@ -114,6 +114,23 @@ public static class EntityLibrary
 
                 break;
 
+            case EEntityType.Bomberman:
+
+                bb = new BoundingBox(0, 0, 16, 32);
+                bb.offsetX = 8;
+
+                e.damage = 0;
+                e.hitpoints[0] = 1;
+
+                sprite = new Sprite(Assets.bomberman);
+                sprite.TextureRect = new IntRect(0, 0, 32, 32);
+
+                gfxComp = new EntityGfx();
+
+                behavior = new BombBrain();
+                physics = new SimplePhysic();
+
+                break;
         }
 
         gfxComp.setSprite(sprite);

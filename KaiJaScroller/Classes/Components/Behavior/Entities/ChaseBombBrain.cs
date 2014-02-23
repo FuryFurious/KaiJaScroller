@@ -16,6 +16,18 @@ public class ChaseBombBrain : ABehavior, IActionListener
     Fireball fireball;
     Bomb bomb;
 
+    public float chase = 150;
+    
+    public float chaseMiddle1   = 101;
+    public float chaseMiddle2   = 99;
+    public float lowX           = 5;
+    
+    public float chaseRangeY    = 150;
+
+    public float jumpPower      = 5;
+    public float speed          = 2;
+
+
     public ChaseBombBrain()
     {
 
@@ -26,14 +38,11 @@ public class ChaseBombBrain : ABehavior, IActionListener
         fireball = new Fireball();
         fireball.setAction(this);
         fireball.setEntity(this.entity);
-        //ASkill skill1 = new Fireball();
-        //skill1.setAction(new RandomAction(0.5));
-        //skill1.setEntity(this.entity);
-
-        //skills.Add(skill1);
+     
         isChasing = false;
-        canRight = false;
+        
 
+      
         bomb = new Bomb();
         bomb.setAction(this);
         bomb.setEntity(this.entity);
@@ -48,7 +57,7 @@ public class ChaseBombBrain : ABehavior, IActionListener
 
         isChasing = false;
 
-        if ((pX - eX >= 101 && pX - eX < 150) || (pX - eX <= -101 && pX - eX > -150))
+        if ((pX - eX >= chaseMiddle1 && pX - eX < chase) || (pX - eX <= -chaseMiddle1 && pX - eX > -chase))
         {
             isChasing = true;
         }
@@ -56,13 +65,13 @@ public class ChaseBombBrain : ABehavior, IActionListener
         
 
         //moving
-        if (this.entity.canMoveRight(2, 0) && ((pX - eX < -5 && pX - eX > -99 || (pX - eX >= 101 && pX - eX < 150))))
+        if (this.entity.canMoveRight(speed, 0) && ((pX - eX < -lowX && pX - eX > -chaseMiddle2 || (pX - eX >= chaseMiddle1 && pX - eX < chase))))
         {
-            this.entity.moveRight(2);
+            this.entity.moveRight(speed);
         }
-        if (this.entity.canMoveLeft(2, 0) && ((pX - eX > 5 && pX - eX < 99 || (pX - eX <= -101 && pX - eX > -150))))
+        if (this.entity.canMoveLeft(speed, 0) && ((pX - eX > lowX && pX - eX < chaseMiddle2 || (pX - eX <= -chaseMiddle1 && pX - eX > -chase))))
         {
-            this.entity.moveLeft(2);
+            this.entity.moveLeft(speed);
         }
 
 
@@ -73,7 +82,7 @@ public class ChaseBombBrain : ABehavior, IActionListener
         
         //jumping 
 
-              if (pX - eX < -5 && pX - eX > -99 || (pX - eX >= 101 && pX - eX < 150))
+              if (pX - eX < -lowX && pX - eX > -chaseMiddle2 || (pX - eX >= chaseMiddle1 && pX - eX < chase))
         {
             if (true)
             {
@@ -87,12 +96,12 @@ public class ChaseBombBrain : ABehavior, IActionListener
             }
             
 
-            if (this.entity.canMoveRight(2, -32))
+            if (this.entity.canMoveRight(speed, -32))
             {
-                this.entity.jump(5);
+                this.entity.jump(jumpPower);
             }
         }
-        if ((pX - eX > 5 && pX - eX < 99 || (pX - eX <= -101 && pX - eX > -150)))
+        if ((pX - eX > lowX && pX - eX < chaseMiddle2 || (pX - eX <= -chaseMiddle1 && pX - eX > -chase)))
         {
             if (true)
             {
@@ -105,9 +114,9 @@ public class ChaseBombBrain : ABehavior, IActionListener
                     }
                 }*/
             }
-            if (this.entity.canMoveLeft(2, -32))
+            if (this.entity.canMoveLeft(speed, -32))
             {
-                this.entity.jump(5);
+                this.entity.jump(jumpPower);
             }
 
             
@@ -118,6 +127,11 @@ public class ChaseBombBrain : ABehavior, IActionListener
     public override void onKill()
     {
 
+    }
+
+    public bool willFollow()
+    {
+        return true;
     }
 
     public bool performed(GameTime gameTime, Entity source, String name)

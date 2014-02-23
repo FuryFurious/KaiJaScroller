@@ -21,6 +21,7 @@ public static class Assets
     public static Texture magicBall         = new Texture("Content/Gfx/magicBall.png");
     public static Texture rogue             = new Texture("Content/Gfx/ninja.png");
     public static Texture mage              = new Texture("Content/Gfx/mage.png");
+    public static Texture bomberman         = new Texture("Content/Gfx/bomberman.png");
 
     public static Font font1 = new Font("Content/Other/Gargoyles.ttf");
 

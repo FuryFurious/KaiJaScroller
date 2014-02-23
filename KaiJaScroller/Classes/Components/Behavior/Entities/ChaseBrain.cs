@@ -26,6 +26,7 @@ public class ChaseBrain : ABehavior
     public override void init()
     {   
     }
+    
 
     public override void update(GameTime gameTime)
     {
