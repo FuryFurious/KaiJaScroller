@@ -93,21 +93,39 @@ public class InGame : IGameState
             e.init(this);
 
         player.init(this);
-        updateViewport();
 
 
+        initViewport();
         //TODO: viewport position ist falsch, wenn spieler mit dem viewport nicht an 0,0
-        view = targets[0].GetView();
-        Vector2f playerCenter = player.boundingBox.Center;
-        view.Center = (new Vector2f(playerCenter.X, view.Center.Y) + new Vector2f(Settings.viewportWidth / 2, 0));
-        view.Center = (new Vector2f(view.Center.X, playerCenter.Y) + new Vector2f(0, Settings.viewportHeight / 2));
 
-        targets[0].SetView(view);
 
         updateLifebar();
         handleNewOverlayState();
+    }
+
+    private void initViewport()
+    {
+        view = targets[0].GetView();
+        Vector2f playerCenter = player.boundingBox.Center;
+
+        view.Center = (new Vector2f(playerCenter.X, view.Center.Y) + new Vector2f(Settings.viewportWidth / 2, 0));
+        view.Center = (new Vector2f(view.Center.X, playerCenter.Y) + new Vector2f(0, Settings.viewportHeight / 2));
+
+        if (view.Center.X - Settings.viewportWidth <= 0)
+            view.Center = new Vector2f(Settings.viewportWidth, view.Center.Y);
+
+        else if (view.Center.X + Settings.viewportWidth >= sprites.GetLength(1) * 32)
+            view.Center = new Vector2f(sprites.GetLength(1) * 32, view.Center.Y);
+
+        if (view.Center.Y - Settings.viewportHeight <= 0)
+            view.Center = new Vector2f(view.Center.X, Settings.viewportHeight);
+
+        else if (view.Center.Y + Settings.viewportHeight >= sprites.GetLength(0) * 32)
+            view.Center = new Vector2f(view.Center.X, sprites.GetLength(0) * 32);
 
 
+
+        targets[0].SetView(view);
     }
 
     private void updateViewport()
@@ -127,11 +145,8 @@ public class InGame : IGameState
         targets[0].SetView(view);
     }
 
-
     public EGameState update(GameTime gameTime)
     {
-
-        Console.WriteLine(view.Center);
 
         currentOverlay = overlay.update(gameTime);
 
@@ -327,7 +342,7 @@ public class InGame : IGameState
 
             foreach (Entity e in enemies)
             {
-                if (e.inviTime <= 0 && friendlyBullets[i].boundingBox.intersects(e.boundingBox))
+                if (e.hitpoints[0] != int.MaxValue && e.inviTime <= 0 && friendlyBullets[i].boundingBox.intersects(e.boundingBox))
                 {
                     friendlyBullets[i].hitpoints[0]--;
 

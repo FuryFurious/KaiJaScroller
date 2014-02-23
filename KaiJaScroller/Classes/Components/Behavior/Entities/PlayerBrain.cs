@@ -67,9 +67,14 @@ public class PlayerBrain : ABehavior
 
     public override void init()
     {
-        ASkill skill1 = new Fireball();
+        ASkill skill1 = new SmallSword();
         skill1.setAction(new Button1Action());
         skill1.setEntity(this.entity);
+
+       (skill1 as SmallSword).reach = 17;
+      //  (skill1 as SmallSword).lifeTime = 0.5;
+       // (skill1 as SmallSword).count = 10;
+      //  (skill1 as SmallSword).xSpeed = 100;
 
         ASkill skill2 = new Bomb();
         skill2.setAction(new Button2Action());

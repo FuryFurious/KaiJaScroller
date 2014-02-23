@@ -65,7 +65,7 @@ public static class EntityLibrary
 
 
                 e.damage = 0;
-                e.hitpoints[0] = Int16.MaxValue;
+                e.hitpoints[0] = int.MaxValue;
 
                 sprite = new Sprite(Assets.turretTexture);
                 sprite.TextureRect = new IntRect(0, 0, 32, 32);

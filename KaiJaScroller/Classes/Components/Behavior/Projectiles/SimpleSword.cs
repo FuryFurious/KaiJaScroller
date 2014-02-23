@@ -8,28 +8,26 @@ using System.Threading.Tasks;
 
 public class SimpleSword : ABehavior
 {
-    public float xSpeed = 5.0f;
-    public double lifeTime = 0.5;
-    public float count = 0.5f;
-    public float reach = 12;
+    public float xSpeed;
+
+    public double lifeTime;
+
+    public float count;
+    public float reach;
 
     public Entity e;
     
     
 
-  //  EDirection direction;
 
     public SimpleSword(EDirection direction)
     {
-    //    this.direction = direction;
+
     }
 
     public override void init()
     {
-      //  if (this.entity.direction == EDirection.Left)
-     //       this.entity.gfxComp.mirror();
 
-        //this.entity.direction = EDirection.Right;
     }
 
     public override void update(GameTime gameTime)
@@ -43,7 +41,6 @@ public class SimpleSword : ABehavior
 
         if (e.direction != this.entity.direction)
         {
-            //this.entity.direction = e.direction;
             this.entity.direction = e.direction;
             this.entity.gfxComp.mirror();
         }

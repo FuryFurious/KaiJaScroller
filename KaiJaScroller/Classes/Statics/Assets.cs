@@ -10,7 +10,6 @@ public static class Assets
 {
     public static Texture zombieTexture     = new Texture("Content/Gfx/zombieSide.png");
     public static Texture impTexture        = new Texture("Content/Gfx/impSide.png");
-    public static Texture golemTexture      = new Texture("Content/Gfx/golemSide.png");
     public static Texture fireballTexture   = new Texture("Content/Gfx/fireball.png");
     public static Texture lifebar           = new Texture("Content/Gfx/lifebar.png");
     public static Texture gameOver          = new Texture("Content/Gfx/gameOver.png");

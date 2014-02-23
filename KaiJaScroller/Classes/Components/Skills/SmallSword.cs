@@ -11,6 +11,11 @@ public class SmallSword : ASkill
 {
 
     public float xSpeed = 5.0f;
+
+    public double lifeTime = 0.5;
+
+    public float count = 0.5f;
+    public float reach = 12;
     
 
     public SmallSword()
@@ -35,7 +40,11 @@ public class SmallSword : ASkill
 
         SimpleSword s = new SimpleSword(this.entity.direction);
         s.xSpeed = xSpeed;
-       
+        s.reach = reach;
+        s.lifeTime = lifeTime;
+        s.count = count;
+
+
         bull.setGfxComp(comp);
         bull.setBrain(s);
         bull.setPhysics(new NoPhysics());
@@ -55,13 +64,13 @@ public class SmallSword : ASkill
         }
         else if (this.entity.direction == EDirection.Right)
         {
-            
             bull.setPosition(startPos.X - 16 + 8, startPos.Y   -12);
         }
         comp.init();
 
       //  bull.init(this.entity.ingame);
         bull.hitpoints[0] = 9;
+       
 
         this.entity.ingame.addBullet(bull, this.entity.isFriendly);
 

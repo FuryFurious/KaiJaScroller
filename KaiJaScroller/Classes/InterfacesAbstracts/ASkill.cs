@@ -16,6 +16,11 @@ public abstract class ASkill
     protected double curCooldown;
     protected double maxCooldown;
 
+    public double Cooldown
+    {
+        get { return maxCooldown; }
+        set { curCooldown = value; maxCooldown = value; }
+    }
 
     public void update(GameTime gameTime)
     {

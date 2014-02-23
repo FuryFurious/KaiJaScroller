@@ -55,5 +55,10 @@ public static class Help
 
         return new Color(red, green, blue, alpha);
     }
+
+    public static float distance(float x, float y)
+    {
+        return (float)Math.Abs(x-y);
+    }
 }
 
