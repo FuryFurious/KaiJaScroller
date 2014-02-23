@@ -39,8 +39,7 @@ public class Bomb : ASkill
         bull.setBrain(b);
 
         SimplePhysic phys = new SimplePhysic();
-        phys.enableAccel = false;
-        phys.fallSpeedConstant = 1;
+    //    phys.fallSpeedConstant = 4f;
         //phys.
 
         bull.setPhysics(phys);

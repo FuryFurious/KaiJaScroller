@@ -1,6 +1,6 @@
 ﻿hp0 = 100
 hp1 = 200
-level = testLevel3.tmx
+level = Prison.tmx
 skill0 = null
 skill1 = null
 skill2 = null
