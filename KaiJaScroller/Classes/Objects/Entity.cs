@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 public class Entity
 {
     //gfxComponent
-    AGfxComp gfxComp;
+    public AGfxComp gfxComp;
 
     //update/think Component:
     ABehavior behavior;
@@ -59,6 +59,7 @@ public class Entity
 
         boundingBox.X = position.X + boundingBox.offsetX;
         boundingBox.Y = position.Y + boundingBox.offsetY;
+
     }
 
     public void draw(GameTime gameTime, RenderTarget[] target)
@@ -197,6 +198,8 @@ public class Entity
     {
         behavior.onKill();
     }
+
+
 
 }
 

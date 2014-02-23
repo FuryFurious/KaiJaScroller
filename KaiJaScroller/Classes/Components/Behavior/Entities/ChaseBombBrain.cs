@@ -64,7 +64,7 @@ public class ChaseBombBrain : ABehavior, IActionListener
         {
             this.entity.moveLeft(2);
         }
-        Console.Clear();
+  //      Console.Clear();
 
         //     fireball.update(gameTime);
 
@@ -129,7 +129,7 @@ public class ChaseBombBrain : ABehavior, IActionListener
 
         else if (name == bomb.name)
         {
-            Console.WriteLine(isChasing);
+          //  Console.WriteLine(isChasing);
             if (isChasing)
             bomb.xSpeed = +(float)Help.random.NextDouble() * 10.0f;
             else

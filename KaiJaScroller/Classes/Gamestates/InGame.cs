@@ -332,7 +332,12 @@ public class InGame : IGameState
                     text.Add(dT);
 
                     e.hitpoints[0] -= friendlyBullets[i].damage;
+                    
+                    
                     e.inviTime = Settings.ENEMYINVITIME;
+
+                    particles.Add(EntityLibrary.getParticle(EParticleType.Blood, e.boundingBox.Center));
+                    particles.Add(EntityLibrary.getParticle(EParticleType.Blood, e.boundingBox.Center));
 
                     if (friendlyBullets[i].hitpoints[0] <= 0)
                     {
@@ -362,7 +367,7 @@ public class InGame : IGameState
             if (enemies[i].inviTime > 0)
                 enemies[i].inviTime -= gameTime.ElapsedTime.TotalSeconds;
 
-            if (player.inviTime <= 0 && enemies[i].boundingBox.intersects(player.boundingBox))
+            if (player.inviTime <= 0 && enemies[i].damage > 0 && enemies[i].boundingBox.intersects(player.boundingBox))
             {
 
                 DynamicText dT = new DynamicText(player.position, "" + enemies[i].damage, 3);
@@ -399,6 +404,8 @@ public class InGame : IGameState
         else
             knockDirection = new Vector2f(Settings.KNOCKBACKX, 0);
 
+        particles.Add(EntityLibrary.getParticle(EParticleType.Blood, player.boundingBox.Center));
+        particles.Add(EntityLibrary.getParticle(EParticleType.Blood, player.boundingBox.Center));
     }
 
     private void updateHostileBullets(GameTime gameTime)
@@ -420,6 +427,7 @@ public class InGame : IGameState
 
                 playerKnockback(hostileBullets[i]);
 
+            
                 updateLifebar();
 
                 if (hostileBullets[i].hitpoints[0] <= 0)

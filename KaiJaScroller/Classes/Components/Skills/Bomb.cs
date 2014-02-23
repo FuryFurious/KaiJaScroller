@@ -52,7 +52,7 @@ public class Bomb : ASkill
         else if(this.entity.direction == EDirection.Right)
             bull.setPosition(startPos.X - 16 + 8, startPos.Y - 40);
 
-
+        comp.init();
 
         this.entity.ingame.addBullet(bull, this.entity.isFriendly);
 

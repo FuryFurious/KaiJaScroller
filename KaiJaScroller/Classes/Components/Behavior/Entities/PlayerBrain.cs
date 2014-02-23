@@ -67,11 +67,16 @@ public class PlayerBrain : ABehavior
 
     public override void init()
     {
-        ASkill skill1 = new Bomb();
+        ASkill skill1 = new SmallSword();
         skill1.setAction(new Button1Action());
         skill1.setEntity(this.entity);
 
+        ASkill skill2 = new Bomb();
+        skill2.setAction(new Button2Action());
+        skill2.setEntity(this.entity);
+
         skills.Add(skill1);
+        skills.Add(skill2);
     }
 
 

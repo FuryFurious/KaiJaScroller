@@ -124,7 +124,6 @@ public class ChaseBrain : ABehavior , IActionListener
             //bomb.xSpeed = (float)Help.random.NextDouble() * 10.0f;
 
 
-
             return true;
         }
 

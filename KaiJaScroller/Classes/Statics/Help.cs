@@ -43,5 +43,17 @@ public static class Help
     {
         return (value < min) ? min : (value > max) ? max : value;
     }
+
+    public static Color lerp(Color c1, Color c2, float t)
+    {
+        float s = (1.0f - t);
+
+        byte red    = (byte)(s * (float)c1.R + t * (float)c2.R);
+        byte green  = (byte)(s * (float)c1.G + t * (float)c2.G);
+        byte blue   = (byte)(s * (float)c1.B + t * (float)c2.B);
+        byte alpha  = (byte)(s * (float)c1.A + t * (float)c2.A);
+
+        return new Color(red, green, blue, alpha);
+    }
 }
 
