@@ -15,7 +15,7 @@ public class TurretBrain : ABehavior, IActionListener
     bool canRight;
     Fireball fireball;
     Bomb bomb;
-    int count;
+    double count;
 
     public TurretBrain()
     {
@@ -35,7 +35,7 @@ public class TurretBrain : ABehavior, IActionListener
         //skills.Add(skill1);
         canLeft = false;
         canRight = false;
-        count = 0;
+        count = 1.2;
 
         bomb = new Bomb();
         bomb.setAction(this);
@@ -44,11 +44,12 @@ public class TurretBrain : ABehavior, IActionListener
 
     public override void update(GameTime gameTime)
     {
+        count = count - gameTime.ElapsedTime.TotalSeconds;
         pX = this.entity.ingame.player.boundingBox.CenterX;
         pY = this.entity.ingame.player.boundingBox.CenterY;
         eX = this.entity.boundingBox.CenterX;
         eY = this.entity.boundingBox.CenterY;
-        count++;
+        
 
         fireball.update(gameTime);
 
@@ -65,13 +66,10 @@ public class TurretBrain : ABehavior, IActionListener
     {
         if (name == fireball.name)
         {
-            if (count > 100)
+            if (count <= 0)
             {
+                count = 1.2;
                 return true;
-            }
-            else
-            {
-                count = 0;
             }
         }
 

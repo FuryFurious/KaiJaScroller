@@ -27,10 +27,10 @@
 54,43,5,5,5,5,5,5,5,5,5,5,5,5,56,
 54,45,45,45,45,45,45,45,45,45,45,45,5,5,56,
 54,5,5,5,5,5,5,5,5,5,5,5,5,5,56,
-54,5,5,5,5,5,5,5,5,5,5,5,5,41,56,
+54,5,5,5,5,5,5,5,5,5,5,5,5,5,56,
 54,5,5,45,45,45,45,45,45,45,45,45,45,45,56,
 54,5,5,5,5,5,5,5,5,5,5,5,5,5,56,
-54,46,5,5,5,5,5,5,5,5,5,5,5,5,56,
+54,5,5,5,5,5,5,5,5,5,5,5,5,5,56,
 51,45,45,45,45,45,45,45,45,45,45,45,5,5,56,
 54,5,5,5,5,5,5,5,5,5,5,5,5,5,56,
 54,5,5,5,5,5,5,5,5,5,5,5,5,44,56,
@@ -45,7 +45,7 @@
   <object type="Picture" gid="14" x="384" y="160"/>
   <object type="Picture" gid="4" x="384" y="128"/>
  </objectgroup>
- <objectgroup name="Col" width="15" height="30">
+ <objectgroup name="Col" width="15" height="30" visible="0">
   <object type="Collision" x="0" y="928" width="480" height="32"/>
   <object type="Collision" x="0" y="0" width="32" height="928"/>
   <object type="Collision" x="448" y="0" width="32" height="928"/>
@@ -70,5 +70,7 @@
  <objectgroup name="Event" width="15" height="30">
   <object name="testLevel.tmx" type="Teleporter" x="384" y="128" width="32" height="32"/>
   <object type="PlayerSpawn" x="64" y="896" width="32" height="32"/>
+  <object type="EnemySpawnLeft" gid="35" x="417" y="703"/>
+  <object type="EnemySpawnRight" gid="35" x="33" y="799"/>
  </objectgroup>
 </map>
