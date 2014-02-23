@@ -99,7 +99,7 @@ public class InGame : IGameState
 
 
         initViewport();
-        //TODO: viewport position ist falsch, wenn spieler mit dem viewport nicht an 0,0
+
 
 
         updateLifebar();
