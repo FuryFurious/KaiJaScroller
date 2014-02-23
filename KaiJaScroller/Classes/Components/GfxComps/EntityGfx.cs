@@ -43,4 +43,7 @@ public class EntityGfx : AGfxComp
     {
         target.Draw(this.sprite);
     }
+
+
+
 }

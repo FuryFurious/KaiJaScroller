@@ -70,8 +70,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Components\Actions\Button1Action.cs" />
-    <Compile Include="Classes\Components\Actions\Button2Action.cs" />
     <Compile Include="Classes\Components\Actions\NoAction.cs" />
     <Compile Include="Classes\Components\Behavior\Entities\RogueBrain.cs" />
     <Compile Include="Classes\Components\Behavior\Entities\TurretBrain.cs" />
@@ -90,6 +88,7 @@
     <Compile Include="Classes\Components\Skills\Fireball.cs" />
     <Compile Include="Classes\GameTemplate\MyReader.cs" />
     <Compile Include="Classes\InterfacesAbstracts\AParticleBehavior.cs" />
+    <Compile Include="Classes\Objects\Animation.cs" />
     <Compile Include="Classes\Objects\Particle.cs" />
     <Compile Include="Classes\InterfacesAbstracts\IOverlayState.cs" />
     <Compile Include="Classes\Overlays\GameOver.cs" />
@@ -134,6 +133,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Content\Level\Swamp.tmx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\Level\UpStairs.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

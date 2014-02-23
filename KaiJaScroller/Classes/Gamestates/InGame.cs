@@ -12,6 +12,7 @@ public class InGame : IGameState
     static String nextLevel;
 
     public List<BoundingBox> collisionRects = new List<BoundingBox>();
+    public List<BoundingBox> harmfulArea = new List<BoundingBox>();
 
     public Entity player = new Entity();
 
@@ -25,6 +26,9 @@ public class InGame : IGameState
     List<Sprite> passiveSprites = new List<Sprite>();
 
     public List<Particle> particles = new List<Particle>();
+
+
+
 
     private RenderTarget[] targets;
     private RenderTexture finalTarget;
@@ -59,20 +63,19 @@ public class InGame : IGameState
 
         lifeWidth = (float)Assets.lifebar.Size.X;
 
-        targets = new RenderTarget[3];
+        targets = new RenderTarget[2];
 
         finalTarget = new RenderTexture((uint)Settings.windowWidth, (uint)Settings.windowHeight);
 
         for (int i = 0; i < targets.Length; i++)
             targets[i] = new RenderTexture((uint)Settings.windowWidth, (uint)Settings.windowHeight);
 
-
         view = targets[0].GetView();
         view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, 2f, 2f);
         targets[0].SetView(view);
-
-
     }
+
+
 
     public void init()
     {
@@ -177,17 +180,18 @@ public class InGame : IGameState
             if (player.inviTime > 0)
             {
                 if (player.inviTime > Settings.PLAYERINVITIME / 2 && player.canMoveRight(knockDirection.X, 0) && player.canMoveLeft(-knockDirection.X, 0) && !Settings.inDebug)
-                {
                     player.position += knockDirection;
-                }
+                
 
                 this.player.inviTime -= gameTime.ElapsedTime.TotalSeconds;
             }
 
+            updateAoe(gameTime);
+
+
             if (Settings.inDebug)
-            {
                 this.player.hitpoints[0] = this.player.hitpoints[1];
-            }
+            
 
             updateEnemies(gameTime);
 
@@ -244,7 +248,7 @@ public class InGame : IGameState
         finalTarget.Clear(Color.Transparent);
         targets[0].Clear(Color.Transparent);
         targets[1].Clear(Color.Transparent);
-        targets[2].Clear(Color.Transparent);
+        //targets[2].Clear(Color.Transparent);
         window.Clear(Color.Transparent);
 
         foreach (Sprite s in sprites)
@@ -288,7 +292,7 @@ public class InGame : IGameState
 
         (targets[0] as RenderTexture).Display();
         (targets[1] as RenderTexture).Display();
-        (targets[2] as RenderTexture).Display();
+        //(targets[2] as RenderTexture).Display();
 
 
         finalTarget.Draw(new Sprite((targets[0] as RenderTexture).Texture));
@@ -304,6 +308,30 @@ public class InGame : IGameState
 
         window.Draw(new Sprite(finalTarget.Texture));
 
+    }
+
+    double aoeCooldown = 0;
+    private void updateAoe(GameTime gameTime)
+    {
+        aoeCooldown -= gameTime.ElapsedTime.TotalSeconds;
+
+        foreach (BoundingBox bb in harmfulArea)
+        {
+            if (aoeCooldown <= 0 && bb.intersects(player.boundingBox))
+            {
+                player.hitpoints[0] -= Settings.aoeDamage;
+              //  player.inviTime = Settings.PLAYERINVITIME;
+
+                DynamicText dT = new DynamicText(player.position, "" + Settings.aoeDamage, 3);
+                text.Add(dT);
+
+                aoeCooldown = Settings.aoeCooldown;
+
+                updateLifebar();
+            }
+
+            
+        }
     }
 
     private void updateParticles(GameTime gameTime)
@@ -423,6 +451,8 @@ public class InGame : IGameState
         else
             knockDirection = new Vector2f(Settings.KNOCKBACKX, 0);
 
+
+
         particles.Add(EntityLibrary.getParticle(EParticleType.Blood, player.boundingBox.Center));
         particles.Add(EntityLibrary.getParticle(EParticleType.Blood, player.boundingBox.Center));
     }
@@ -487,9 +517,13 @@ public class InGame : IGameState
             {
                 player.setPosition(rec.x, rec.y);
             }
-            if (rec.type.Equals("Teleporter"))
+            else if (rec.type.Equals("Teleporter"))
             {
                 teleport = new Teleporter(rec.x, rec.y, rec.width, rec.height, rec.name);
+            }
+            else if (rec.type.Equals("AoE"))
+            {
+                harmfulArea.Add(new BoundingBox(rec.x, rec.y, rec.width, rec.height));
             }
 
         }

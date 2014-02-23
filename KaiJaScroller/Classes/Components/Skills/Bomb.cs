@@ -37,7 +37,13 @@ public class Bomb : ASkill
         b.ySpeed = ySpeed;
         bull.setGfxComp(comp);
         bull.setBrain(b);
-        bull.setPhysics(new SimplePhysic());
+
+        SimplePhysic phys = new SimplePhysic();
+        phys.enableAccel = false;
+        phys.fallSpeedConstant = 1;
+        //phys.
+
+        bull.setPhysics(phys);
      //   bull.setPhysics(new NoPhysics());
         Vector2f startPos = this.entity.boundingBox.Center;
 

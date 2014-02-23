@@ -6,20 +6,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class PlayerBrain : ABehavior
+public class PlayerBrain : ABehavior, IActionListener
 {
     float speed = 3;
 
     public List<ASkill> skills = new List<ASkill>();
+    Animation animation;
 
     public PlayerBrain()
     {
+        animation = new Animation();
+        animation.animationTime = 0.2;
+        animation.numPics = 4;
+
+       
+
     }
 
     public override void update(GameTime gameTime)
     {
         if(this.entity.inviTime < Settings.PLAYERINVITIME / 2)
             updateMovement();
+
+        animation.update(gameTime);
+
+        
 
         updateSkills(gameTime);
     }
@@ -68,7 +79,7 @@ public class PlayerBrain : ABehavior
     public override void init()
     {
         ASkill skill1 = new SmallSword();
-        skill1.setAction(new Button1Action());
+        skill1.setAction(this);
         skill1.setEntity(this.entity);
 
        (skill1 as SmallSword).reach = 17;
@@ -77,11 +88,15 @@ public class PlayerBrain : ABehavior
       //  (skill1 as SmallSword).xSpeed = 100;
 
         ASkill skill2 = new Bomb();
-        skill2.setAction(new Button2Action());
+        skill2.setAction(this);
         skill2.setEntity(this.entity);
 
         skills.Add(skill1);
         skills.Add(skill2);
+
+        animation.entity = this.entity;
+
+    
     }
 
 
@@ -94,4 +109,21 @@ public class PlayerBrain : ABehavior
 
 
 
+
+    public bool performed(GameTime gameTime, Entity source, string name)
+    {
+        bool returnBool = false;
+
+        if(name == skills[0].name)
+            returnBool = GameStateManager.input.isClicked(Keyboard.Key.E) || GameStateManager.pad.isClicked(Help.X);
+
+        else if(name == skills[1].name)
+            returnBool = GameStateManager.input.isClicked(Keyboard.Key.R) || GameStateManager.pad.isClicked(Help.B);
+
+        if (returnBool)
+            animation.start();
+
+
+        return returnBool;
+    }
 }

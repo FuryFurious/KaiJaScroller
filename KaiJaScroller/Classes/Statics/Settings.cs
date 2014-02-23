@@ -31,6 +31,9 @@ public static class Settings
     public const float KNOCKBACKX       = 3.5f;
     public const float KNOCKBACKY       = 3.5f;
 
+    public const int aoeDamage          = 5;
+    public const double aoeCooldown     = 0.05;
+
     //_______________________COMBAT TEXT___________________//
     public const float COMBATTEXTSPEED  = -0.5f;
     public const float COMBATTEXTOFFSET = 4.0f; //maximum randaom offset left and right at spawn

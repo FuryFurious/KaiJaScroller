@@ -15,6 +15,10 @@ public class SimplePhysic : APhysicComponent
 
     float fallSpeed = 0;
 
+    public float fallSpeedStart = 2;
+    public bool enableAccel = true;
+    public float fallSpeedConstant = 0;
+
 
     public SimplePhysic()
     {
@@ -55,7 +59,7 @@ public class SimplePhysic : APhysicComponent
             if (willFall)
             {
                 resetPhysics();
-                fallSpeed = 2;
+                fallSpeed = fallSpeedStart;
                 isFalling = true;
             }
         }
@@ -63,8 +67,12 @@ public class SimplePhysic : APhysicComponent
         //jumping or falling:
         else
         {
-            fallTime += gameTime.ElapsedTime.TotalSeconds;
-            fallSpeed += (float)fallTime;
+            if (enableAccel)
+                fallTime += gameTime.ElapsedTime.TotalSeconds;
+            else
+                fallTime = 0;
+
+            fallSpeed += (float)fallTime + fallSpeedConstant;
 
 
             //falling:
@@ -92,7 +100,7 @@ public class SimplePhysic : APhysicComponent
             else 
             {
 
-                float y = this.entity.boundingBox.Top;
+                float y = this.entity.boundingBox.Top - 2;
                 float x0 = this.entity.boundingBox.Left;
                 float x1 = this.entity.boundingBox.Right;
 

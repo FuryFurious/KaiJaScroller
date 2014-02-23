@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="10" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="wall" tilewidth="32" tileheight="32">
+  <image source="wall.png" width="320" height="320"/>
+ </tileset>
+ <layer name="Kachelebene 1" width="30" height="10">
+  <data encoding="csv">
+52,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,45,52,
+53,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,51,
+53,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,51,
+53,5,5,5,5,5,5,5,5,5,5,56,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,51,
+53,5,5,5,5,5,5,5,5,5,5,56,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,51,
+53,5,5,5,5,5,5,5,5,5,5,56,5,5,5,5,5,5,5,5,44,42,46,5,5,5,5,5,5,51,
+53,5,5,5,5,5,5,5,5,5,5,56,5,5,5,5,5,45,5,45,51,52,53,5,5,5,5,5,5,51,
+53,5,5,5,5,5,5,5,5,5,5,56,5,5,5,5,5,5,5,5,51,52,53,5,5,5,5,5,5,51,
+53,5,56,21,21,21,21,21,21,21,21,56,21,21,21,51,21,21,21,21,52,52,53,5,5,5,5,5,5,51,
+52,65,66,62,62,62,62,62,62,62,62,64,65,65,65,62,62,62,62,62,62,62,62,45,45,45,45,45,45,52
+</data>
+ </layer>
+ <objectgroup name="Pictures" width="30" height="10">
+  <object type="Picture" gid="22" x="318" y="135"/>
+  <object type="Picture" gid="22" x="136" y="252"/>
+  <object type="Collision" x="136" y="220" width="16" height="16"/>
+  <object type="Picture" gid="22" x="176" y="218"/>
+  <object type="Collision" x="176" y="186" width="16" height="16"/>
+  <object type="Picture" gid="22" x="115" y="181"/>
+  <object type="Collision" x="115" y="149" width="16" height="16"/>
+  <object type="Picture" gid="22" x="58" y="139"/>
+  <object type="Collision" x="58" y="107" width="16" height="16"/>
+  <object type="Picture" gid="22" x="148" y="113"/>
+  <object type="Collision" x="148" y="81" width="16" height="16"/>
+  <object type="Picture" gid="22" x="243" y="115"/>
+  <object type="Collision" x="243" y="83" width="16" height="16"/>
+  <object type="Picture" gid="22" x="416" y="226"/>
+  <object type="Collision" x="416" y="194" width="16" height="16"/>
+  <object type="Collision" x="0" y="288" width="960" height="32"/>
+  <object type="Collision" x="0" y="0" width="960" height="32"/>
+  <object type="Collision" x="640" y="160" width="96" height="128"/>
+  <object type="Collision" x="544" y="192" width="32" height="32"/>
+  <object type="Collision" x="608" y="192" width="32" height="32"/>
+  <object type="Collision" x="480" y="256" width="32" height="32"/>
+  <object type="Collision" x="352" y="96" width="32" height="192"/>
+  <object type="Collision" x="64" y="256" width="32" height="32"/>
+  <object type="Collision" x="0" y="32" width="32" height="256"/>
+  <object type="Collision" x="928" y="32" width="32" height="256"/>
+ </objectgroup>
+ <objectgroup name="Events" width="30" height="10">
+  <object type="PlayerSpawn" x="32" y="256" width="32" height="32"/>
+  <object name="testLevel.tmx" type="Teleporter" x="800" y="160" width="64" height="96"/>
+  <object type="AoE" x="96" y="256" width="256" height="32"/>
+  <object type="AoE" x="384" y="256" width="96" height="32"/>
+  <object type="AoE" x="512" y="256" width="128" height="32"/>
+ </objectgroup>
+ <objectgroup name="Collision" width="30" height="10">
+  <object type="Collision" x="318" y="103" width="16" height="16"/>
+ </objectgroup>
+</map>
