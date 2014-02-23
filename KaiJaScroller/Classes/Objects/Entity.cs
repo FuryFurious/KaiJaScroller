@@ -65,7 +65,7 @@ public class Entity
     {
         gfxComp.draw(gameTime, target[0]);
 
-        if(Settings.drawBoundings)
+        if(Settings.inDebug)
             boundingBox.draw(target[0]);
     }
 

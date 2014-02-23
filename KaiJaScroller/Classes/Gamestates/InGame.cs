@@ -142,7 +142,7 @@ public class InGame : IGameState
             return  EGameState.Restart;
 
         if (GameStateManager.input.isClicked(Keyboard.Key.F1) || GameStateManager.pad.isClicked(Help.Y))
-            Settings.drawBoundings = !Settings.drawBoundings;
+            Settings.inDebug = !Settings.inDebug;
 
         if (!overlay.isPaused())
         {
@@ -158,16 +158,15 @@ public class InGame : IGameState
 
             if (player.inviTime > 0)
             {
-                if (player.canMoveRight(knockDirection.X, 0) && player.canMoveLeft(-knockDirection.X,0) && !Settings.drawBoundings)
+                if (player.inviTime > Settings.PLAYERINVITIME / 2 && player.canMoveRight(knockDirection.X, 0) && player.canMoveLeft(-knockDirection.X,0) && !Settings.inDebug)
                 {
                     player.position += knockDirection;
-              
                 }
 
                 this.player.inviTime -= gameTime.ElapsedTime.TotalSeconds;
             }
 
-            if (Settings.drawBoundings)
+            if (Settings.inDebug)
             {
                 this.player.hitpoints[0] = this.player.hitpoints[1];
             }
@@ -196,7 +195,7 @@ public class InGame : IGameState
     {
 
 
-        if (Settings.drawBoundings)
+        if (Settings.inDebug)
         {
             fps.DisplayedString = "" + 1.0f / (float)gameTime.ElapsedTime.TotalSeconds;
 
@@ -246,11 +245,11 @@ public class InGame : IGameState
         foreach (Entity e in enemies)
             e.draw(gameTime, targets);
 
-        if (Settings.drawBoundings)
+        if (Settings.inDebug)
             foreach (BoundingBox bb in collisionRects)
                 bb.draw(targets[0]);
 
-        if(Settings.drawBoundings)
+        if(Settings.inDebug)
             teleport.draw(targets[0]);
 
         this.player.draw(gameTime, targets);
@@ -264,7 +263,7 @@ public class InGame : IGameState
         targets[1].Draw(lifeframe);
         targets[1].Draw(lifebar);
 
-        if (Settings.drawBoundings)
+        if (Settings.inDebug)
             targets[1].Draw(fps);
 
         overlay.draw(gameTime, targets[1]);
@@ -392,12 +391,13 @@ public class InGame : IGameState
 
     private void playerKnockback(Entity source)
     {
+        player.jump(Settings.KNOCKBACKY);
 
         if (this.player.boundingBox.CenterX < source.boundingBox.CenterX)
-            knockDirection = new Vector2f(-Settings.KNOCKBACKX, -Settings.KNOCKBACKY);
+            knockDirection = new Vector2f(-Settings.KNOCKBACKX, 0);
 
         else
-            knockDirection = new Vector2f(Settings.KNOCKBACKX, -Settings.KNOCKBACKY);
+            knockDirection = new Vector2f(Settings.KNOCKBACKX, 0);
 
     }
 
@@ -442,10 +442,10 @@ public class InGame : IGameState
 
     private void loadLevel(String path)
     {
-        TiledMap.TiledMapInfo map = TiledMap.TiledMapInfo.getMap("Content/"+path);
+        TiledMap.TiledMapInfo map = TiledMap.TiledMapInfo.getMap("Content/Level/"+path);
 
         int[, ,] ids = map.getTileIds();
-        Texture texture = new Texture("Content/" + map.getTileSetName() + ".png");
+        Texture texture = new Texture("Content/Gfx/" + map.getTileSetName() + ".png");
         sprites = new Sprite[ids.GetLength(0), ids.GetLength(1), ids.GetLength(2)];
 
 
@@ -541,7 +541,7 @@ public class InGame : IGameState
 
     private void save()
     {
-        Help.reader.open("Content/save.txt");
+        Help.reader.open("Content/Other/save.txt");
 
         Help.reader.setValue("hp0", ""+player.hitpoints[0]);
         Help.reader.setValue("hp1", "" + player.hitpoints[1]);
@@ -554,7 +554,7 @@ public class InGame : IGameState
 
     private void load()
     {
-        Help.reader.open("Content/save.txt");
+        Help.reader.open("Content/Other/save.txt");
 
         int hp0 = int.Parse(Help.reader.getValue("hp0"));
         int hp1 = int.Parse(Help.reader.getValue("hp1"));

@@ -18,8 +18,15 @@ public class PlayerBrain : ABehavior
 
     public override void update(GameTime gameTime)
     {
+        if(this.entity.inviTime < Settings.PLAYERINVITIME / 2)
+            updateMovement();
 
-        if (GameStateManager.input.isPressed(Keyboard.Key.A) && this.entity.canMoveLeft(speed, 0))        
+        updateSkills(gameTime);
+    }
+
+    private void updateMovement()
+    {
+        if (GameStateManager.input.isPressed(Keyboard.Key.A) && this.entity.canMoveLeft(speed, 0))
             this.entity.moveLeft(speed);
 
         if (GameStateManager.input.isClicked(Keyboard.Key.Space) || GameStateManager.pad.isClicked(Help.A))
@@ -30,17 +37,15 @@ public class PlayerBrain : ABehavior
             this.entity.moveRight(speed);
         }
 
-        updateSkills(gameTime);
-
         float leftX = GameStateManager.pad.getLeftX();
-        
+     
+
         if (leftX > 0)
-            leftX = ((Help.Clamp(leftX, 5, 95) - 5.0f ) / 90.0f);
+            leftX = ((Help.Clamp(leftX, 5, 95) - 5.0f) / 90.0f);
 
         else if (leftX < 0)
             leftX = ((Help.Clamp(leftX, -95, -5) + 5.0f) / 90.0f);
 
-        //TODO direction zeugs ist falsch, weil moveLeft jetzt positive werte annimmt!! PSSST
 
         if (Math.Abs(leftX) > 0.2f)
         {
@@ -52,7 +57,6 @@ public class PlayerBrain : ABehavior
             else if (xHelp < 0 && this.entity.canMoveLeft(-xHelp, 0))
                 this.entity.moveLeft(-xHelp);
         }
-
     }
 
     public override void onKill()
@@ -76,5 +80,7 @@ public class PlayerBrain : ABehavior
         foreach (ASkill skill in skills)
             skill.update(gameTime);
     }
+
+
 
 }

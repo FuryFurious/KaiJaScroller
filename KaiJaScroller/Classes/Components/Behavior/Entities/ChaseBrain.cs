@@ -58,7 +58,7 @@ public class ChaseBrain : ABehavior , IActionListener
             canRight = true;
             this.entity.moveRight(2);
         }
-        Console.Clear();
+     //   Console.Clear();
 
    //     fireball.update(gameTime);
 
@@ -74,17 +74,12 @@ public class ChaseBrain : ABehavior , IActionListener
                 {
                     if (this.entity.canMoveRight(2, 32) || this.entity.canMoveRight(2, 64))
                     {
-                        Console.WriteLine("Wrong");
-                        Console.WriteLine("Wrong");
-                        Console.WriteLine("Wrong");
-                        Console.WriteLine("Wrong");
                         this.entity.jump(5);
                     }
                 }
             }
             if (this.entity.canMoveRight(2, -32) && pX > eX && pY < eY)
             {
-                Console.WriteLine("Right");
                 this.entity.jump(5);
             }
         }
@@ -96,9 +91,6 @@ public class ChaseBrain : ABehavior , IActionListener
                 {
                     if (this.entity.canMoveLeft(2, 32) || this.entity.canMoveLeft(2, 64))
                     {
-                        Console.WriteLine("Wrong");
-                        Console.WriteLine("Wrong");
-                        Console.WriteLine("Wrong");
 
                         this.entity.jump(5);
                     }
@@ -106,7 +98,6 @@ public class ChaseBrain : ABehavior , IActionListener
             }
             if (this.entity.canMoveLeft(2, -32) && pX < eX && pY < eY )
             {
-                Console.WriteLine("Right");
                 this.entity.jump(5);
             }
             
