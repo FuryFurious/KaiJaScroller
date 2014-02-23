@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objecttypes>
+ <objecttype name="Collision" color="#ff0000"/>
+ <objecttype name="PlayerSpawn" color="#0000ff"/>
+ <objecttype name="EnemySpawnLeft" color="#ff00fb"/>
+ <objecttype name="Teleporter" color="#ffff00"/>
+ <objecttype name="Picture" color="#00ff00"/>
+ <objecttype name="EnemySpawnRight" color="#a400a4"/>
+ <objecttype name="AoE" color="#55ffff"/>
+</objecttypes>
