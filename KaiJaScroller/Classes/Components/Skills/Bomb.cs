@@ -30,7 +30,7 @@ public class Bomb : ASkill
 
         bull.setGfxComp(comp);
         bull.setBrain(new SimpleBomb(this.entity.direction));
-        bull.setPhysics(new SimplePhysic(new NoAction()));
+        bull.setPhysics(new SimplePhysic());
      //   bull.setPhysics(new NoPhysics());
         Vector2f startPos = this.entity.boundingBox.Center;
 

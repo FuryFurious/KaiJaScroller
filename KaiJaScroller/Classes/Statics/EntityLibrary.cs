@@ -33,7 +33,7 @@ public static class EntityLibrary
                 gfxComp = new ProjectileGfx();
 
                 behavior = new PlayerBrain();
-                physics = new SimplePhysic(new PlayerJump());
+                physics = new SimplePhysic();
 
                 break;
 
@@ -50,7 +50,7 @@ public static class EntityLibrary
                 gfxComp = new ProjectileGfx();
 
                 behavior = new ChaseBrain();
-                physics = new SimplePhysic(new ChaseJump());
+                physics = new SimplePhysic();
                 break;
 
         }

@@ -169,7 +169,10 @@ public class Entity
        // this.gfxComp..Position = this.position;
     }
 
-
+    public void jump(float startPower)
+    {
+        this.physic.jump(startPower);
+    }
   
 
     public void setGfxComp(AGfxComp s)

@@ -20,7 +20,10 @@ public class PlayerBrain : ABehavior
 //  else 
         if (GameStateManager.input.isPressed(Keyboard.Key.A) && this.entity.canMoveLeft(speed, 0))        
             this.entity.moveLeft(speed);
-        
+
+        if (GameStateManager.input.isClicked(Keyboard.Key.Space))
+            this.entity.jump(5);
+
         else if (GameStateManager.input.isPressed(Keyboard.Key.D) && this.entity.canMoveRight(speed, 0))
         {
             this.entity.moveRight(speed);
@@ -64,5 +67,7 @@ public class PlayerBrain : ABehavior
         skill1.setEntity(this.entity);
 
         skills.Add(skill1);
+
+      
     }
 }

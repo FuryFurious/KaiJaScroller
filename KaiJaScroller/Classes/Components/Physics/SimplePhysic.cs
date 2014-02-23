@@ -11,14 +11,23 @@ public class SimplePhysic : APhysicComponent
 {
     bool isFalling = true;
 
-    double fallTime = 0;
+    public double fallTime = 0;
     float fallSpeed = 0;
 
-    IActionListener jumpPerformance;
 
-    public SimplePhysic(IActionListener jumpPerformance)
+    public SimplePhysic()
     {
-        this.jumpPerformance = jumpPerformance;
+
+    }
+
+    new public void jump(float power)
+    {
+        if (!isFalling)
+        {
+            resetPhysics();
+            isFalling = true;
+            fallSpeed = -power;
+        }
     }
 
     public override void update(GameTime gameTime)
@@ -47,13 +56,6 @@ public class SimplePhysic : APhysicComponent
                 resetPhysics();
                 fallSpeed = 2;
                 isFalling = true;
-            }
-
-            if (jumpPerformance.performed(gameTime, this.entity))
-            {
-                resetPhysics();
-                isFalling = true;
-                fallSpeed = -5;
             }
         }
 
