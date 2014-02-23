@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 public class Fireball : ASkill
 {
+
+
     public Fireball()
     {
         this.name = "Fireball";
@@ -21,9 +23,8 @@ public class Fireball : ASkill
     {
         Entity bull = new Entity();
 
-        Sprite sp = new Sprite(Assets.fireballTexture);
+        Sprite sp = new Sprite(Assets.magicBall);
         sp.TextureRect = new IntRect(0, 0, 32, 32);
-
         AGfxComp comp = new ProjectileGfx();
         comp.setSprite(sp);
 

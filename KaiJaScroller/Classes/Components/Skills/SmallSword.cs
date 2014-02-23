@@ -61,7 +61,7 @@ public class SmallSword : ASkill
         comp.init();
 
       //  bull.init(this.entity.ingame);
-        
+        bull.hitpoints[0] = 9;
 
         this.entity.ingame.addBullet(bull, this.entity.isFriendly);
 

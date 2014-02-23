@@ -344,7 +344,7 @@ public class InGame : IGameState
                         friendlyBullets[i].exists = false;
                         break;
                     }
-
+                    
                 }
             }
 

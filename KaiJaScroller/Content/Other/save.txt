@@ -1,6 +1,6 @@
 ﻿hp0 = 100
 hp1 = 200
-level = Entrance.tmx
+level = UpStairs.tmx
 skill0 = null
 skill1 = null
 skill2 = null
