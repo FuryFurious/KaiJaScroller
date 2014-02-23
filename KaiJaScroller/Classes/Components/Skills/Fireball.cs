@@ -36,7 +36,7 @@ public class Fireball : ASkill
         Vector2f startPos = this.entity.boundingBox.Center - new Vector2f(16,16);
 
         if (this.entity.direction == EDirection.Left)
-            startPos += new Vector2f(-16,0);
+            startPos += new Vector2f(-16, 0);
         else
             startPos += new Vector2f(16, 0);
 
