@@ -36,8 +36,7 @@ public class PauseOverlay : IOverlayState
     {
        
     }
-    //TODO: make pause menu more beautiful ;)
-    //TODO: add gamepad input
+
     public EOverlayState update(GameTime gameTime)
     {
         

@@ -137,7 +137,6 @@ public class Entity
         return true;
     }
 
-    //TODO maybe remove +- 1 in verMovement, written for offsetting stuff, maybe its not good!
     public bool canMoveDown(float dy)
     {
         float y = this.boundingBox.Bottom + dy;
@@ -151,7 +150,7 @@ public class Entity
         return true;
     }
 
-    //TODO maybe remove +- 1 in verMovement:
+
     public bool canMoveUp(float dy)
     {
         float y = this.boundingBox.Top + dy;
