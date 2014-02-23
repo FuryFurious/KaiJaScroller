@@ -22,7 +22,7 @@ public class PlayerBrain : ABehavior
         if (GameStateManager.input.isPressed(Keyboard.Key.A) && this.entity.canMoveLeft(speed, 0))        
             this.entity.moveLeft(speed);
 
-        if (GameStateManager.input.isClicked(Keyboard.Key.Space))
+        if (GameStateManager.input.isClicked(Keyboard.Key.Space) || GameStateManager.pad.isClicked(Help.A))
             this.entity.jump(5);
 
         else if (GameStateManager.input.isPressed(Keyboard.Key.D) && this.entity.canMoveRight(speed, 0))

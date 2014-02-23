@@ -141,7 +141,7 @@ public class InGame : IGameState
         if (GameStateManager.pad.isClicked(Help.LB) || GameStateManager.input.isClicked(Keyboard.Key.Q))
             return  EGameState.Restart;
 
-        if (GameStateManager.input.isClicked(Keyboard.Key.F1))
+        if (GameStateManager.input.isClicked(Keyboard.Key.F1) || GameStateManager.pad.isClicked(Help.Y))
             Settings.drawBoundings = !Settings.drawBoundings;
 
         if (!overlay.isPaused())
