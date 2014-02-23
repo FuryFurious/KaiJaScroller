@@ -490,8 +490,9 @@ public class InGame : IGameState
             {
                 Entity ene = EntityLibrary.getEntity((EEntityType)pic.id);
                 ene.direction = EDirection.Right;
-                ene.moveLeft(0.01f);
+                ene.moveRight(0.0f);
                 ene.setPosition(pic.x, pic.y);
+                ene.gfxComp.mirror();
                 enemies.Add(ene);
             }
 
