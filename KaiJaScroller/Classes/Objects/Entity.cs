@@ -167,6 +167,8 @@ public class Entity
         this.position = new Vector2f(x, y);
         this.boundingBox.X = x;
         this.boundingBox.Y = y;
+
+        this.gfxComp.sprite.Position = new Vector2f(x,y);
        // this.gfxComp..Position = this.position;
     }
 

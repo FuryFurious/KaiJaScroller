@@ -11,7 +11,7 @@ public abstract class AGfxComp
 {
 
     protected Entity entity;
-    protected Sprite sprite;
+    public Sprite sprite;
 
     public float xOffset = 0;
     public float yOffset = 0;

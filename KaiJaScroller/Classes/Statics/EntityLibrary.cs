@@ -63,9 +63,9 @@ public static class EntityLibrary
         e.boundingBox = bb;
         e.setGfxComp(gfxComp);
 
-        gfxComp.init();
-        physics.init();
-        behavior.init();
+        //gfxComp.init();
+        //physics.init();
+      //  behavior.init();
 
         return e;
     }

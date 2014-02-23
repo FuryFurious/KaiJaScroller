@@ -64,7 +64,7 @@ public class ChaseBombBrain : ABehavior, IActionListener
         {
             this.entity.moveLeft(2);
         }
-  //      Console.Clear();
+
 
         //     fireball.update(gameTime);
 

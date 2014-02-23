@@ -41,6 +41,7 @@ public class Bomb : ASkill
      //   bull.setPhysics(new NoPhysics());
         Vector2f startPos = this.entity.boundingBox.Center;
 
+        bull.hitpoints[0] = 1;
         bull.damage = 99;
         bull.boundingBox = new BoundingBox(startPos.X, startPos.Y, 8, 8);
         bull.boundingBox.offsetX = 12;
