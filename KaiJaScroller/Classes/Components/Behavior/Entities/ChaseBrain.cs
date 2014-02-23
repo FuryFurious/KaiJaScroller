@@ -58,7 +58,6 @@ public class ChaseBrain : ABehavior , IActionListener
             canRight = true;
             this.entity.moveRight(2);
         }
-     //   Console.Clear();
 
    //     fireball.update(gameTime);
 

@@ -107,6 +107,7 @@ public class InGame : IGameState
         updateLifebar();
         handleNewOverlayState();
 
+
     }
 
     private void updateViewport()
@@ -129,6 +130,8 @@ public class InGame : IGameState
 
     public EGameState update(GameTime gameTime)
     {
+
+        Console.WriteLine(view.Center);
 
         currentOverlay = overlay.update(gameTime);
 

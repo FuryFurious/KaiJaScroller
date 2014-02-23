@@ -53,8 +53,6 @@ public class TurretBrain : ABehavior, IActionListener
 
         fireball.update(gameTime);
 
-
-
     }
 
     public override void onKill()

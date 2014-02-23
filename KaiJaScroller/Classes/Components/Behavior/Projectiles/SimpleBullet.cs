@@ -16,8 +16,8 @@ public class SimpleBullet : ABehavior
 
     public SimpleBullet(EDirection direction)
     {
-        this.dir = direction;
-    }
+        dir = direction;
+   } 
 
     public override void update(GameTime gameTime)
     {
