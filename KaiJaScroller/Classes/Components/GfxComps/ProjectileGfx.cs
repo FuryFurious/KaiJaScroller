@@ -12,7 +12,7 @@ public class ProjectileGfx : AGfxComp
     public override void init()
     {
        // this.sprite.Transform.        
-        this.sprite.Scale = new SFML.Window.Vector2f(-1, 1);
+       // this.sprite.Scale = new SFML.Window.Vector2f(-1, 1);
     
     }
 

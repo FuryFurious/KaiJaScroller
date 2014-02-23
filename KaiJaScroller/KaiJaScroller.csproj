@@ -73,7 +73,6 @@
     <Compile Include="Classes\Components\Actions\Button1Action.cs" />
     <Compile Include="Classes\Components\Actions\ChaseJump.cs" />
     <Compile Include="Classes\Components\Actions\NoAction.cs" />
-    <Compile Include="Classes\Components\Actions\PlayerJump.cs" />
     <Compile Include="Classes\Components\Actions\RandomAction.cs" />
     <Compile Include="Classes\Components\Behavior\Entities\ChaseBrain.cs" />
     <Compile Include="Classes\Components\Behavior\Particles\Smoke.cs" />

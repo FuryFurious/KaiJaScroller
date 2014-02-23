@@ -48,7 +48,5 @@ public class SimpleBomb : ABehavior
         this.entity.ingame.particles.Add(EntityLibrary.getParticle(EParticleType.Smoke, startPos));
         this.entity.ingame.particles.Add(EntityLibrary.getParticle(EParticleType.Smoke, startPos));
         this.entity.ingame.particles.Add(EntityLibrary.getParticle(EParticleType.Smoke, startPos));
-
-        Console.Write(startPos);
     }
 }

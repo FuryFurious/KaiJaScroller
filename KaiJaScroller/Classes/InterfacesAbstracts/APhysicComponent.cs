@@ -14,6 +14,11 @@ public abstract class APhysicComponent
         this.entity = e;
     }
 
+    public void jump(float power)
+    {
+        (this as SimplePhysic).jump(power);
+    }
+
     public abstract void init();
 
     public abstract void update(GameTime gameTime);
