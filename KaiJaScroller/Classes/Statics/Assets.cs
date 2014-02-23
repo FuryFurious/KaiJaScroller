@@ -16,6 +16,7 @@ public static class Assets
     public static Texture gameOver          = new Texture("Content/Gfx/gameOver.png");
     public static Texture smokeParticle     = new Texture("Content/Gfx/smoke.png");
     public static Texture bomb              = new Texture("Content/Gfx/bomb.png");
+    public static Texture bloodParticle   = new Texture("Content/Gfx/bloodParticle.png");
 
     public static Font font1 = new Font("Content/Other/Gargoyles.ttf");
 

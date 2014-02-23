@@ -116,7 +116,7 @@ public class ChaseBombBrain : ABehavior, IActionListener
 
         else if (name == bomb.name)
         {
-            //bomb.xSpeed = (float)Help.random.NextDouble() * 10.0f;
+            bomb.xSpeed = -(float)Help.random.NextDouble() * 10.0f;
             //if(Math.Abs(pX - eX) < 100)
             return true;
         }

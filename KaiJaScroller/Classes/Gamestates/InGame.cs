@@ -332,7 +332,12 @@ public class InGame : IGameState
                     text.Add(dT);
 
                     e.hitpoints[0] -= friendlyBullets[i].damage;
+                    
+                    
                     e.inviTime = Settings.ENEMYINVITIME;
+
+                    particles.Add(EntityLibrary.getParticle(EParticleType.Blood, e.boundingBox.Center));
+                    particles.Add(EntityLibrary.getParticle(EParticleType.Blood, e.boundingBox.Center));
 
                     if (friendlyBullets[i].hitpoints[0] <= 0)
                     {
@@ -362,7 +367,7 @@ public class InGame : IGameState
             if (enemies[i].inviTime > 0)
                 enemies[i].inviTime -= gameTime.ElapsedTime.TotalSeconds;
 
-            if (player.inviTime <= 0 && enemies[i].boundingBox.intersects(player.boundingBox))
+            if (player.inviTime <= 0 && enemies[i].damage > 0 && enemies[i].boundingBox.intersects(player.boundingBox))
             {
 
                 DynamicText dT = new DynamicText(player.position, "" + enemies[i].damage, 3);
@@ -399,6 +404,8 @@ public class InGame : IGameState
         else
             knockDirection = new Vector2f(Settings.KNOCKBACKX, 0);
 
+        particles.Add(EntityLibrary.getParticle(EParticleType.Blood, player.boundingBox.Center));
+        particles.Add(EntityLibrary.getParticle(EParticleType.Blood, player.boundingBox.Center));
     }
 
     private void updateHostileBullets(GameTime gameTime)
@@ -418,8 +425,9 @@ public class InGame : IGameState
                 player.hitpoints[0] -= hostileBullets[i].damage;
                 player.inviTime = Settings.PLAYERINVITIME;
 
-                playerKnockback(enemies[i]);
+                playerKnockback(hostileBullets[i]);
 
+            
                 updateLifebar();
 
                 if (hostileBullets[i].hitpoints[0] <= 0)
@@ -445,7 +453,7 @@ public class InGame : IGameState
         TiledMap.TiledMapInfo map = TiledMap.TiledMapInfo.getMap("Content/Level/"+path);
 
         int[, ,] ids = map.getTileIds();
-        Texture texture = new Texture("Content/Gfx/" + map.getTileSetName() + ".png");
+        Texture texture = new Texture("Content/Level/" + map.getTileSetName() + ".png");
         sprites = new Sprite[ids.GetLength(0), ids.GetLength(1), ids.GetLength(2)];
 
 

@@ -6,19 +6,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class ProjectileGfx : AGfxComp
+
+public class EntityGfx : AGfxComp
 {
 
-    EDirection dir = EDirection.Left;
+    EDirection dir;
 
     public override void init()
     {
-       // this.sprite.Transform.        
-       // this.sprite.Scale = new SFML.Window.Vector2f(-1, 1);
+        dir = this.entity.direction;
+
+      
     }
 
     public override void update(GameTime gameTime)
     {
+
+
+        if (this.entity.inviTime > 0)
+            this.sprite.Color = Color.Red;
+
+        else
+            this.sprite.Color = Color.White;
+
         if (dir != this.entity.direction)
         {
             mirror();
@@ -34,4 +44,3 @@ public class ProjectileGfx : AGfxComp
         target.Draw(this.sprite);
     }
 }
-

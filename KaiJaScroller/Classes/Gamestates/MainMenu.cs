@@ -84,7 +84,7 @@ using System.Threading.Tasks;
                 if (GameStateManager.pad.isClicked(Help.A))
                     return EGameState.None;
             }
-            Console.WriteLine(count);
+    
 
             return EGameState.MainMenu;
         }
