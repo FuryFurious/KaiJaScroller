@@ -33,7 +33,12 @@ public class Fireball : ASkill
         bull.setPhysics(new NoPhysics());
 
 
-        Vector2f startPos = this.entity.boundingBox.Center - new Vector2f(32,16);
+        Vector2f startPos = this.entity.boundingBox.Center - new Vector2f(16,16);
+
+        if (this.entity.direction == EDirection.Left)
+            startPos += new Vector2f(-16, 0);
+        else
+            startPos += new Vector2f(16, 0);
 
         bull.damage = 99;
         bull.boundingBox = new BoundingBox(startPos.X, startPos.Y, 16, 16);
