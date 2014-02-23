@@ -11,10 +11,11 @@ public class SimpleBomb : ABehavior
     float xSpeed = 5.0f;
     float ySpeed = -3.5f;
 
+    EDirection direction;
+
     public SimpleBomb(EDirection direction)
     {
-        if (direction == EDirection.Left)
-            xSpeed *= -1;
+        this.direction = direction;
     }
 
     public override void init()
@@ -25,10 +26,17 @@ public class SimpleBomb : ABehavior
     public override void update(GameTime gameTime)
     {
 
-        if (!this.entity.canMoveLeft(3,0) || !this.entity.canMoveRight(3,0) || !this.entity.canMoveUp(3) || !this.entity.canMoveDown(3))
+        if (!this.entity.canMoveLeft(0, 0) || !this.entity.canMoveRight(0, 0) || !this.entity.canMoveUp(3) || !this.entity.canMoveDown(3))
+        {
             this.entity.exists = false;
+            return;
+        }
 
-        this.entity.moveLeft(xSpeed);
+        if(direction == EDirection.Left)
+            this.entity.moveLeft(xSpeed);
+
+        else if(direction == EDirection.Right)
+            this.entity.moveRight(xSpeed);
 
         this.entity.moveVert(ySpeed);
     }
@@ -36,10 +44,11 @@ public class SimpleBomb : ABehavior
     public override void onKill()
     {
         Vector2f startPos = this.entity.boundingBox.Center;
+
         this.entity.ingame.particles.Add(EntityLibrary.getParticle(EParticleType.Smoke, startPos));
         this.entity.ingame.particles.Add(EntityLibrary.getParticle(EParticleType.Smoke, startPos));
         this.entity.ingame.particles.Add(EntityLibrary.getParticle(EParticleType.Smoke, startPos));
 
-
+        Console.Write(startPos);
     }
 }

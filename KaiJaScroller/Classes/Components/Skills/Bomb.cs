@@ -31,7 +31,7 @@ public class Bomb : ASkill
         bull.setGfxComp(comp);
         bull.setBrain(new SimpleBomb(this.entity.direction));
         bull.setPhysics(new SimplePhysic(new NoAction()));
-
+     //   bull.setPhysics(new NoPhysics());
         Vector2f startPos = this.entity.boundingBox.Center;
 
         bull.damage = 99;
@@ -42,8 +42,9 @@ public class Bomb : ASkill
         if(this.entity.direction == EDirection.Left)
             bull.setPosition(startPos.X - 16 - 8, startPos.Y - 40);
 
-        else
+        else if(this.entity.direction == EDirection.Right)
             bull.setPosition(startPos.X - 16 + 8, startPos.Y - 40);
+
 
 
         this.entity.ingame.addBullet(bull, this.entity.isFriendly);
