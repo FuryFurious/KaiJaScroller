@@ -158,10 +158,9 @@ public class InGame : IGameState
 
             if (player.inviTime > 0)
             {
-                if (player.canMoveRight(knockDirection.X, 0) && player.canMoveLeft(-knockDirection.X,0) && !Settings.drawBoundings)
+                if (player.inviTime > Settings.PLAYERINVITIME / 2 && player.canMoveRight(knockDirection.X, 0) && player.canMoveLeft(-knockDirection.X,0) && !Settings.drawBoundings)
                 {
                     player.position += knockDirection;
-              
                 }
 
                 this.player.inviTime -= gameTime.ElapsedTime.TotalSeconds;
@@ -392,12 +391,13 @@ public class InGame : IGameState
 
     private void playerKnockback(Entity source)
     {
+        player.jump(Settings.KNOCKBACKY);
 
         if (this.player.boundingBox.CenterX < source.boundingBox.CenterX)
-            knockDirection = new Vector2f(-Settings.KNOCKBACKX, -Settings.KNOCKBACKY);
+            knockDirection = new Vector2f(-Settings.KNOCKBACKX, 0);
 
         else
-            knockDirection = new Vector2f(Settings.KNOCKBACKX, -Settings.KNOCKBACKY);
+            knockDirection = new Vector2f(Settings.KNOCKBACKX, 0);
 
     }
 
