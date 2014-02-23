@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class ChaseBrain : ABehavior
+public class ChaseBrain : ABehavior , IActionListener
 {
     float pX;
     float pY;
@@ -13,15 +13,20 @@ public class ChaseBrain : ABehavior
     float eY;
     bool canLeft;
     bool canRight;
-    
+    Fireball fireball;
+    Bomb bomb;
 
     public ChaseBrain()
     {
         
+
     }
 
     public override void init()
     {
+        fireball = new Fireball();
+        fireball.setAction(this);
+        fireball.setEntity(this.entity);
         //ASkill skill1 = new Fireball();
         //skill1.setAction(new RandomAction(0.5));
         //skill1.setEntity(this.entity);
@@ -30,6 +35,9 @@ public class ChaseBrain : ABehavior
         canLeft = false;
         canRight = false;
         
+        bomb = new Bomb();
+        bomb.setAction(this);
+        bomb.setEntity(this.entity);
     }
 
     public override void update(GameTime gameTime)
@@ -52,6 +60,11 @@ public class ChaseBrain : ABehavior
         }
         Console.Clear();
 
+   //     fireball.update(gameTime);
+
+  //      bomb.update(gameTime);
+
+        //updateSkills(gameTime);
         //jumping  
         if (pX - eX > 5 && pX - eX < 150)
         {
@@ -101,11 +114,27 @@ public class ChaseBrain : ABehavior
 
 
 
-        updateSkills(gameTime);
     }
 
     public override void onKill()
     {
 
+    }
+
+    public bool performed(GameTime gameTime, Entity source, String name)
+    {
+        if (name == fireball.name)
+        {
+            return true;
+        }
+
+        else if (name == bomb.name)
+        {
+            //bomb.xSpeed = (float)Help.random.NextDouble() * 10.0f;
+
+            return true;
+        }
+
+        return false;
     }
 }

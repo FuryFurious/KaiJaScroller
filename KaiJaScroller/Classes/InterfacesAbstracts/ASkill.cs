@@ -9,7 +9,7 @@ public abstract class ASkill
 {
     protected Entity entity;
 
-    protected String name;
+    public String name;
 
     protected IActionListener action;
 
@@ -24,7 +24,7 @@ public abstract class ASkill
         if (curCooldown > 0)
             curCooldown -= gameTime.ElapsedTime.TotalSeconds;
 
-        else if (curCooldown <= 0 && action.performed(gameTime, entity))
+        else if (curCooldown <= 0 && action.performed(gameTime, entity, name))
         {
             curCooldown = maxCooldown;
             onUse(gameTime);

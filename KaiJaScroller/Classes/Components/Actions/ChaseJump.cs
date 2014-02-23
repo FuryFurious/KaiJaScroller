@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 public class ChaseJump : IActionListener
 {
 
-    public bool performed(GameTime gameTime, Entity source)
+    public bool performed(GameTime gameTime, Entity source, String name)
     {
         float pX = source.ingame.player.boundingBox.CenterX;
         float eX = source.boundingBox.CenterX;

@@ -12,6 +12,7 @@ public class SimplePhysic : APhysicComponent
     bool isFalling = true;
 
     public double fallTime = 0;
+
     float fallSpeed = 0;
 
 
@@ -78,8 +79,7 @@ public class SimplePhysic : APhysicComponent
                     if (bb.intersectsHorzLine(y, x0, x1))
                     {
                         
-                        //TODO: make this better: made for bombs not being affected by setting ontop
-                        if(this.entity.boundingBox.Height > 16)
+                        if(bb.Top + 15 > this.entity.boundingBox.Bottom)
                             this.entity.position.Y = bb.Y - this.entity.boundingBox.Height;
 
                         resetPhysics();

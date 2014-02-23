@@ -44,6 +44,7 @@ public class InGame : IGameState
 
     IOverlayState overlay;
 
+
     public InGame()
     {
 
@@ -140,7 +141,7 @@ public class InGame : IGameState
         if (GameStateManager.pad.isClicked(Help.LB) || GameStateManager.input.isClicked(Keyboard.Key.Q))
             return  EGameState.Restart;
 
-        if (GameStateManager.input.isClicked(Keyboard.Key.F1))
+        if (GameStateManager.input.isClicked(Keyboard.Key.F1) || GameStateManager.pad.isClicked(Help.Y))
             Settings.drawBoundings = !Settings.drawBoundings;
 
         if (!overlay.isPaused())
@@ -156,9 +157,25 @@ public class InGame : IGameState
             this.player.update(gameTime);
 
             if (player.inviTime > 0)
+            {
+                if (player.canMoveRight(knockDirection.X, 0) && player.canMoveLeft(-knockDirection.X,0) && !Settings.drawBoundings)
+                {
+                    player.position += knockDirection;
+              
+                }
+
                 this.player.inviTime -= gameTime.ElapsedTime.TotalSeconds;
+            }
+
+            if (Settings.drawBoundings)
+            {
+                this.player.hitpoints[0] = this.player.hitpoints[1];
+            }
 
             updateEnemies(gameTime);
+
+           
+               
 
 
             if (player.boundingBox.intersects(teleport.bb))
@@ -316,7 +333,7 @@ public class InGame : IGameState
                     text.Add(dT);
 
                     e.hitpoints[0] -= friendlyBullets[i].damage;
-                    e.inviTime = Settings.INVITIME;
+                    e.inviTime = Settings.ENEMYINVITIME;
 
                     if (friendlyBullets[i].hitpoints[0] <= 0)
                     {
@@ -338,6 +355,7 @@ public class InGame : IGameState
 
     private void updateEnemies(GameTime gameTime)
     {
+ 
         for (int i = 0; i < enemies.Count; i++)
         {
             enemies[i].update(gameTime);
@@ -347,12 +365,14 @@ public class InGame : IGameState
 
             if (player.inviTime <= 0 && enemies[i].boundingBox.intersects(player.boundingBox))
             {
+
                 DynamicText dT = new DynamicText(player.position, "" + enemies[i].damage, 3);
                 text.Add(dT);
 
-                player.inviTime = Settings.INVITIME;
+                player.inviTime = Settings.PLAYERINVITIME;
                 player.hitpoints[0] -= enemies[i].damage;
 
+                playerKnockback(enemies[i]);
                 updateLifebar();
             }
 
@@ -366,6 +386,19 @@ public class InGame : IGameState
                 i--;
             }
         }
+    }
+
+    Vector2f knockDirection;
+
+    private void playerKnockback(Entity source)
+    {
+
+        if (this.player.boundingBox.CenterX < source.boundingBox.CenterX)
+            knockDirection = new Vector2f(-Settings.KNOCKBACKX, -Settings.KNOCKBACKY);
+
+        else
+            knockDirection = new Vector2f(Settings.KNOCKBACKX, -Settings.KNOCKBACKY);
+
     }
 
     private void updateHostileBullets(GameTime gameTime)
@@ -383,7 +416,9 @@ public class InGame : IGameState
                 text.Add(dT);
 
                 player.hitpoints[0] -= hostileBullets[i].damage;
-                player.inviTime = Settings.INVITIME;
+                player.inviTime = Settings.PLAYERINVITIME;
+
+                playerKnockback(enemies[i]);
 
                 updateLifebar();
 
@@ -585,4 +620,6 @@ public class InGame : IGameState
             hostileBullets.Add(e);
         
     }
+
+
 }

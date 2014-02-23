@@ -10,6 +10,8 @@ public class PlayerBrain : ABehavior
 {
     float speed = 3;
 
+    public List<ASkill> skills = new List<ASkill>();
+
     public PlayerBrain()
     {
     }
@@ -17,7 +19,6 @@ public class PlayerBrain : ABehavior
     public override void update(GameTime gameTime)
     {
 
-//  else 
         if (GameStateManager.input.isPressed(Keyboard.Key.A) && this.entity.canMoveLeft(speed, 0))        
             this.entity.moveLeft(speed);
 
@@ -67,7 +68,13 @@ public class PlayerBrain : ABehavior
         skill1.setEntity(this.entity);
 
         skills.Add(skill1);
-
-      
     }
+
+
+    public void updateSkills(GameTime gameTime)
+    {
+        foreach (ASkill skill in skills)
+            skill.update(gameTime);
+    }
+
 }

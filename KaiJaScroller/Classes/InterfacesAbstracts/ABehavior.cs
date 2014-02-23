@@ -9,7 +9,7 @@ public abstract class ABehavior
 {
     protected Entity entity;
 
-    public List<ASkill> skills = new List<ASkill>();
+
 
     public void setEntity(Entity e)
     {
@@ -19,12 +19,6 @@ public abstract class ABehavior
     public abstract void init();
 
     public abstract void update(GameTime gameTime);
-
-    public void updateSkills(GameTime gameTime)
-    {
-        foreach (ASkill skill in skills)
-            skill.update(gameTime);
-    }
 
     public abstract void onKill();
 }

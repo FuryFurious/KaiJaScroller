@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 public class SimpleBomb : ABehavior
 {
-    float xSpeed = 5.0f;
-    float ySpeed = -3.5f;
+    public float xSpeed = 5.0f;
+    public float ySpeed = -3.5f;
 
     EDirection direction;
 

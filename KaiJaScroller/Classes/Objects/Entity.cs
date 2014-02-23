@@ -30,7 +30,7 @@ public class Entity
     public int damage = 0;
     public int[] hitpoints = new int[2];
 
-    public double inviTime = Settings.INVITIME;
+    public double inviTime = Settings.ENEMYINVITIME;
     public EDirection direction = EDirection.Left;
 
 
