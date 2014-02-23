@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 public class Bomb : ASkill
 {
 
+    public float xSpeed = 5.0f;
+    public float ySpeed = -3.5f;
+
     public Bomb()
     {
         this.name = "Bomb";
@@ -28,8 +31,12 @@ public class Bomb : ASkill
         AGfxComp comp = new ProjectileGfx();
         comp.setSprite(sp);
 
+
+        SimpleBomb b = new SimpleBomb(this.entity.direction);
+        b.xSpeed = xSpeed;
+        b.ySpeed = ySpeed;
         bull.setGfxComp(comp);
-        bull.setBrain(new SimpleBomb(this.entity.direction));
+        bull.setBrain(b);
         bull.setPhysics(new SimplePhysic());
      //   bull.setPhysics(new NoPhysics());
         Vector2f startPos = this.entity.boundingBox.Center;

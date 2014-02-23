@@ -25,8 +25,11 @@ public static class Settings
     public static Color boundingBoxColor    = new Color(255, 0, 0, 127);
 
     //________________________COMBAT_______________________________//
-    public const double INVITIME = 0.4;
+    public const double ENEMYINVITIME = 0.4;
+    public const double PLAYERINVITIME = 0.4;
 
+    public const float KNOCKBACKX = 3.5f;
+    public const float KNOCKBACKY = 3.5f;
 
     //_______________________COMBAT TEXT___________________//
     public const float COMBATTEXTSPEED  = -0.5f;

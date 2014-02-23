@@ -15,7 +15,9 @@ public class RandomAction : IActionListener
 
     }
 
-    public bool performed(GameTime gameTime, Entity source)
+
+
+    public bool performed(GameTime gameTime, Entity source, string name)
     {
         return Help.random.NextDouble() < chance;
     }

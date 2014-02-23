@@ -30,7 +30,7 @@ public class Entity
     public int damage = 0;
     public int[] hitpoints = new int[2];
 
-    public double inviTime = Settings.INVITIME;
+    public double inviTime = Settings.ENEMYINVITIME;
     public EDirection direction = EDirection.Left;
 
 
@@ -108,7 +108,7 @@ public class Entity
 
     public bool canMoveLeft(float dx, float dy)
     {
-        float x = this.boundingBox.Left - dx + dy;
+        float x = this.boundingBox.Left - dx;
         float y0 = this.boundingBox.Top + 3 + dy;
         float y1 = this.boundingBox.Bottom - 1 - dy;
 
@@ -121,7 +121,7 @@ public class Entity
 
     public bool canMoveRight(float dx, float dy)
     {
-        float x = this.boundingBox.Right + dx + dy;
+        float x = this.boundingBox.Right + dx;
         float y0 = this.boundingBox.Top + 3 + dy;
         float y1 = this.boundingBox.Bottom - 1 -dy;
 
