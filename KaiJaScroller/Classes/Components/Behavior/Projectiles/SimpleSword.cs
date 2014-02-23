@@ -20,12 +20,15 @@ public class SimpleSword : ABehavior
     public SimpleSword(EDirection direction)
     {
         this.direction = direction;
+
+        
     }
 
     public override void init()
     {
         if (this.entity.direction == EDirection.Left)
             this.entity.gfxComp.mirror();
+
     }
 
     public override void update(GameTime gameTime)

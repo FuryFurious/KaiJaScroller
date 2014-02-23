@@ -52,14 +52,13 @@ public class Entity
 
     public void update(GameTime gameTime)
     {
-
-        physic.update(gameTime);
         behavior.update(gameTime);
+        physic.update(gameTime);
+
         gfxComp.update(gameTime);
 
         boundingBox.X = position.X + boundingBox.offsetX;
-        boundingBox.Y = position.Y + boundingBox.offsetY;
-
+        boundingBox.Y = position.Y + boundingBox.offsetY;     
     }
 
     public void draw(GameTime gameTime, RenderTarget[] target)

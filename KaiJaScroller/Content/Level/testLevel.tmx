@@ -78,7 +78,7 @@
  </objectgroup>
  <objectgroup name="EventsStuff" width="20" height="20">
   <object type="PlayerSpawn" x="96" y="32" width="32" height="32"/>
-  <object type="EnemySpawnLeft" gid="34" x="287" y="157"/>
+  <object type="EnemySpawnLeft" gid="34" x="288" y="128"/>
   <object name="testLevel2.tmx" type="Teleporter" x="32" y="0" width="32" height="64"/>
   <object x="-448" y="-70" width="1"/>
  </objectgroup>
