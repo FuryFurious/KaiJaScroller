@@ -79,10 +79,10 @@ public class BombBrain : ABehavior, IActionListener
         {
             
             
-                bomb.xSpeed = (float)Help.random.NextDouble() * 5.0f;
+                bomb.xSpeed = (float)Help.random.NextDouble() * 10.0f;
             
 
-            //if(Math.Abs(pX - eX) < 100)
+            if((float)Help.random.NextDouble() > 0.99f)
             return true;
         }
 
