@@ -60,7 +60,7 @@ public static class EntityLibrary
             case EEntityType.Turret:
 
                 bb = new BoundingBox(0, 0, 32, 32);
-                bb.offsetX = 8;
+                bb.offsetX = 0;
 
 
 
@@ -74,6 +74,44 @@ public static class EntityLibrary
 
                 behavior = new TurretBrain();
                 physics = new NoPhysics();
+                break;
+
+
+            case EEntityType.Rogue:
+
+                bb = new BoundingBox(0, 0, 16, 32);
+                bb.offsetX = 8;
+
+                e.damage = 0;
+                e.hitpoints[0] = 1;
+
+                sprite = new Sprite(Assets.rogue);
+                sprite.TextureRect = new IntRect(0, 0, 32, 32);
+
+                gfxComp = new EntityGfx();
+
+                behavior = new RogueBrain();
+
+                physics = new SimplePhysic();
+
+                break;
+
+            case EEntityType.Mage:
+
+                bb = new BoundingBox(0, 0, 16, 32);
+                bb.offsetX = 8;
+
+                e.damage = 0;
+                e.hitpoints[0] = 1;
+
+                sprite = new Sprite(Assets.mage);
+                sprite.TextureRect = new IntRect(0, 0, 32, 32);
+
+                gfxComp = new EntityGfx();
+
+                behavior = new ChaseBrain();
+                physics = new SimplePhysic();
+
                 break;
 
         }

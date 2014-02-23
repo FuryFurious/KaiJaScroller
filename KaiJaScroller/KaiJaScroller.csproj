@@ -73,6 +73,7 @@
     <Compile Include="Classes\Components\Actions\Button1Action.cs" />
     <Compile Include="Classes\Components\Actions\Button2Action.cs" />
     <Compile Include="Classes\Components\Actions\NoAction.cs" />
+    <Compile Include="Classes\Components\Behavior\Entities\RogueBrain.cs" />
     <Compile Include="Classes\Components\Behavior\Entities\TurretBrain.cs" />
     <Compile Include="Classes\Components\Behavior\Projectiles\SimpleSword.cs" />
     <Compile Include="Classes\Components\Behavior\RandomAction.cs" />
@@ -177,7 +178,13 @@
     <Content Include="Content\Gfx\lifeMarker.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Gfx\mage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Gfx\magicBall.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Gfx\ninja.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Gfx\particle1.png">
