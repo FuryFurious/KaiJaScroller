@@ -27,6 +27,11 @@ public class ChaseJump : IActionListener
             {
                 if (true)
                 {
+                    Console.WriteLine("1: " + source.canMoveRight(2, 0));
+                    Console.WriteLine("2: " + source.canMoveRight(2, 32));
+                    Console.WriteLine("3: " + source.canMoveRight(2, 64));
+
+
 
                     if (!source.canMoveRight(2, 0))
                     {
