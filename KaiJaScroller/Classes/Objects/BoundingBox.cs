@@ -137,7 +137,7 @@ public class BoundingBox
                 ( 
                     (y0 >= this.Top && y0 <= bot) || 
                     (y1 >= this.Top && y1 <= bot) || 
-                    (y0 >= this.Top && y1 <= bot));
+                    (y0 <= this.Top && y1 >= bot));
     }
 
 

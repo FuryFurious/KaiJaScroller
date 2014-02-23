@@ -145,6 +145,27 @@ namespace TiledMap
 
                                         map.rectangles.Add(currentRect);
                                     }
+                                    else if (reader.Value.Equals("AoE"))
+                                    {
+
+                                        TiledRectangle currentRect = new TiledRectangle();
+                                        currentRect.type = reader.Value;
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.x = float.Parse(reader.Value);
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.y = float.Parse(reader.Value);
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.width = float.Parse(reader.Value);
+
+                                        reader.MoveToNextAttribute();
+                                        currentRect.height = float.Parse(reader.Value);
+
+
+                                        map.rectangles.Add(currentRect);
+                                    }
                                     //teleporter:
                                     else if (reader.Name.Equals("name"))
                                     {
