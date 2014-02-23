@@ -158,9 +158,10 @@ public class InGame : IGameState
 
             if (player.inviTime > 0)
             {
-                if (player.inviTime > Settings.PLAYERINVITIME / 2 && player.canMoveRight(knockDirection.X, 0) && player.canMoveLeft(-knockDirection.X,0) && !Settings.inDebug)
+                if (!Settings.inDebug && player.canMoveRight(knockDirection.X, 0) && player.canMoveLeft(-knockDirection.X, 0))
                 {
                     player.position += knockDirection;
+              
                 }
 
                 this.player.inviTime -= gameTime.ElapsedTime.TotalSeconds;
@@ -391,13 +392,14 @@ public class InGame : IGameState
 
     private void playerKnockback(Entity source)
     {
-        player.jump(Settings.KNOCKBACKY);
+
+        this.player.jump(Settings.KNOCKBACKY);
 
         if (this.player.boundingBox.CenterX < source.boundingBox.CenterX)
-            knockDirection = new Vector2f(-Settings.KNOCKBACKX, 0);
+            knockDirection = new Vector2f(-Settings.KNOCKBACKX, -Settings.KNOCKBACKY);
 
         else
-            knockDirection = new Vector2f(Settings.KNOCKBACKX, 0);
+            knockDirection = new Vector2f(Settings.KNOCKBACKX, -Settings.KNOCKBACKY);
 
     }
 
@@ -418,7 +420,7 @@ public class InGame : IGameState
                 player.hitpoints[0] -= hostileBullets[i].damage;
                 player.inviTime = Settings.PLAYERINVITIME;
 
-                playerKnockback(enemies[i]);
+                playerKnockback(hostileBullets[i]);
 
                 updateLifebar();
 
