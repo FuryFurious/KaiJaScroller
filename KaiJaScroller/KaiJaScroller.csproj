@@ -174,7 +174,7 @@
     <Content Include="Content\Gfx\smoke.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Gfx\wall.png">
+    <Content Include="Content\Level\wall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Gfx\zombieSide.png">

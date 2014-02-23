@@ -13,18 +13,18 @@ public class InGame : IGameState
 
     public List<BoundingBox> collisionRects = new List<BoundingBox>();
 
-    public Entity player                    = new Entity();
+    public Entity player = new Entity();
 
-    public List<Entity> friendlyBullets     = new List<Entity>();
-    public List<Entity> hostileBullets      = new List<Entity>();
+    public List<Entity> friendlyBullets = new List<Entity>();
+    public List<Entity> hostileBullets = new List<Entity>();
 
-    public List<Entity> enemies             = new List<Entity>();
+    public List<Entity> enemies = new List<Entity>();
 
-    public List<DynamicText> text           = new List<DynamicText>();
+    public List<DynamicText> text = new List<DynamicText>();
 
-    List<Sprite> passiveSprites             = new List<Sprite>();
+    List<Sprite> passiveSprites = new List<Sprite>();
 
-    public List<Particle> particles         = new List<Particle>();
+    public List<Particle> particles = new List<Particle>();
 
     private RenderTarget[] targets;
     private RenderTexture finalTarget;
@@ -63,15 +63,15 @@ public class InGame : IGameState
 
         finalTarget = new RenderTexture((uint)Settings.windowWidth, (uint)Settings.windowHeight);
 
-        for(int i = 0; i < targets.Length; i++)
+        for (int i = 0; i < targets.Length; i++)
             targets[i] = new RenderTexture((uint)Settings.windowWidth, (uint)Settings.windowHeight);
-      
+
 
         view = targets[0].GetView();
         view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, 2f, 2f);
         targets[0].SetView(view);
 
-    
+
     }
 
     public void init()
@@ -79,7 +79,7 @@ public class InGame : IGameState
         player = EntityLibrary.getEntity(EEntityType.Player);
 
         view = targets[0].GetView();
-        view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, Settings.windowWidth/Settings.viewportWidth, Settings.windowHeight/Settings.viewportHeight);
+        view.Viewport = new FloatRect(view.Viewport.Left, view.Viewport.Top, Settings.windowWidth / Settings.viewportWidth, Settings.windowHeight / Settings.viewportHeight);
 
         targets[0].SetView(view);
         load();
@@ -116,7 +116,7 @@ public class InGame : IGameState
         Vector2f playerCenter = player.boundingBox.Center;
 
         if ((playerCenter.X > Settings.viewportWidth / 2 &&
-            playerCenter.X  + Settings.viewportWidth / 2 < sprites.GetLength(1) * 32))
+            playerCenter.X + Settings.viewportWidth / 2 < sprites.GetLength(1) * 32))
             view.Center = (new Vector2f(playerCenter.X, view.Center.Y) + new Vector2f(Settings.viewportWidth / 2, 0));
 
         if ((playerCenter.Y > Settings.viewportHeight / 2 &&
@@ -139,7 +139,7 @@ public class InGame : IGameState
             return EGameState.None;
 
         if (GameStateManager.pad.isClicked(Help.LB) || GameStateManager.input.isClicked(Keyboard.Key.Q))
-            return  EGameState.Restart;
+            return EGameState.Restart;
 
         if (GameStateManager.input.isClicked(Keyboard.Key.F1) || GameStateManager.pad.isClicked(Help.Y))
             Settings.inDebug = !Settings.inDebug;
@@ -158,10 +158,9 @@ public class InGame : IGameState
 
             if (player.inviTime > 0)
             {
-                if (!Settings.inDebug && player.canMoveRight(knockDirection.X, 0) && player.canMoveLeft(-knockDirection.X, 0))
+                if (player.inviTime > Settings.PLAYERINVITIME / 2 && player.canMoveRight(knockDirection.X, 0) && player.canMoveLeft(-knockDirection.X, 0) && !Settings.inDebug)
                 {
                     player.position += knockDirection;
-              
                 }
 
                 this.player.inviTime -= gameTime.ElapsedTime.TotalSeconds;
@@ -174,8 +173,8 @@ public class InGame : IGameState
 
             updateEnemies(gameTime);
 
-           
-               
+
+
 
 
             if (player.boundingBox.intersects(teleport.bb))
@@ -231,7 +230,7 @@ public class InGame : IGameState
         window.Clear(Color.Transparent);
 
         foreach (Sprite s in sprites)
-            if(s != null)
+            if (s != null)
                 targets[0].Draw(s);
 
         foreach (Sprite s in passiveSprites)
@@ -250,7 +249,7 @@ public class InGame : IGameState
             foreach (BoundingBox bb in collisionRects)
                 bb.draw(targets[0]);
 
-        if(Settings.inDebug)
+        if (Settings.inDebug)
             teleport.draw(targets[0]);
 
         this.player.draw(gameTime, targets);
@@ -355,7 +354,7 @@ public class InGame : IGameState
 
     private void updateEnemies(GameTime gameTime)
     {
- 
+
         for (int i = 0; i < enemies.Count; i++)
         {
             enemies[i].update(gameTime);
@@ -392,14 +391,13 @@ public class InGame : IGameState
 
     private void playerKnockback(Entity source)
     {
-
-        this.player.jump(Settings.KNOCKBACKY);
+        player.jump(Settings.KNOCKBACKY);
 
         if (this.player.boundingBox.CenterX < source.boundingBox.CenterX)
-            knockDirection = new Vector2f(-Settings.KNOCKBACKX, -Settings.KNOCKBACKY);
+            knockDirection = new Vector2f(-Settings.KNOCKBACKX, 0);
 
         else
-            knockDirection = new Vector2f(Settings.KNOCKBACKX, -Settings.KNOCKBACKY);
+            knockDirection = new Vector2f(Settings.KNOCKBACKX, 0);
 
     }
 
@@ -431,7 +429,7 @@ public class InGame : IGameState
                 }
 
             }
-            
+
 
             if (!hostileBullets[i].exists)
             {
@@ -444,10 +442,10 @@ public class InGame : IGameState
 
     private void loadLevel(String path)
     {
-        TiledMap.TiledMapInfo map = TiledMap.TiledMapInfo.getMap("Content/Level/"+path);
+        TiledMap.TiledMapInfo map = TiledMap.TiledMapInfo.getMap("Content/Level/" + path);
 
         int[, ,] ids = map.getTileIds();
-        Texture texture = new Texture("Content/Gfx/" + map.getTileSetName() + ".png");
+        Texture texture = new Texture("Content/Level/" + map.getTileSetName() + ".png");
         sprites = new Sprite[ids.GetLength(0), ids.GetLength(1), ids.GetLength(2)];
 
 
@@ -471,7 +469,7 @@ public class InGame : IGameState
 
         foreach (TiledMap.TiledPicture pic in map.pictures)
         {
-            
+
             if (pic.type.Equals("EnemySpawnLeft"))
             {
                 Entity ene = EntityLibrary.getEntity((EEntityType)pic.id);
@@ -487,7 +485,7 @@ public class InGame : IGameState
                 ene.setPosition(pic.x, pic.y);
                 enemies.Add(ene);
             }
-            
+
             else if (pic.type.Equals("Picture"))
             {
                 pic.id -= 1;
@@ -538,14 +536,14 @@ public class InGame : IGameState
             lifebar.Size = new Vector2f((lifeWidth - 8.4f) * ((float)player.hitpoints[0] / (float)player.hitpoints[1]), 16);
 
         else
-            lifebar.Size = new Vector2f(0, 0);  
+            lifebar.Size = new Vector2f(0, 0);
     }
 
     private void save()
     {
         Help.reader.open("Content/Other/save.txt");
 
-        Help.reader.setValue("hp0", ""+player.hitpoints[0]);
+        Help.reader.setValue("hp0", "" + player.hitpoints[0]);
         Help.reader.setValue("hp1", "" + player.hitpoints[1]);
         Help.reader.setValue("level", nextLevel);
 
@@ -620,7 +618,7 @@ public class InGame : IGameState
             friendlyBullets.Add(e);
         else
             hostileBullets.Add(e);
-        
+
     }
 
 

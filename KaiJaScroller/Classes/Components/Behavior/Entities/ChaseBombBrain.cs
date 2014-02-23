@@ -11,7 +11,7 @@ public class ChaseBombBrain : ABehavior, IActionListener
     float pY;
     float eX;
     float eY;
-    bool canLeft;
+    bool isChasing;
     bool canRight;
     Fireball fireball;
     Bomb bomb;
@@ -31,7 +31,7 @@ public class ChaseBombBrain : ABehavior, IActionListener
         //skill1.setEntity(this.entity);
 
         //skills.Add(skill1);
-        canLeft = false;
+        isChasing = false;
         canRight = false;
 
         bomb = new Bomb();
@@ -46,16 +46,23 @@ public class ChaseBombBrain : ABehavior, IActionListener
         eX = this.entity.boundingBox.CenterX;
         eY = this.entity.boundingBox.CenterY;
 
-        //moving
-        if (pX - eX < -5 && pX - eX > -150 && this.entity.canMoveLeft(2, 0))
+        isChasing = false;
+
+        if ((pX - eX >= 101 && pX - eX < 150) || (pX - eX <= -101 && pX - eX > -150))
         {
-            canLeft = true;
-            this.entity.moveLeft(2);
+            isChasing = true;
         }
-        else if (pX - eX > 5 && pX - eX < 150 && this.entity.canMoveRight(2, 0))
+
+        
+
+        //moving
+        if (this.entity.canMoveRight(2, 0) && ((pX - eX < -5 && pX - eX > -99 || (pX - eX >= 101 && pX - eX < 150))))
         {
-            canRight = true;
             this.entity.moveRight(2);
+        }
+        if (this.entity.canMoveLeft(2, 0) && ((pX - eX > 5 && pX - eX < 99 || (pX - eX <= -101 && pX - eX > -150))))
+        {
+            this.entity.moveLeft(2);
         }
         Console.Clear();
 
@@ -64,42 +71,48 @@ public class ChaseBombBrain : ABehavior, IActionListener
               bomb.update(gameTime);
 
         
-        //jumping  
-        if (pX - eX > 5 && pX - eX < 150)
+        //jumping 
+
+              if (pX - eX < -5 && pX - eX > -99 || (pX - eX >= 101 && pX - eX < 150))
         {
             if (true)
             {
-                if (!this.entity.canMoveRight(2, 0))
+                /*if (!this.entity.canMoveRight(2, 0))
                 {
                     if (this.entity.canMoveRight(2, 32) || this.entity.canMoveRight(2, 64))
                     {
                         this.entity.jump(5);
                     }
-                }
+                }*/
             }
-            if (this.entity.canMoveRight(2, -32) && pX > eX && pY < eY)
+            
+
+            if (this.entity.canMoveRight(2, -32))
             {
                 this.entity.jump(5);
             }
         }
-        if (pX - eX < -5 && pX - eX > -150)
+        if ((pX - eX > 5 && pX - eX < 99 || (pX - eX <= -101 && pX - eX > -150)))
         {
             if (true)
             {
-                if (!this.entity.canMoveLeft(2, 0))
+                /*if (!this.entity.canMoveLeft(2, 0))
                 {
                     if (this.entity.canMoveLeft(2, 32) || this.entity.canMoveLeft(2, 64))
                     {
 
                         this.entity.jump(5);
                     }
-                }
+                }*/
             }
-            if (this.entity.canMoveLeft(2, -32) && pX < eX && pY < eY)
+            if (this.entity.canMoveLeft(2, -32))
             {
                 this.entity.jump(5);
             }
+
+            
         }
+         
     }
 
     public override void onKill()
@@ -116,7 +129,14 @@ public class ChaseBombBrain : ABehavior, IActionListener
 
         else if (name == bomb.name)
         {
-            //bomb.xSpeed = (float)Help.random.NextDouble() * 10.0f;
+            Console.WriteLine(isChasing);
+            if (isChasing)
+            bomb.xSpeed = +(float)Help.random.NextDouble() * 10.0f;
+            else
+            {
+                bomb.xSpeed = -(float)Help.random.NextDouble() * 10.0f;
+            }
+            
             //if(Math.Abs(pX - eX) < 100)
             return true;
         }
