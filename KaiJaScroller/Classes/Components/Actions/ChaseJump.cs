@@ -14,37 +14,53 @@ public class ChaseJump : IActionListener
     {
         float pX = source.ingame.player.boundingBox.CenterX;
         float eX = source.boundingBox.CenterX;
+        float pY = source.ingame.player.boundingBox.CenterY;
+        float eY = source.boundingBox.CenterY;
+        
         
 
-        
-        
 
-        if (source.ingame.player.position.Y < source.position.Y)
-        {
+
+
 
             if (pX - eX > 5 && pX - eX < 150)
             {
-                if (!source.canMoveRight(2,0))
+                if (true)
                 {
-                    if (source.canMoveRight(2, 32) || source.canMoveRight(2, 64))
+
+                    if (!source.canMoveRight(2, 0))
                     {
-                        return true;
+                        if (source.canMoveRight(2, 32) || source.canMoveRight(2, 64))
+                        {
+                            return true;
+                        }
                     }
+                }
+                if (source.canMoveRight(2, -32))
+                {
+                    return true;
                 }
                 
             }
             if (pX - eX < -5 && pX - eX > -150)
             {
-                if (!source.canMoveLeft(-2,0))
+                if (true)
                 {
-                    if (source.canMoveLeft(-2, 32) || source.canMoveLeft(-2, 64))
+                    if (!source.canMoveLeft(2, 0))
                     {
-                        return true;
+                        if (source.canMoveLeft(2, 32) || source.canMoveLeft(2, 64))
+                        {
+                            return true;
+                        }
                     }
-                }   
+                }
+                if (source.canMoveLeft(2, -32))
+                {
+                    return true;
+                }
             }
 
-        }
+        
 
 
 
