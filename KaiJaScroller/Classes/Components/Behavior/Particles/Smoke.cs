@@ -23,7 +23,7 @@ public class Smoke : AParticleBehavior
     {
         dir = Vec2f.lerp(new Vector2f(0.5f, -1), new Vector2f(-0.5f, -1), (float)Help.random.NextDouble());
 
-        speed = (float)Help.random.NextDouble();
+        speed = (float)Math.Max(Help.random.NextDouble(), 0.5);
         rotateSpeed = speed;
 
         if (Help.random.NextDouble() < 0.5)
