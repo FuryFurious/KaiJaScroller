@@ -11,7 +11,7 @@ public class GameOver : IOverlayState
 {
     Sprite screen;
 
-    Text text1 = new Text("You Died", Assets.font1, 90);
+    Text text1 = new Text("You Died, you are bad!", Assets.font1, 90);
 
     public bool isPaused()
     {
